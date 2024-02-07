@@ -1,4 +1,4 @@
-package com.example.appyugioh;
+package com.example.appyugioh.interfacegraphique;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.appyugioh.R;
+
 public class MainActivity extends AppCompatActivity {
 
     protected Button boutonRechercheCarte;

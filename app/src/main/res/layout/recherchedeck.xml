@@ -6,4 +6,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <EditText
+        android:id="@+id/rechercheDeck"
+        android:layout_width="343dp"
+        android:layout_height="69dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="archétype souhaité"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="InvalidId" />
+
+    <LinearLayout
+        android:id="@+id/layoutResultatRecherche"
+        android:layout_width="418dp"
+        android:layout_height="543dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="187dp"
+        tools:ignore="MissingConstraints"></LinearLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/listeFiltre"
+        android:layout_width="409dp"
+        android:layout_height="66dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="119dp">
+
+        <LinearLayout
+            android:id="@+id/layoutFiltre"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/filtrePrix"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="100dp"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/triPrix"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="200dp"
+                />
+        </LinearLayout>
+
+    </HorizontalScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

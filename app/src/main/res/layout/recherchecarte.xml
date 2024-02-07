@@ -6,23 +6,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="450dp"
-        android:layout_height="179dp"
-        android:layout_marginTop="260dp"
+    <EditText
+        android:id="@+id/rechercheCarte"
+        android:layout_width="278dp"
+        android:layout_height="73dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="archétype souhaité"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="InvalidId" />
+
+    <LinearLayout
+        android:id="@+id/layoutResultatRecherche"
+        android:layout_width="418dp"
+        android:layout_height="543dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="185dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"></LinearLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/listeFiltre"
+        android:layout_width="409dp"
+        android:layout_height="66dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="119dp">
+
+        <LinearLayout
+            android:id="@+id/layoutFiltre"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/filtrePrix"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="100dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/triPrix"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="200dp" />
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <Button
+        android:id="@+id/boutonRechercheCarte"
+        android:layout_width="82dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="320dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="9dp"
+        android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="133dp"
-        android:layout_height="179dp"
-        app:srcCompat="@android:mipmap/sym_def_app_icon"
-        tools:layout_editor_absoluteX="126dp"
-        tools:layout_editor_absoluteY="40dp"
-        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

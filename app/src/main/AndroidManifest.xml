@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,7 +14,7 @@
         android:theme="@style/Theme.AppYuGiOh"
         tools:targetApi="31" >
         <activity
-            android:name=".MainActivity"
+            android:name=".interfacegraphique.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,13 +22,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RechercheCarte"
+        <activity android:name=".interfacegraphique.RechercheCarte"
             android:exported="false">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             </activity>
-        <activity android:name=".RechercheDeck"
+        <activity android:name=".interfacegraphique.RechercheDeck"
             android:exported="false">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER"/>
