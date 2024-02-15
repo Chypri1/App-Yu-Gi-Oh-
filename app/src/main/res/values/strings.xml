@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AppYuGiOh</string>
+    <string name="recherche_de_carte">recherche de carte</string>
 </resources>
