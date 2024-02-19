@@ -6,36 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/boutonRechercheCarte"
-        android:layout_width="166dp"
-        android:layout_height="174dp"
-        android:layout_marginTop="176dp"
-        android:text="Recherche de carte"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.083"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/boutonRechercheDeck"
-        android:layout_width="173dp"
-        android:layout_height="172dp"
-        android:layout_marginTop="176dp"
-        android:text="Recherche de deck"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.878"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_launcher_background"
-        tools:layout_editor_absoluteX="139dp"
-        tools:layout_editor_absoluteY="457dp"
-        tools:ignore="MissingConstraints" />
+        <Button
+            android:id="@+id/boutonRechercheDeck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:text="Recherche de deck" />
+
+        <Button
+            android:id="@+id/boutonRechercheCarte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:text="Recherche de carte" />
+    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

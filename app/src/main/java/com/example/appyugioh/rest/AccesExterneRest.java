@@ -22,14 +22,16 @@ import java.util.List;
 public class AccesExterneRest {
 
     private static final String URL = "https://db.ygoprodeck.com/api/v7/cardinfo.php";
-    protected  String urlString = URL;
+
 
     protected  MappeurCarteRest2CarteYuGiOh mappeurCarteRest2CarteYuGiOh = new MappeurCarteRest2CarteYuGiOh();
-    public List<CarteYuGiOh> appeRest(String information) {
+    public List<CarteYuGiOh> appeRest(String nomCarte) {
 
         List<CarteYuGiOh> listeCarteYuGiOh = new ArrayList();
         StringBuffer response = new StringBuffer();
-        String urlMagicien = urlString + "?name=" + information;
+        String urlMagicien = URL + "?name=" + nomCarte;
+
+        // TODO: faire appel rest
 
         // resultat appel Rest
         String resultatRest = """
@@ -162,7 +164,7 @@ public class AccesExterneRest {
             JSONObject jsonResponse = new JSONObject(resultatRest);
 
             // Récupérer le tableau de cartes
-            JSONArray cardsArray = jsonResponse.getJSONArray("data");
+            List<JSONArray> cardsArray = List.of(jsonResponse.getJSONArray("data"));
 
             listeCarteYuGiOh = mappeurCarteRest2CarteYuGiOh.mapperListeCarteRest2ListeCarteYuGiOh(cardsArray);
 

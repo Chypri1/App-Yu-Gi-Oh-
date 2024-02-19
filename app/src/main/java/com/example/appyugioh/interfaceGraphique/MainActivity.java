@@ -1,6 +1,7 @@
 package com.example.appyugioh.interfacegraphique;
 
-import android.annotation.SuppressLint;
+
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,30 +9,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.appyugioh.R;
-import com.example.appyugioh.rest.AccesExterneRest;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     protected DrawerLayout drawerLayout;
     protected Button boutonRechercheCarte;
-
     protected Button boutonRechercheDeck;
-
-    protected Button menuBoutonRechercheCarte;
-
     protected NavigationView drawer;
-
-    protected ImageView imageView;
-
-    AccesExterneRest accesExterneRest;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -46,12 +35,14 @@ public class MainActivity extends AppCompatActivity {
         /* créer une classe pour le menu en lui même */
         NavigationView navigationView = findViewById(R.id.nav_view);
         Menu menu = navigationView.getMenu();
+
         MenuItem menuItem1 = menu.findItem(R.id.menu_bouton_recherche_carte);
-        MenuItem menuItem2 = menu.findItem(R.id.menu_item2);
+        MenuItem menuItem2 = menu.findItem(R.id.menu_bouton_accueil);
+        MenuItem menuItem3 = menu.findItem(R.id.menu_bouton_recherche_deck);
+        MenuItem menuItem4 = menu.findItem(R.id.menu_bouton_mes_cartes);
+        MenuItem menuItem5 = menu.findItem(R.id.menu_bouton_mes_decks);
 
-        this.imageView = findViewById(R.id.imageView);
 
-        drawer = findViewById(R.id.nav_view);
 
         boutonRechercheCarte.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,28 +63,44 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int variableItem = item.getItemId();
 
-                switch (variableItem) {
-                    case R.id.menu_bouton_recherche_carte:
-                        Intent rechercheDeck = new Intent(getApplicationContext(),RechercheDeck.class);
-                        startActivity(rechercheDeck);
-                        finish();
-                        return true;
-                    case R.id.menu_item2:
-                        // Actions à effectuer lorsque l'élément de menu 2 est sélectionné
-                        return true;
-                    // Ajoutez d'autres cas pour d'autres éléments de menu si nécessaire
-                    default:
-                        return false;
+                if (item.getItemId() == R.id.menu_bouton_accueil)
+                {
+                    Intent rechercheCarte = new Intent(getApplicationContext(),MainActivity.class);
+                    startActivity(rechercheCarte);
+                    finish();
                 }
+                if (item.getItemId() == R.id.menu_bouton_recherche_carte)
+                {
+                    Intent rechercheCarte = new Intent(getApplicationContext(),RechercheCarte.class);
+                    startActivity(rechercheCarte);
+                    finish();
+                }
+                if (item.getItemId() == R.id.menu_bouton_recherche_deck)
+                {
+                    Intent rechercheCarte = new Intent(getApplicationContext(),RechercheDeck.class);
+                    startActivity(rechercheCarte);
+                    finish();
+                }
+                if (item.getItemId() == R.id.menu_bouton_mes_cartes)
+                {
+                    Intent rechercheCarte = new Intent(getApplicationContext(),AffichageCarte.class);
+                    startActivity(rechercheCarte);
+                    finish();
+                }
+                if (item.getItemId() == R.id.menu_bouton_mes_decks)
+                {
+                    Intent rechercheCarte = new Intent(getApplicationContext(),AffichageDeck.class);
+                    startActivity(rechercheCarte);
+                    finish();
+                }
+                return true;
             }
         });
-
-
     }
 }

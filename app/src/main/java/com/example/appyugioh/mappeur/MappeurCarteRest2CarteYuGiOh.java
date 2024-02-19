@@ -11,13 +11,17 @@ import java.util.List;
 
 public class MappeurCarteRest2CarteYuGiOh {
 
-    public List<CarteYuGiOh> mapperListeCarteRest2ListeCarteYuGiOh(JSONArray listeCarteRest) throws JSONException {
+    public List<CarteYuGiOh> mapperListeCarteRest2ListeCarteYuGiOh(List<JSONArray> listeCarteRest) throws JSONException {
         List<CarteYuGiOh> listeCarteYuGiOh = new ArrayList();
 
-        for (int i=0;i<listeCarteRest.length();i++) {
-            CarteYuGiOh carteYuGiOh = new CarteYuGiOh();
-            carteYuGiOh = this.mapperCarteRest2CarteYuGiOh(listeCarteRest.getJSONObject(i));
-            listeCarteYuGiOh.add(carteYuGiOh);
+        for (JSONArray carteRest:listeCarteRest)
+        {
+            for (int i = 0; i < carteRest.length(); i++)
+            {
+                CarteYuGiOh carteYuGiOh = new CarteYuGiOh();
+                carteYuGiOh = this.mapperCarteRest2CarteYuGiOh(carteRest.getJSONObject(i));
+                listeCarteYuGiOh.add(carteYuGiOh);
+            }
         }
 
         return listeCarteYuGiOh;

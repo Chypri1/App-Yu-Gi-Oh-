@@ -4,13 +4,29 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/menu_bouton_accueil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:title="Acceuil" />
+        <item
             android:id="@+id/menu_bouton_recherche_carte"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:title="recherche_carte" />
+            android:title="recherche de carte" />
         <item
-            android:id="@+id/menu_item2"
-            android:title="Élément de menu 2" />
-        <!-- Ajoutez d'autres éléments de menu ici -->
+            android:id="@+id/menu_bouton_recherche_deck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:title="recherche de deck" />
+        <item
+            android:id="@+id/menu_bouton_mes_decks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:title="mes decks" />
+        <item
+            android:id="@+id/menu_bouton_mes_cartes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:title="mes cartes" />
     </group>
 </menu>

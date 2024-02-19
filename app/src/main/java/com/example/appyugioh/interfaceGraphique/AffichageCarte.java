@@ -1,5 +1,6 @@
 package com.example.appyugioh.interfacegraphique;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
@@ -7,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.appyugioh.R;
 
-public class AffichageCarte extends AppCompatActivity {
+public class AffichageCarte extends Activity {
 
     LinearLayout layoutTop;
 
