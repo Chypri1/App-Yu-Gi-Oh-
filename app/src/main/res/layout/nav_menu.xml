@@ -28,5 +28,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:title="mes cartes" />
+        <item
+            android:id="@+id/menu_bouton_enregistrer_carte"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:title="Enregistrer carte" />
     </group>
 </menu>

@@ -20,7 +20,8 @@ public class MainActivity extends Activity {
     protected DrawerLayout drawerLayout;
     protected Button boutonRechercheCarte;
     protected Button boutonRechercheDeck;
-    protected NavigationView drawer;
+    protected NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -32,8 +33,8 @@ public class MainActivity extends Activity {
 
         this.boutonRechercheDeck= findViewById(R.id.boutonRechercheDeck);
 
-        /* créer une classe pour le menu en lui même */
-        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        this.navigationView = findViewById(R.id.nav_view);
         Menu menu = navigationView.getMenu();
 
         MenuItem menuItem1 = menu.findItem(R.id.menu_bouton_recherche_carte);
@@ -41,6 +42,7 @@ public class MainActivity extends Activity {
         MenuItem menuItem3 = menu.findItem(R.id.menu_bouton_recherche_deck);
         MenuItem menuItem4 = menu.findItem(R.id.menu_bouton_mes_cartes);
         MenuItem menuItem5 = menu.findItem(R.id.menu_bouton_mes_decks);
+        MenuItem menuItem6 = menu.findItem(R.id.menu_bouton_enregistrer_carte);
 
 
 
@@ -83,20 +85,26 @@ public class MainActivity extends Activity {
                 }
                 if (item.getItemId() == R.id.menu_bouton_recherche_deck)
                 {
-                    Intent rechercheCarte = new Intent(getApplicationContext(),RechercheDeck.class);
-                    startActivity(rechercheCarte);
+                    Intent rechercheDeck = new Intent(getApplicationContext(),RechercheDeck.class);
+                    startActivity(rechercheDeck);
                     finish();
                 }
                 if (item.getItemId() == R.id.menu_bouton_mes_cartes)
                 {
-                    Intent rechercheCarte = new Intent(getApplicationContext(),AffichageCarte.class);
-                    startActivity(rechercheCarte);
+                    Intent mesCartes = new Intent(getApplicationContext(),AffichageCarte.class);
+                    startActivity(mesCartes);
                     finish();
                 }
                 if (item.getItemId() == R.id.menu_bouton_mes_decks)
                 {
-                    Intent rechercheCarte = new Intent(getApplicationContext(),AffichageDeck.class);
-                    startActivity(rechercheCarte);
+                    Intent mesDecks = new Intent(getApplicationContext(),AffichageDeck.class);
+                    startActivity(mesDecks);
+                    finish();
+                }
+                if (item.getItemId() == R.id.menu_bouton_enregistrer_carte)
+                {
+                    Intent enregsitrerCarte = new Intent(getApplicationContext(),EnregistrerCarte.class);
+                    startActivity(enregsitrerCarte);
                     finish();
                 }
                 return true;
