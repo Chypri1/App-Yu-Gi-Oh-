@@ -39,8 +39,8 @@
 
         <LinearLayout
             android:id="@+id/layoutResultatCam"
-            android:layout_width="416dp"
-            android:layout_height="400dp"
+            android:layout_width="412dp"
+            android:layout_height="291dp"
             android:layout_marginTop="333dp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,8 +49,7 @@
             <ImageView
                 android:id="@+id/imageCam"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                 />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <Button
@@ -60,6 +59,16 @@
             android:layout_marginStart="72dp"
             android:layout_marginTop="228dp"
             android:text="@string/camera"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/boutonEnregistrementCarte"
+            android:layout_width="397dp"
+            android:layout_height="97dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="631dp"
+            android:text="Enregistrer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
