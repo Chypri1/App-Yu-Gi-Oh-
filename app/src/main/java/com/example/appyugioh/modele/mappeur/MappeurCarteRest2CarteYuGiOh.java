@@ -1,6 +1,6 @@
-package com.example.appyugioh.mappeur;
+package com.example.appyugioh.modele.mappeur;
 
-import com.example.appyugioh.metier.CarteYuGiOh;
+import com.example.appyugioh.modele.metier.CarteYuGiOh;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,25 +1,19 @@
-package com.example.appyugioh.interfacegraphique;
+package com.example.appyugioh.vue;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.hardware.Camera;
 import android.hardware.camera2.*;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.service.media.CameraPrewarmService;
 import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,11 +21,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 
+import com.example.appyugioh.modele.ComportementMenu;
 import com.example.appyugioh.R;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -55,7 +49,7 @@ public class EnregistrerCarte extends Activity {
 
     protected NavigationView navigationView;
 
-    protected CommunAffichage communAffichage;
+    protected ComportementMenu comportementMenu;
 
 
     @Override
@@ -78,7 +72,7 @@ public class EnregistrerCarte extends Activity {
         this.navigationView = findViewById(R.id.nav_view);
         Menu menu = navigationView.getMenu();
 
-        this.communAffichage = new CommunAffichage();
+        this.comportementMenu = new ComportementMenu();
 
         MenuItem menuItem1 = menu.findItem(R.id.menu_bouton_recherche_carte);
         MenuItem menuItem2 = menu.findItem(R.id.menu_bouton_accueil);
@@ -94,7 +88,7 @@ public class EnregistrerCarte extends Activity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                return communAffichage.initItemMenu(item, elem1);
+                return comportementMenu.initItemMenu(item, elem1);
             }
         });
 
@@ -111,46 +105,6 @@ public class EnregistrerCarte extends Activity {
                 enregistrementCarte(nomCarte,nomEdition,imageCam);
             }
         });
-    }
-
-    private boolean initItemMenu(@androidx.annotation.NonNull MenuItem item) {
-        if (item.getItemId() == R.id.menu_bouton_accueil)
-        {
-            Intent rechercheCarte = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(rechercheCarte);
-            finish();
-        }
-        if (item.getItemId() == R.id.menu_bouton_recherche_carte)
-        {
-            Intent rechercheCarte = new Intent(getApplicationContext(),RechercheCarte.class);
-            startActivity(rechercheCarte);
-            finish();
-        }
-        if (item.getItemId() == R.id.menu_bouton_recherche_deck)
-        {
-            Intent rechercheDeck = new Intent(getApplicationContext(),RechercheDeck.class);
-            startActivity(rechercheDeck);
-            finish();
-        }
-        if (item.getItemId() == R.id.menu_bouton_mes_cartes)
-        {
-            Intent mesCartes = new Intent(getApplicationContext(),AffichageCarte.class);
-            startActivity(mesCartes);
-            finish();
-        }
-        if (item.getItemId() == R.id.menu_bouton_mes_decks)
-        {
-            Intent mesDecks = new Intent(getApplicationContext(),AffichageDeck.class);
-            startActivity(mesDecks);
-            finish();
-        }
-        if (item.getItemId() == R.id.menu_bouton_enregistrer_carte)
-        {
-            Intent enregsitrerCarte = new Intent(getApplicationContext(),EnregistrerCarte.class);
-            startActivity(enregsitrerCarte);
-            finish();
-        }
-        return true;
     }
 
     private void enregistrementCarte(EditText nomCarte,EditText nomEdition,ImageView imageCam) {
@@ -175,6 +129,7 @@ public class EnregistrerCarte extends Activity {
                 if (imageSavedPath != null) {
                     // L'image a été enregistrée avec succès
                     // TODO : enregistrer l'emplacement de l'image et les infos dans un json
+
                 } else {
                     // Gérer le cas où l'enregistrement de l'image a échoué
                 }

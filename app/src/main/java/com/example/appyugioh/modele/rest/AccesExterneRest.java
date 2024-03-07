@@ -1,21 +1,12 @@
-package com.example.appyugioh.rest;
+package com.example.appyugioh.modele.rest;
 
-import android.widget.TextView;
-
-import com.example.appyugioh.mappeur.MappeurCarteRest2CarteYuGiOh;
-import com.example.appyugioh.metier.CarteYuGiOh;
+import com.example.appyugioh.modele.mappeur.MappeurCarteRest2CarteYuGiOh;
+import com.example.appyugioh.modele.metier.CarteYuGiOh;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.os.AsyncTask;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +15,12 @@ public class AccesExterneRest {
     private static final String URL = "https://db.ygoprodeck.com/api/v7/cardinfo.php";
 
 
-    protected  MappeurCarteRest2CarteYuGiOh mappeurCarteRest2CarteYuGiOh = new MappeurCarteRest2CarteYuGiOh();
+    protected MappeurCarteRest2CarteYuGiOh mappeurCarteRest2CarteYuGiOh = new MappeurCarteRest2CarteYuGiOh();
     public List<CarteYuGiOh> appeRest(String nomCarte) {
 
         List<CarteYuGiOh> listeCarteYuGiOh = new ArrayList();
         StringBuffer response = new StringBuffer();
-        String urlMagicien = URL + "?name=" + nomCarte;
+        String urlNomCarte = URL + "?name=" + nomCarte;
 
         // TODO: faire appel rest
 

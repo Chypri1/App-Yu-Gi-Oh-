@@ -1,10 +1,8 @@
-package com.example.appyugioh.interfacegraphique;
+package com.example.appyugioh.vue;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.LinearLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.appyugioh.R;
 

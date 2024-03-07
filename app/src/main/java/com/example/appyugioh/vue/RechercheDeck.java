@@ -1,4 +1,4 @@
-package com.example.appyugioh.interfacegraphique;
+package com.example.appyugioh.vue;
 
 import static com.example.appyugioh.R.*;
 
@@ -7,7 +7,6 @@ import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.Menu;
@@ -15,18 +14,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appyugioh.R;
-import com.example.appyugioh.metier.CarteYuGiOh;
-import com.example.appyugioh.rest.AccesExterneRest;
+import com.example.appyugioh.modele.metier.CarteYuGiOh;
+import com.example.appyugioh.modele.rest.AccesExterneRest;
 
 import java.util.ArrayList;
 import java.util.List;
