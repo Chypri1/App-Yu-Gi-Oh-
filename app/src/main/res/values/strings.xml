@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">AppYuGiOh</string>
     <string name="recherche_de_carte">recherche de carte</string>
+    <string name="nom_carte">nom de la carte</string>
+    <string name="edition">édition de la carte</string>
+    <string name="camera">caméra</string>
 </resources>

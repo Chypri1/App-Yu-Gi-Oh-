@@ -2,7 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,7 +20,7 @@
         android:theme="@style/Theme.AppYuGiOh"
         tools:targetApi="31" >
         <activity
-            android:name=".interfacegraphique.MainActivity"
+            android:name=".vue.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,25 +28,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".interfacegraphique.RechercheCarte"
+        <activity android:name=".vue.RechercheCarte"
             android:exported="false">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
             </activity>
-        <activity android:name=".interfacegraphique.RechercheDeck"
+        <activity android:name=".vue.RechercheDeck"
             android:exported="false">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
         </activity>
-        <activity android:name=".interfacegraphique.AffichageCarte"
+        <activity android:name=".vue.AffichageCarte"
             android:exported="false">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
+        </activity>
+        <activity android:name=".vue.EnregistrerCarte"
+            android:exported="false">
+
         </activity>
     </application>
-
-
 </manifest>

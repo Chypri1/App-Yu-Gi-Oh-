@@ -1,4 +1,4 @@
-package com.example.appyugioh.interfacegraphique;
+package com.example.appyugioh.vue;
 
 import android.app.Activity;
 

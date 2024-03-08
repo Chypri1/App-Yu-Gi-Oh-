@@ -1,4 +1,4 @@
-package com.example.appyugioh.metier;
+package com.example.appyugioh.modele.metier;
 
 import java.util.List;
 
