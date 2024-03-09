@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,8 +26,13 @@ import com.example.appyugioh.modele.ComportementMenu;
 import com.example.appyugioh.R;
 import com.google.android.material.navigation.NavigationView;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -102,40 +108,76 @@ public class EnregistrerCarte extends Activity {
         boutonEnregistrementCarte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enregistrementCarte(nomCarte,nomEdition,imageCam);
+                try {
+                    enregistrementCarte(nomCarte, nomEdition, imageCam);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
 
-    private void enregistrementCarte(EditText nomCarte,EditText nomEdition,ImageView imageCam) {
-        if(nomCarte.getText()!= null || nomCarte.getText().equals(R.string.nom_carte)){
+    private void enregistrementCarte(EditText nomCarte, EditText nomEdition, ImageView imageCam) throws JSONException {
+        String nomCarteText = nomCarte.getText().toString();
+        String nomEditionText = nomEdition.getText().toString();
 
-        }
-        if(nomEdition.getText()!= null || nomEdition.getText().equals(R.string.edition)) {
+        // Vérifier si le nom de la carte et l'édition sont vides ou égaux aux valeurs par défaut
+        if (!TextUtils.isEmpty(nomCarteText) && !nomCarteText.equals(getString(R.string.nom_carte)) &&
+                !TextUtils.isEmpty(nomEditionText) && !nomEditionText.equals(getString(R.string.edition))) {
 
-        }
+            // Vérifier si l'imageView n'est pas vide
+            if (imageCam.getDrawable() != null) {
+                // Récupérer le Drawable de l'ImageView
+                Drawable drawable = imageCam.getDrawable();
+                // Vérifier si le Drawable est une instance de BitmapDrawable
+                if (drawable instanceof BitmapDrawable) {
+                    // Convertir le Drawable en Bitmap
+                    Bitmap image = ((BitmapDrawable) drawable).getBitmap();
+                    // Enregistrer l'image dans le stockage de l'appareil
+                    String imageSavedPath = saveImageToGallery(image, nomCarteText);
+                    // Vérifier si l'enregistrement de l'image a réussi
+                    if (imageSavedPath != null) {
+                        // Créer un objet JSON avec le nom de la carte, l'édition et l'emplacement de l'image
+                        // TODO: enregistrer d'autres infos pour savoir si c'est une carte prise ne photo ou non
+                        JSONObject carteJSON = new JSONObject();
+                        carteJSON.put("nomCarte", nomCarteText);
+                        carteJSON.put("nomEdition", nomEditionText);
+                        carteJSON.put("imagePath", imageSavedPath);
 
-        // Vérifier si l'imageView n'est pas vide
-        if (imageCam.getDrawable() != null) {
-            // Récupérer le Drawable de l'ImageView
-            Drawable drawable = imageCam.getDrawable();
-            // Vérifier si le Drawable est une instance de BitmapDrawable
-            if (drawable instanceof BitmapDrawable) {
-                // Convertir le Drawable en Bitmap
-                Bitmap image = ((BitmapDrawable) drawable).getBitmap();
-                // Enregistrer l'image dans le stockage de l'appareil
-                String imageSavedPath = saveImageToGallery(image, nomCarte.getText().toString());
-                // Vérifier si l'enregistrement de l'image a réussi
-                if (imageSavedPath != null) {
-                    // L'image a été enregistrée avec succès
-                    // TODO : enregistrer l'emplacement de l'image et les infos dans un json
-
-                } else {
-                    // Gérer le cas où l'enregistrement de l'image a échoué
+                        // Enregistrer l'objet JSON dans un fichier
+                        String jsonFilePath = saveJSONObjectToFile(carteJSON);
+                        if (jsonFilePath != null) {
+                            // L'objet JSON a été enregistré avec succès dans le fichier
+                        } else {
+                            // Gérer le cas où l'enregistrement de l'objet JSON a échoué
+                        }
+                    } else {
+                        // Gérer le cas où l'enregistrement de l'image a échoué
+                    }
                 }
             }
+        } else {
+            // Gérer le cas où le nom de la carte ou l'édition est vide ou égal à la valeur par défaut
         }
     }
+
+    // Méthode pour enregistrer un objet JSON dans un fichier
+    private String saveJSONObjectToFile(JSONObject jsonObject) {
+        try {
+            // Créer un fichier dans le répertoire des fichiers de l'application
+            File jsonFile = new File(getFilesDir(), "carte.json");
+            FileWriter fileWriter = new FileWriter(jsonFile);
+            // Écrire l'objet JSON dans le fichier
+            fileWriter.write(jsonObject.toString());
+            fileWriter.close();
+            return jsonFile.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Gérer l'exception si l'enregistrement de l'objet JSON dans le fichier échoue
+            return null;
+        }
+    }
+
 
 
     private void prendreUnePhoto()  {
