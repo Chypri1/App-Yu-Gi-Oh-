@@ -1,11 +1,11 @@
-package com.example.appyugioh.modele;
+package com.example.appyugioh.modele.comportementFront;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.view.MenuItem;
 
 import com.example.appyugioh.R;
-import com.example.appyugioh.vue.AffichageCarte;
+import com.example.appyugioh.vue.AffichageMesCartes;
 import com.example.appyugioh.vue.AffichageDeck;
 import com.example.appyugioh.vue.EnregistrerCarte;
 import com.example.appyugioh.vue.MainActivity;
@@ -34,7 +34,7 @@ public class ComportementMenu {
         }
         if (item.getItemId() == R.id.menu_bouton_mes_cartes)
         {
-            Intent mesCartes = new Intent(activity.getApplicationContext(), AffichageCarte.class);
+            Intent mesCartes = new Intent(activity.getApplicationContext(), AffichageMesCartes.class);
             activity.startActivity(mesCartes);
             activity.finish();
         }
