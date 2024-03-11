@@ -101,7 +101,7 @@ public class RechercheCarte extends Activity {
                 }
                 if (item.getItemId() == id.menu_bouton_mes_cartes)
                 {
-                    Intent rechercheCarte = new Intent(getApplicationContext(),AffichageCarte.class);
+                    Intent rechercheCarte = new Intent(getApplicationContext(), AffichageMesCartes.class);
                     startActivity(rechercheCarte);
                     finish();
                 }

@@ -91,7 +91,7 @@ public class MainActivity extends Activity {
                 }
                 if (item.getItemId() == R.id.menu_bouton_mes_cartes)
                 {
-                    Intent mesCartes = new Intent(getApplicationContext(),AffichageCarte.class);
+                    Intent mesCartes = new Intent(getApplicationContext(), AffichageMesCartes.class);
                     startActivity(mesCartes);
                     finish();
                 }

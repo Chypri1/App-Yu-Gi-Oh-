@@ -37,7 +37,7 @@
             android:exported="false">
 
         </activity>
-        <activity android:name=".vue.AffichageCarte"
+        <activity android:name=".vue.AffichageMesCartes"
             android:exported="false">
 
         </activity>
