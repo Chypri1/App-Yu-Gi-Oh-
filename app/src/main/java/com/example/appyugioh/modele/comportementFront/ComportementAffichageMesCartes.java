@@ -1,10 +1,14 @@
-package com.example.appyugioh.modele;
+package com.example.appyugioh.modele.comportementFront;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+
+import com.example.appyugioh.vue.AffichageUneCarte;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +61,16 @@ public class ComportementAffichageMesCartes
             Bitmap imageBitmap = BitmapFactory.decodeFile(imagePath);
             // Afficher l'image dans l'ImageView
             imageButton.setImageBitmap(imageBitmap);
+
+            imageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Rediriger l'utilisateur vers une autre page
+                    Intent affichageUneCarte = new Intent(activity, AffichageUneCarte.class); // Remplacez NouvellePage par le nom de votre classe d'activité cible
+                    activity.startActivity(affichageUneCarte);
+                    activity.finish();
+                }
+            });
 
             // Ajouter l'ImageView au layoutResultatRecherche
             layoutResultatRecherche.addView(imageButton);

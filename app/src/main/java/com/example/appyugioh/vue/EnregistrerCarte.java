@@ -1,21 +1,12 @@
 package com.example.appyugioh.vue;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.hardware.camera2.*;
 
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,25 +17,13 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import com.example.appyugioh.modele.ComportementEnregistrementCarte;
-import com.example.appyugioh.modele.ComportementMenu;
+import com.example.appyugioh.modele.comportementFront.ComportementEnregistrementCarte;
+import com.example.appyugioh.modele.comportementFront.ComportementMenu;
 import com.example.appyugioh.R;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 public class EnregistrerCarte extends Activity {

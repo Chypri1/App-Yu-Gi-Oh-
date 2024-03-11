@@ -1,4 +1,4 @@
-package com.example.appyugioh.modele;
+package com.example.appyugioh.modele.comportementFront;
 
 import android.Manifest;
 import android.app.Activity;
