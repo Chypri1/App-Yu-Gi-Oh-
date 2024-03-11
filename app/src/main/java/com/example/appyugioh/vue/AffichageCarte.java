@@ -79,7 +79,7 @@ public class AffichageCarte extends Activity {
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader bufferedReader = new BufferedReader(isr);
             StringBuilder stringBuilder = new StringBuilder();
-            String line = stringBuilder.toString();
+            String line;
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuilder.append(line);
             }

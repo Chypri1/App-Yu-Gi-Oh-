@@ -1,13 +1,16 @@
 package com.example.appyugioh.vue;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.hardware.camera2.*;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -20,11 +23,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.appyugioh.modele.ComportementMenu;
 import com.example.appyugioh.R;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 
 import org.json.JSONException;
@@ -39,6 +47,8 @@ import java.util.Date;
 
 
 public class EnregistrerCarte extends Activity {
+
+    private static final int REQUEST_CAMERA_PERMISSION = 101;
 
     private static final int RETOUR_PRENDRE_PHOTO = 1;
     protected EditText nomCarte;
@@ -101,7 +111,7 @@ public class EnregistrerCarte extends Activity {
         boutonAccesCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prendreUnePhoto();
+                demanderPermissionCamera();
             }
         });
 
@@ -110,12 +120,18 @@ public class EnregistrerCarte extends Activity {
             public void onClick(View v) {
                 try {
                     enregistrementCarte(nomCarte, nomEdition, imageCam);
+                    afficherConfirmationEnregistrementCarte();
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
             }
         });
     }
+
+    private void afficherConfirmationEnregistrementCarte() {
+        Snackbar.make(findViewById(android.R.id.content), "Carte enregistrée avec succès", Snackbar.LENGTH_SHORT).show();
+    }
+
 
     private void enregistrementCarte(EditText nomCarte, EditText nomEdition, ImageView imageCam) throws JSONException {
         String nomCarteText = nomCarte.getText().toString();
@@ -148,6 +164,7 @@ public class EnregistrerCarte extends Activity {
                         String jsonFilePath = saveJSONObjectToFile(carteJSON);
                         if (jsonFilePath != null) {
                             // L'objet JSON a été enregistré avec succès dans le fichier
+                            //TODO : pop up pour dire si oui c'est enregistré
                         } else {
                             // Gérer le cas où l'enregistrement de l'objet JSON a échoué
                         }
@@ -208,10 +225,17 @@ public class EnregistrerCarte extends Activity {
         if (frontCameraId != null) {
                     startActivityForResult(intent, RETOUR_PRENDRE_PHOTO);
                 } else {
-                    // aller dans les parametres de l'appareil pour l'activer
-                }
-            }
+                Toast.makeText(this, "Aucune application de caméra disponible", Toast.LENGTH_SHORT).show();
+                redirigerVersParametresCamera();
+        }
+    }
 
+
+    private void redirigerVersParametresCamera() {
+        Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.parse("package:" + getPackageName()));
+        startActivity(intent);
+    }
 
 
     @Override
@@ -259,6 +283,33 @@ public class EnregistrerCarte extends Activity {
             // Gérer le cas où le stockage externe n'est pas disponible
             return null;
         }
+    }
+
+    private void demanderPermissionCamera() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+        } else {
+            ouvrirCamera();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                ouvrirCamera();
+            } else {
+                // La permission a été refusée. Vous pouvez afficher un message à l'utilisateur.
+                Toast.makeText(this, "Permission de la caméra refusée", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void ouvrirCamera() {
+        // Intent pour accéder à la caméra
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        prendreUnePhoto();
     }
 }
 
