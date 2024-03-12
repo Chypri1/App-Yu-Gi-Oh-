@@ -65,12 +65,14 @@ public class ComportementAffichageMesCartes
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Rediriger l'utilisateur vers une autre page
-                    Intent affichageUneCarte = new Intent(activity, AffichageUneCarte.class); // Remplacez NouvellePage par le nom de votre classe d'activité cible
+                    // Rediriger l'utilisateur vers une autre page et passer le chemin de l'image
+                    Intent affichageUneCarte = new Intent(activity, AffichageUneCarte.class);
+                    affichageUneCarte.putExtra("imagePath", imagePath); // Passer le chemin de l'image en extra
                     activity.startActivity(affichageUneCarte);
                     activity.finish();
                 }
             });
+
 
             // Ajouter l'ImageView au layoutResultatRecherche
             layoutResultatRecherche.addView(imageButton);

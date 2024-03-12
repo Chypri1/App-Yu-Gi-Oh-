@@ -18,6 +18,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.example.appyugioh.R;
 import com.example.appyugioh.modele.metier.CarteYuGiOh;
 import com.example.appyugioh.modele.rest.AccesExterneRest;
@@ -39,12 +42,19 @@ public class RechercheDeck extends Activity {
     protected AccesExterneRest accesExterneRest;
 
     protected ComportementMenu comportementMenu;
+
+    protected DrawerLayout drawerLayout;
+
+    protected ImageButton boutonMenuDeroulant;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.recherchedeck);
 
+
         boutonRechercheDeck = findViewById(id.boutonRechercheDeck);
+        boutonMenuDeroulant = findViewById(id.menuDeroulant);
         rechercheDeck = findViewById(R.id.rechercheDeck);
         layoutResultatRecherche = findViewById(R.id.layoutResultatRecherche);
         boutonFiltre = findViewById(id.boutonFiltre);
@@ -82,6 +92,12 @@ public class RechercheDeck extends Activity {
         });
         layoutResultatRecherche.addView(cardInfoImageButton);
 
+        boutonMenuDeroulant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 

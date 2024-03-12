@@ -5,7 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.appyugioh.R;
 import com.example.appyugioh.modele.comportementFront.ComportementAffichageMesCartes;
@@ -13,6 +19,8 @@ import com.example.appyugioh.modele.comportementFront.ComportementMenu;
 import com.google.android.material.navigation.NavigationView;
 
 public class AffichageMesCartes extends Activity {
+
+    protected DrawerLayout drawerLayout;
 
     protected LinearLayout layoutResultatRecherche;
 
@@ -22,6 +30,8 @@ public class AffichageMesCartes extends Activity {
 
     protected ComportementAffichageMesCartes comportementAffichageMesCartes;
 
+    protected ImageButton boutonMenuDeroulant;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +39,11 @@ public class AffichageMesCartes extends Activity {
 
         this.comportementAffichageMesCartes = new ComportementAffichageMesCartes();
         layoutResultatRecherche = findViewById(R.id.layoutResultatRecherche);
+
+        this.drawerLayout = findViewById(R.id.drawerLayout);
+
+        this.boutonMenuDeroulant = findViewById(R.id.menuDeroulant);
+
         comportementAffichageMesCartes.afficherImagesEnregistrees(layoutResultatRecherche, this);
 
 
@@ -53,6 +68,13 @@ public class AffichageMesCartes extends Activity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 return comportementMenu.initItemMenu(item, elem1);
+            }
+        });
+
+        boutonMenuDeroulant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
             }
         });
     }

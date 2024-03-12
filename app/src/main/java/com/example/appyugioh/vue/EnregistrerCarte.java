@@ -12,10 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.appyugioh.modele.comportementFront.ComportementEnregistrementCarte;
 import com.example.appyugioh.modele.comportementFront.ComportementMenu;
@@ -31,6 +35,8 @@ public class EnregistrerCarte extends Activity {
     protected int REQUEST_CAMERA_PERMISSION = 101;
 
     protected int RETOUR_PRENDRE_PHOTO = 1;
+
+    protected DrawerLayout drawerLayout;
     protected EditText nomCarte;
 
     protected EditText nomEdition;
@@ -49,6 +55,8 @@ public class EnregistrerCarte extends Activity {
 
     protected ComportementEnregistrementCarte comportementEnregistrementCarte;
 
+    protected ImageButton boutonMenuDeroulant;
+
     protected Activity activity = this;
 
 
@@ -56,6 +64,10 @@ public class EnregistrerCarte extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.enregistrercarte);
+
+        drawerLayout = findViewById(R.id.drawerLayout);
+
+        boutonMenuDeroulant = findViewById(R.id.menuDeroulant);
 
         nomCarte = findViewById(R.id.nomCarte);
 
@@ -112,6 +124,13 @@ public class EnregistrerCarte extends Activity {
                 }
             }
         });
+
+        boutonMenuDeroulant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
     }
 
 
@@ -131,6 +150,7 @@ public class EnregistrerCarte extends Activity {
             }
         }
     }
+
 
 
 
