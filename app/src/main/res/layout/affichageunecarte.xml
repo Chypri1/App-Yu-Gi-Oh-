@@ -1,6 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewNomCarte"
+            android:layout_width="163dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="112dp"
+            android:layout_marginTop="16dp"
+            android:text="nom de la carte"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/boutonAjoutMesCartes"
+            android:layout_width="102dp"
+            android:layout_height="67dp"
+            android:layout_marginStart="291dp"
+            android:layout_marginTop="15dp"
+            android:text="+"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="411dp"
+            android:layout_height="616dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="121dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="252dp"
+                    android:layout_height="429dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/yugioh_card_back" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewPrix"
+                    android:layout_width="127dp"
+                    android:layout_height="61dp"
+                    android:layout_marginStart="267dp"
+                    android:layout_marginTop="28dp"
+                    android:text="Prix:"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/boutonListeEdition"
+                    android:layout_width="142dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="258dp"
+                    android:layout_marginTop="120dp"
+                    android:text="@string/edition"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textViewRarete"
+                    android:layout_width="137dp"
+                    android:layout_height="92dp"
+                    android:layout_marginStart="259dp"
+                    android:layout_marginTop="266dp"
+                    android:text="rareté:"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@layout/nav_menu"
+        tools:ignore="MissingConstraints" />
+</androidx.drawerlayout.widget.DrawerLayout>

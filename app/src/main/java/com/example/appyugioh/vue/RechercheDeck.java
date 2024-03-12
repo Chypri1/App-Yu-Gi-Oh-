@@ -2,6 +2,7 @@ package com.example.appyugioh.vue;
 
 import static com.example.appyugioh.R.*;
 
+import com.example.appyugioh.modele.comportementFront.ComportementMenu;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
@@ -27,15 +28,17 @@ import java.util.List;
 
 public class RechercheDeck extends Activity {
 
-    EditText rechercheDeck;
+    protected EditText rechercheDeck;
 
-    ImageButton boutonRechercheDeck;
+    protected ImageButton boutonRechercheDeck;
 
-    LinearLayout layoutResultatRecherche;
+    protected LinearLayout layoutResultatRecherche;
 
-    Button boutonFiltre;
+    protected Button boutonFiltre;
 
-    AccesExterneRest accesExterneRest;
+    protected AccesExterneRest accesExterneRest;
+
+    protected ComportementMenu comportementMenu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +60,9 @@ public class RechercheDeck extends Activity {
         MenuItem menuItem4 = menu.findItem(id.menu_bouton_mes_cartes);
         MenuItem menuItem5 = menu.findItem(id.menu_bouton_mes_decks);
 
+        this.comportementMenu = new ComportementMenu();
 
+        final Activity activity = this;
 
         ImageButton cardInfoImageButton = new ImageButton(this);
         boutonRechercheDeck.setOnClickListener(new View.OnClickListener() {
@@ -83,37 +88,7 @@ public class RechercheDeck extends Activity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                if (item.getItemId() == id.menu_bouton_accueil)
-                {
-                    Intent rechercheCarte = new Intent(getApplicationContext(),MainActivity.class);
-                    startActivity(rechercheCarte);
-                    finish();
-                }
-                if (item.getItemId() == R.id.menu_bouton_recherche_carte)
-                {
-                    Intent rechercheCarte = new Intent(getApplicationContext(),RechercheCarte.class);
-                    startActivity(rechercheCarte);
-                    finish();
-                }
-                if (item.getItemId() == id.menu_bouton_recherche_deck)
-                {
-                    Intent rechercheCarte = new Intent(getApplicationContext(),RechercheDeck.class);
-                    startActivity(rechercheCarte);
-                    finish();
-                }
-                if (item.getItemId() == id.menu_bouton_mes_cartes)
-                {
-                    Intent rechercheCarte = new Intent(getApplicationContext(), AffichageMesCartes.class);
-                    startActivity(rechercheCarte);
-                    finish();
-                }
-                if (item.getItemId() == id.menu_bouton_mes_decks)
-                {
-                    Intent rechercheCarte = new Intent(getApplicationContext(),AffichageDeck.class);
-                    startActivity(rechercheCarte);
-                    finish();
-                }
-                return true;
+                return comportementMenu.initItemMenu(item, activity);
             }
         });
     }
