@@ -39,6 +39,7 @@ public class MainActivity extends Activity {
     /*Carrousel*/
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -107,6 +108,8 @@ public class MainActivity extends Activity {
         MenuItem menuItem5 = menu.findItem(R.id.menu_bouton_mes_decks);
         MenuItem menuItem6 = menu.findItem(R.id.menu_bouton_enregistrer_carte);
 
+
+        final Activity activity = this;
 
 
         boutonRechercheCarte.setOnClickListener(new View.OnClickListener() {
