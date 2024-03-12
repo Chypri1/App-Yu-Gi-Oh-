@@ -7,7 +7,7 @@
             android:id="@+id/menu_bouton_accueil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:title="Acceuil" />
+            android:title="Accueil" />
         <item
             android:id="@+id/menu_bouton_recherche_carte"
             android:layout_width="match_parent"
