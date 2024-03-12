@@ -4,4 +4,7 @@
     <string name="nom_carte">nom de la carte</string>
     <string name="edition">édition de la carte</string>
     <string name="camera">caméra</string>
+    <string name="ouvrir_le_menu_d_roulant">Ouvrir le menu déroulant</string>
+    <string name="recherche_de_deck">Recherche de deck</string>
+    <string name="carousel_d_image">Carousel d\'image</string>
 </resources>
