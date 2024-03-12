@@ -39,7 +39,6 @@ public class MainActivity extends Activity {
     /*Carrousel*/
 
 
-    protected ComportementMenu comportementMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -109,7 +108,6 @@ public class MainActivity extends Activity {
         MenuItem menuItem5 = menu.findItem(R.id.menu_bouton_mes_decks);
         MenuItem menuItem6 = menu.findItem(R.id.menu_bouton_enregistrer_carte);
 
-        this.comportementMenu = new ComportementMenu();
 
         final Activity activity = this;
 
