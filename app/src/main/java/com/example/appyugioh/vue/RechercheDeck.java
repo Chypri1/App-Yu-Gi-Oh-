@@ -30,6 +30,7 @@ import java.util.List;
 
 
 public class RechercheDeck extends Activity {
+    protected DrawerLayout drawerLayout;
 
     protected EditText rechercheDeck;
 
@@ -42,19 +43,13 @@ public class RechercheDeck extends Activity {
     protected AccesExterneRest accesExterneRest;
 
     protected ComportementMenu comportementMenu;
-
-    protected DrawerLayout drawerLayout;
-
-    protected ImageButton boutonMenuDeroulant;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.recherchedeck);
 
-
+        drawerLayout=findViewById(id.drawerLayout);
         boutonRechercheDeck = findViewById(id.boutonRechercheDeck);
-        boutonMenuDeroulant = findViewById(id.menuDeroulant);
         rechercheDeck = findViewById(R.id.rechercheDeck);
         layoutResultatRecherche = findViewById(R.id.layoutResultatRecherche);
         boutonFiltre = findViewById(id.boutonFiltre);
@@ -92,12 +87,6 @@ public class RechercheDeck extends Activity {
         });
         layoutResultatRecherche.addView(cardInfoImageButton);
 
-        boutonMenuDeroulant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -105,6 +94,23 @@ public class RechercheDeck extends Activity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 return comportementMenu.initItemMenu(item, activity);
+            }
+        });
+
+        ImageButton boutonMenuDeroulant=findViewById(R.id.menuDeroulant);
+        boutonMenuDeroulant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+        // Configuration du geste de balayage pour ouvrir le tiroir de navigation
+        this.drawerLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
+            @Override
+            public void onSwipeRight() {
+                if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
             }
         });
     }

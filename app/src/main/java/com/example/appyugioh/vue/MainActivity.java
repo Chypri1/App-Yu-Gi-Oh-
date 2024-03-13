@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,7 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.appyugioh.R;
-import com.example.appyugioh.modele.comportementFront.ComportementMenu;
 import com.google.android.material.carousel.CarouselLayoutManager;
 import com.google.android.material.navigation.NavigationView;
 
@@ -36,7 +36,12 @@ public class MainActivity extends Activity {
     protected Button boutonRechercheDeck;
     protected NavigationView navigationView;
     protected ImageButton boutonMenuDeroulant;
-    protected ComportementMenu comportementMenu;
+
+    /*Logo*/
+    private MediaPlayer mediaPlayer;
+    private ImageView logoImageView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -52,7 +57,12 @@ public class MainActivity extends Activity {
         this.boutonMenuDeroulant = findViewById(R.id.menuDeroulant);
         /* Carrousel */
         RecyclerView recyclerView = findViewById(R.id.recycler);
+        /*Logo */
+        // Initialisation du lecteur multimédia avec votre fichier audio
+        mediaPlayer = MediaPlayer.create(this,R.raw.yugiohtransition);
 
+        // Référence à l'ImageView du logo
+        logoImageView = findViewById(R.id.logo);
 
         ArrayList<String> arrayList = new ArrayList<>();
 
@@ -106,7 +116,6 @@ public class MainActivity extends Activity {
         MenuItem menuItem5 = menu.findItem(R.id.menu_bouton_mes_decks);
         MenuItem menuItem6 = menu.findItem(R.id.menu_bouton_enregistrer_carte);
 
-        this.comportementMenu = new ComportementMenu();
 
         final Activity activity = this;
 
@@ -141,7 +150,44 @@ public class MainActivity extends Activity {
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                return comportementMenu.initItemMenu(item,activity);
+
+                if (item.getItemId() == R.id.menu_bouton_accueil)
+                {
+                    Intent rechercheCarte = new Intent(getApplicationContext(),MainActivity.class);
+                    startActivity(rechercheCarte);
+                    finish();
+                }
+                if (item.getItemId() == R.id.menu_bouton_recherche_carte)
+                {
+                    Intent rechercheCarte = new Intent(getApplicationContext(),RechercheCarte.class);
+                    startActivity(rechercheCarte);
+                    finish();
+                }
+                if (item.getItemId() == R.id.menu_bouton_recherche_deck)
+                {
+                    Intent rechercheDeck = new Intent(getApplicationContext(),RechercheDeck.class);
+                    startActivity(rechercheDeck);
+                    finish();
+                }
+                if (item.getItemId() == R.id.menu_bouton_mes_cartes)
+                {
+                    Intent mesCartes = new Intent(getApplicationContext(), AffichageMesCartes.class);
+                    startActivity(mesCartes);
+                    finish();
+                }
+                if (item.getItemId() == R.id.menu_bouton_mes_decks)
+                {
+                    Intent mesDecks = new Intent(getApplicationContext(),AffichageDeck.class);
+                    startActivity(mesDecks);
+                    finish();
+                }
+                if (item.getItemId() == R.id.menu_bouton_enregistrer_carte)
+                {
+                    Intent enregsitrerCarte = new Intent(getApplicationContext(),EnregistrerCarte.class);
+                    startActivity(enregsitrerCarte);
+                    finish();
+                }
+                return true;
             }
         });
         // Configuration du geste de balayage pour ouvrir le tiroir de navigation
@@ -153,5 +199,28 @@ public class MainActivity extends Activity {
                 }
             }
         });
+
+        // Ajout d'un OnClickListener au logo
+        logoImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleMusic(); // Appeler la méthode pour démarrer ou mettre en pause la musique
+            }
+        });
+    }
+
+    // Méthode pour démarrer ou mettre en pause la musique
+    private void toggleMusic() {
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.pause(); // Mettre en pause si déjà en cours de lecture
+        } else {
+            mediaPlayer.start(); // Démarrer la lecture
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.release(); // Libérer le lecteur
     }
 }

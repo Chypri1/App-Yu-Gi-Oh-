@@ -35,7 +35,6 @@ public class EnregistrerCarte extends Activity {
     protected int REQUEST_CAMERA_PERMISSION = 101;
 
     protected int RETOUR_PRENDRE_PHOTO = 1;
-
     protected DrawerLayout drawerLayout;
     protected EditText nomCarte;
 
@@ -55,8 +54,6 @@ public class EnregistrerCarte extends Activity {
 
     protected ComportementEnregistrementCarte comportementEnregistrementCarte;
 
-    protected ImageButton boutonMenuDeroulant;
-
     protected Activity activity = this;
 
 
@@ -65,9 +62,9 @@ public class EnregistrerCarte extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.enregistrercarte);
 
-        drawerLayout = findViewById(R.id.drawerLayout);
+        this.drawerLayout=findViewById(R.id.drawerLayout);
 
-        boutonMenuDeroulant = findViewById(R.id.menuDeroulant);
+        ImageButton boutonMenuDeroulant = findViewById(R.id.menuDeroulant);
 
         nomCarte = findViewById(R.id.nomCarte);
 
@@ -131,6 +128,16 @@ public class EnregistrerCarte extends Activity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+
+        // Configuration du geste de balayage pour ouvrir le tiroir de navigation
+        this.drawerLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
+            @Override
+            public void onSwipeRight() {
+                if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
     }
 
 
@@ -150,7 +157,6 @@ public class EnregistrerCarte extends Activity {
             }
         }
     }
-
 
 
 

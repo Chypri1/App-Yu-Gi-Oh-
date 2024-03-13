@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.core.view.GravityCompat;
@@ -21,7 +20,6 @@ import com.google.android.material.navigation.NavigationView;
 public class AffichageMesCartes extends Activity {
 
     protected DrawerLayout drawerLayout;
-
     protected LinearLayout layoutResultatRecherche;
 
     protected NavigationView navigationView;
@@ -30,20 +28,14 @@ public class AffichageMesCartes extends Activity {
 
     protected ComportementAffichageMesCartes comportementAffichageMesCartes;
 
-    protected ImageButton boutonMenuDeroulant;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.affichagemescartes);
+        this.drawerLayout=findViewById(R.id.drawerLayout);
 
         this.comportementAffichageMesCartes = new ComportementAffichageMesCartes();
         layoutResultatRecherche = findViewById(R.id.layoutResultatRecherche);
-
-        this.drawerLayout = findViewById(R.id.drawerLayout);
-
-        this.boutonMenuDeroulant = findViewById(R.id.menuDeroulant);
-
         comportementAffichageMesCartes.afficherImagesEnregistrees(layoutResultatRecherche, this);
 
 
@@ -71,10 +63,20 @@ public class AffichageMesCartes extends Activity {
             }
         });
 
+        ImageButton boutonMenuDeroulant=findViewById(R.id.menuDeroulant);
         boutonMenuDeroulant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+        // Configuration du geste de balayage pour ouvrir le tiroir de navigation
+        this.drawerLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
+            @Override
+            public void onSwipeRight() {
+                if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
             }
         });
     }
