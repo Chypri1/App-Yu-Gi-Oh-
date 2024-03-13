@@ -4,20 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/gris">
 
+    <include layout="@layout/layout_btn_menu_deroulant" />
 
     <RelativeLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="331dp"
+            android:layout_height="142dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="67dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/logo_description"
+            android:src="@drawable/yugiohlogo" />
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:importantForAccessibility="no" />
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop" />
 
         <Button
             android:id="@+id/boutonRechercheDeck"
@@ -25,6 +43,7 @@
             android:layout_height="105dp"
             android:layout_marginStart="192dp"
             android:layout_marginTop="492dp"
+            android:background="@color/rouge"
             android:text="@string/recherche_de_deck"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,20 +54,11 @@
             android:layout_height="106dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="492dp"
+            android:background="@color/rouge"
             android:text="@string/recherche_de_carte"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/menuDeroulant"
-            android:layout_width="68dp"
-            android:layout_height="61dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/hamburger_button"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/ouvrir_le_menu_d_roulant"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
@@ -56,6 +66,7 @@
             android:layout_height="256dp"
             android:layout_centerInParent="true"
             android:layout_marginTop="10sp"
+            android:background="@drawable/carousel_border"
             app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager" />
 
     </RelativeLayout>

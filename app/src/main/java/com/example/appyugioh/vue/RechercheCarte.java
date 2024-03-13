@@ -31,8 +31,8 @@ import java.util.List;
 
 
 public class RechercheCarte extends Activity {
-
     protected DrawerLayout drawerLayout;
+
     protected EditText rechercheCarte;
 
     protected ImageButton boutonRechercheCarte;
@@ -43,16 +43,13 @@ public class RechercheCarte extends Activity {
 
     protected AccesExterneRest accesExterneRest;
 
-    protected ImageButton boutonMenuDeroulant;
-
     protected ComportementMenu comportementMenu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.recherchecarte);
 
-        drawerLayout = findViewById(id.drawerLayout);
-        boutonMenuDeroulant = findViewById(id.menuDeroulant);
+        drawerLayout=findViewById(id.drawerLayout);
         boutonRechercheCarte = findViewById(id.boutonRechercheCarte);
         rechercheCarte = findViewById(R.id.rechercheCarte);
         layoutResultatRecherche = findViewById(R.id.layoutResultatRecherche);
@@ -99,10 +96,20 @@ public class RechercheCarte extends Activity {
             }
         });
 
+        ImageButton boutonMenuDeroulant=findViewById(R.id.menuDeroulant);
         boutonMenuDeroulant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+        // Configuration du geste de balayage pour ouvrir le tiroir de navigation
+        this.drawerLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
+            @Override
+            public void onSwipeRight() {
+                if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
             }
         });
     }
