@@ -45,5 +45,9 @@
             android:exported="false">
 
         </activity>
+        <activity android:name=".vue.AffichageUneCarte"
+            android:exported="false">
+
+        </activity>
     </application>
 </manifest>

@@ -67,6 +67,9 @@ public class ComportementAffichageMesCartes
                 public void onClick(View v) {
                     // Rediriger l'utilisateur vers une autre page
                     Intent affichageUneCarte = new Intent(activity, AffichageUneCarte.class); // Remplacez NouvellePage par le nom de votre classe d'activité cible
+                    affichageUneCarte.putExtra("nomCarte",nomCarte);
+                    affichageUneCarte.putExtra("nomEdition", nomEdition);
+                    affichageUneCarte.putExtra("imagePath", imagePath);
                     activity.startActivity(affichageUneCarte);
                     activity.finish();
                 }

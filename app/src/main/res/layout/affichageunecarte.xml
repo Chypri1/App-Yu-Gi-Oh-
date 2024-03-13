@@ -21,6 +21,7 @@
             android:layout_marginStart="112dp"
             android:layout_marginTop="16dp"
             android:text="nom de la carte"
+            android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,7 +58,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:id="@+id/imageView4"
+                        android:id="@+id/imageViewCarte"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
