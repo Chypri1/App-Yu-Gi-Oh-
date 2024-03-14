@@ -3,8 +3,8 @@ package com.example.appyugioh.vue;
 import static com.example.appyugioh.R.*;
 
 import com.example.appyugioh.modele.comportementFront.ComportementMenu;
+import com.example.appyugioh.modele.comportementFront.OnSwipeTouchListener;
 import com.google.android.material.navigation.NavigationView;
-import com.squareup.picasso.Picasso;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -22,11 +22,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.appyugioh.R;
-import com.example.appyugioh.modele.metier.CarteYuGiOh;
 import com.example.appyugioh.modele.rest.AccesExterneRest;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class RechercheDeck extends Activity {

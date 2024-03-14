@@ -1,4 +1,4 @@
-package com.example.appyugioh.vue;
+package com.example.appyugioh.modele.comportementFront;
 import android.content.Context;
 import android.view.GestureDetector;
 import android.view.MotionEvent;

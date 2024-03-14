@@ -141,7 +141,7 @@ ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main
 	android:name
 		ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:30:27-74
 activity#com.example.appyugioh.vue.RechercheCarte
-ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:33:9-35:20
+ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:33:9-35:24
 	android:exported
 		ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:34:13-37
 	android:name
