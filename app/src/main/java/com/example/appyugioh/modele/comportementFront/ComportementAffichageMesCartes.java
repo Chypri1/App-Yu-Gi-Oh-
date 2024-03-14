@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import com.example.appyugioh.vue.AffichageUneCarte;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,53 +35,66 @@ public class ComportementAffichageMesCartes
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuilder.append(line);
+                System.out.print(line);
             }
             bufferedReader.close();
 
-            // Convertir la chaîne JSON en un objet JSON
+            // Convertir la chaîne JSON en un tableau JSON
             String jsonString = stringBuilder.toString();
-            JSONObject jsonObject = new JSONObject(jsonString);
+            JSONArray jsonArray = new JSONArray(jsonString);
 
+            // Pour chaque carte dans le tableau JSON
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-            // TODO : faire la liste des cartes et pas une puis les afficher dans le layout
+                // Récupérer les informations de la carte
+                String nomCarte = jsonObject.getString("nomCarte");
+                String nomEdition = jsonObject.getString("nomEdition");
+                String imagePath = jsonObject.getString("imagePath");
 
-            // Récupérer les informations de la carte
-            String nomCarte = jsonObject.getString("nomCarte");
-            String nomEdition = jsonObject.getString("nomEdition");
-            String imagePath = jsonObject.getString("imagePath");
+                // Créer un bouton d'image pour afficher la carte
+                ImageButton imageButton = new ImageButton(activity);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+                imageButton.setLayoutParams(layoutParams);
 
-            // Créer un cadre ImageView pour afficher l'image
-            ImageButton imageButton = new ImageButton(activity);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            );
-            imageButton.setLayoutParams(layoutParams);
+                // Charger l'image depuis le chemin de l'image
+                Bitmap imageBitmap = BitmapFactory.decodeFile(imagePath);
 
-            // Charger l'image depuis le chemin de l'image
-            Bitmap imageBitmap = BitmapFactory.decodeFile(imagePath);
-            // Afficher l'image dans l'ImageView
-            imageButton.setImageBitmap(imageBitmap);
+                Bitmap imageBitmapResized = resizeBitmap(imageBitmap, 1.3f);
 
-            imageButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Rediriger l'utilisateur vers une autre page
-                    Intent affichageUneCarte = new Intent(activity, AffichageUneCarte.class); // Remplacez NouvellePage par le nom de votre classe d'activité cible
-                    affichageUneCarte.putExtra("nomCarte",nomCarte);
-                    affichageUneCarte.putExtra("nomEdition", nomEdition);
-                    affichageUneCarte.putExtra("imagePath", imagePath);
-                    activity.startActivity(affichageUneCarte);
-                    activity.finish();
-                }
-            });
+                // Afficher l'image dans le bouton d'image
+                imageButton.setImageBitmap(imageBitmapResized);
 
-            // Ajouter l'ImageView au layoutResultatRecherche
-            layoutResultatRecherche.addView(imageButton);
+                // Ajouter un écouteur de clic au bouton d'image
+                imageButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Rediriger l'utilisateur vers la page d'affichage de la carte
+                        Intent affichageUneCarte = new Intent(activity, AffichageUneCarte.class);
+                        affichageUneCarte.putExtra("nomCarte", nomCarte);
+                        affichageUneCarte.putExtra("nomEdition", nomEdition);
+                        affichageUneCarte.putExtra("imagePath", imagePath);
+                        activity.startActivity(affichageUneCarte);
+                        activity.finish();
+                    }
+                });
 
+                // Ajouter le bouton d'image au layoutResultatRecherche
+                layoutResultatRecherche.addView(imageButton);
+            }
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
     }
+
+    private Bitmap resizeBitmap(Bitmap originalBitmap, float scaleFactor) {
+        int newWidth = (int) (originalBitmap.getWidth() * scaleFactor);
+        int newHeight = (int) (originalBitmap.getHeight() * scaleFactor);
+        return Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, false);
+    }
+
 
 }

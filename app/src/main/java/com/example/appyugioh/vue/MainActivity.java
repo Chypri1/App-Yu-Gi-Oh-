@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.appyugioh.R;
+import com.example.appyugioh.modele.comportementFront.ComportementMenu;
 import com.google.android.material.carousel.CarouselLayoutManager;
 import com.google.android.material.navigation.NavigationView;
 
@@ -37,6 +38,7 @@ public class MainActivity extends Activity {
     protected NavigationView navigationView;
     protected ImageButton boutonMenuDeroulant;
 
+    protected ComportementMenu comportementMenu;
     /*Logo*/
     private MediaPlayer mediaPlayer;
     private ImageView logoImageView;
@@ -55,6 +57,8 @@ public class MainActivity extends Activity {
         this.boutonRechercheDeck= findViewById(R.id.boutonRechercheDeck);
 
         this.boutonMenuDeroulant = findViewById(R.id.menuDeroulant);
+
+        comportementMenu = new ComportementMenu();
         /* Carrousel */
         RecyclerView recyclerView = findViewById(R.id.recycler);
         /*Logo */
@@ -150,44 +154,7 @@ public class MainActivity extends Activity {
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                if (item.getItemId() == R.id.menu_bouton_accueil)
-                {
-                    Intent rechercheCarte = new Intent(getApplicationContext(),MainActivity.class);
-                    startActivity(rechercheCarte);
-                    finish();
-                }
-                if (item.getItemId() == R.id.menu_bouton_recherche_carte)
-                {
-                    Intent rechercheCarte = new Intent(getApplicationContext(),RechercheCarte.class);
-                    startActivity(rechercheCarte);
-                    finish();
-                }
-                if (item.getItemId() == R.id.menu_bouton_recherche_deck)
-                {
-                    Intent rechercheDeck = new Intent(getApplicationContext(),RechercheDeck.class);
-                    startActivity(rechercheDeck);
-                    finish();
-                }
-                if (item.getItemId() == R.id.menu_bouton_mes_cartes)
-                {
-                    Intent mesCartes = new Intent(getApplicationContext(), AffichageMesCartes.class);
-                    startActivity(mesCartes);
-                    finish();
-                }
-                if (item.getItemId() == R.id.menu_bouton_mes_decks)
-                {
-                    Intent mesDecks = new Intent(getApplicationContext(),AffichageDeck.class);
-                    startActivity(mesDecks);
-                    finish();
-                }
-                if (item.getItemId() == R.id.menu_bouton_enregistrer_carte)
-                {
-                    Intent enregsitrerCarte = new Intent(getApplicationContext(),EnregistrerCarte.class);
-                    startActivity(enregsitrerCarte);
-                    finish();
-                }
-                return true;
+                return comportementMenu.initItemMenu(item,activity);
             }
         });
         // Configuration du geste de balayage pour ouvrir le tiroir de navigation
