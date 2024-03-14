@@ -2,6 +2,7 @@ package com.example.appyugioh.vue;
 
 import static com.example.appyugioh.R.*;
 
+import com.example.appyugioh.controlleur.ControlleurRechercheCarte;
 import com.example.appyugioh.modele.comportementFront.ComportementMenu;
 import com.google.android.material.navigation.NavigationView;
 
@@ -32,69 +33,64 @@ public class RechercheCarte extends Activity {
 
     protected LinearLayout layoutResultatRecherche;
 
+    protected NavigationView navigationView;
+
+    protected ControlleurRechercheCarte controlleurRechercheCarte;
+
     protected Button boutonFiltre;
 
-    protected AccesExterneRest accesExterneRest;
+    public DrawerLayout getDrawerLayout() {
+        return drawerLayout;
+    }
 
-    protected ComportementMenu comportementMenu;
+    public void setDrawerLayout(DrawerLayout drawerLayout) {
+        this.drawerLayout = drawerLayout;
+    }
+
+    public EditText getRechercheCarte() {
+        return rechercheCarte;
+    }
+
+    public void setRechercheCarte(EditText rechercheCarte) {
+        this.rechercheCarte = rechercheCarte;
+    }
+
+    public ImageButton getBoutonRechercheCarte() {
+        return boutonRechercheCarte;
+    }
+
+    public void setBoutonRechercheCarte(ImageButton boutonRechercheCarte) {
+        this.boutonRechercheCarte = boutonRechercheCarte;
+    }
+
+    public LinearLayout getLayoutResultatRecherche() {
+        return layoutResultatRecherche;
+    }
+
+    public void setLayoutResultatRecherche(LinearLayout layoutResultatRecherche) {
+        this.layoutResultatRecherche = layoutResultatRecherche;
+    }
+
+    public Button getBoutonFiltre() {
+        return boutonFiltre;
+    }
+
+    public void setBoutonFiltre(Button boutonFiltre) {
+        this.boutonFiltre = boutonFiltre;
+    }
+
+    public NavigationView getNavigationView() {
+        return navigationView;
+    }
+
+    public void setNavigationView(NavigationView navigationView) {
+        this.navigationView = navigationView;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.recherchecarte);
-
-        drawerLayout=findViewById(id.drawerLayout);
-        boutonRechercheCarte = findViewById(id.boutonRechercheCarte);
-        rechercheCarte = findViewById(R.id.rechercheCarte);
-        layoutResultatRecherche = findViewById(R.id.layoutResultatRecherche);
-        boutonFiltre = findViewById(id.boutonFiltre);
-        accesExterneRest = new AccesExterneRest();
-
-        /* créer une classe pour le menu en lui même */
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        Menu menu = navigationView.getMenu();
-
-        MenuItem menuItem1 = menu.findItem(R.id.menu_bouton_recherche_carte);
-        MenuItem menuItem2 = menu.findItem(R.id.menu_bouton_accueil);
-        MenuItem menuItem3 = menu.findItem(id.menu_bouton_recherche_deck);
-        MenuItem menuItem4 = menu.findItem(id.menu_bouton_mes_cartes);
-        MenuItem menuItem5 = menu.findItem(id.menu_bouton_mes_decks);
-
-        this.comportementMenu = new ComportementMenu();
-
-        final Activity activity = this;
-
-        boutonRechercheCarte.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                layoutResultatRecherche.removeAllViews();
-                accesExterneRest.appRest(rechercheCarte.getText().toString(), layoutResultatRecherche,activity);
-            }
-        });
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                return comportementMenu.initItemMenu(item, activity);
-            }
-        });
-
-        ImageButton boutonMenuDeroulant=findViewById(R.id.menuDeroulant);
-        boutonMenuDeroulant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-        // Configuration du geste de balayage pour ouvrir le tiroir de navigation
-        this.drawerLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
-            @Override
-            public void onSwipeRight() {
-                if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    drawerLayout.openDrawer(GravityCompat.START);
-                }
-            }
-        });
+        controlleurRechercheCarte = new ControlleurRechercheCarte(this);
     }
 }
