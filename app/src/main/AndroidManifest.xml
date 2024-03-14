@@ -32,7 +32,7 @@
         </activity>
         <activity android:name=".vue.RechercheCarte"
             android:exported="false">
-        </activity>
+            </activity>
         <activity android:name=".vue.RechercheDeck"
             android:exported="false">
 

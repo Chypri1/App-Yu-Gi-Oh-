@@ -1,5 +1,6 @@
 package com.example.appyugioh.vue;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,6 +29,7 @@ public class AffichageMesCartes extends Activity {
 
     protected ComportementAffichageMesCartes comportementAffichageMesCartes;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

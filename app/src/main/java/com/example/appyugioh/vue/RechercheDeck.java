@@ -6,6 +6,7 @@ import com.example.appyugioh.modele.comportementFront.ComportementMenu;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -42,6 +43,7 @@ public class RechercheDeck extends Activity {
     protected AccesExterneRest accesExterneRest;
 
     protected ComportementMenu comportementMenu;
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +54,7 @@ public class RechercheDeck extends Activity {
         rechercheDeck = findViewById(R.id.rechercheDeck);
         layoutResultatRecherche = findViewById(R.id.layoutResultatRecherche);
         boutonFiltre = findViewById(id.boutonFiltre);
-        accesExterneRest = new AccesExterneRest();
+        //accesExterneRest = new AccesExterneRest();
 
         /* créer une classe pour le menu en lui même */
         NavigationView navigationView = findViewById(R.id.nav_view);

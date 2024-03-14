@@ -1,5 +1,6 @@
 package com.example.appyugioh.vue;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.core.view.GravityCompat;
@@ -23,6 +25,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class AffichageUneCarte extends Activity {
     protected DrawerLayout drawerLayout;
+    protected ScrollView scrollView;
     protected ImageButton boutonMenuDeroulant;
     protected TextView texteViewNomCarte;
     protected ImageView imageViewImage;
@@ -33,6 +36,7 @@ public class AffichageUneCarte extends Activity {
 
     protected ComportementAffichageMesCartes comportementAffichageMesCartes;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +45,7 @@ public class AffichageUneCarte extends Activity {
         comportementMenu = new ComportementMenu();
         comportementAffichageMesCartes = new ComportementAffichageMesCartes();
         this.drawerLayout = findViewById(R.id.drawerLayout);
+        scrollView= findViewById(R.id.scrollView);
         boutonMenuDeroulant = findViewById(R.id.menuDeroulant);
 
         texteViewNomCarte = findViewById(R.id.textViewNomCarte);
@@ -71,6 +76,16 @@ public class AffichageUneCarte extends Activity {
         });
 
 
+
+        this.scrollView.setOnTouchListener(new OnSwipeTouchListener(this) {
+            @Override
+            public void onSwipeRight() {
+                if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.openDrawer(GravityCompat.START);
+
+                }
+            }
+        });
 
         this.drawerLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
             @Override
