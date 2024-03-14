@@ -7,9 +7,6 @@ import android.graphics.Bitmap;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -18,16 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.appyugioh.modele.comportementFront.ComportementEnregistrementCarte;
-import com.example.appyugioh.modele.comportementFront.ComportementMenu;
 import com.example.appyugioh.R;
+import com.example.appyugioh.controlleur.ControlleurEnregistrerCarte;
 import com.google.android.material.navigation.NavigationView;
-
-
-import org.json.JSONException;
 
 
 public class EnregistrerCarte extends Activity {
@@ -40,6 +32,8 @@ public class EnregistrerCarte extends Activity {
 
     protected EditText nomEdition;
 
+    protected ImageButton boutonMenuDeroulant;
+
     protected LinearLayout layoutResultatCam;
 
     protected ImageView imageCam;
@@ -50,93 +44,102 @@ public class EnregistrerCarte extends Activity {
 
     protected NavigationView navigationView;
 
-    protected ComportementMenu comportementMenu;
+    protected ControlleurEnregistrerCarte controlleurEnregistrerCarte;
 
-    protected ComportementEnregistrementCarte comportementEnregistrementCarte;
 
-    protected Activity activity = this;
+    public int getREQUEST_CAMERA_PERMISSION() {
+        return REQUEST_CAMERA_PERMISSION;
+    }
 
+    public void setREQUEST_CAMERA_PERMISSION(int REQUEST_CAMERA_PERMISSION) {
+        this.REQUEST_CAMERA_PERMISSION = REQUEST_CAMERA_PERMISSION;
+    }
+
+    public int getRETOUR_PRENDRE_PHOTO() {
+        return RETOUR_PRENDRE_PHOTO;
+    }
+
+    public void setRETOUR_PRENDRE_PHOTO(int RETOUR_PRENDRE_PHOTO) {
+        this.RETOUR_PRENDRE_PHOTO = RETOUR_PRENDRE_PHOTO;
+    }
+
+    public DrawerLayout getDrawerLayout() {
+        return drawerLayout;
+    }
+
+    public void setDrawerLayout(DrawerLayout drawerLayout) {
+        this.drawerLayout = drawerLayout;
+    }
+
+    public EditText getNomCarte() {
+        return nomCarte;
+    }
+
+    public void setNomCarte(EditText nomCarte) {
+        this.nomCarte = nomCarte;
+    }
+
+    public EditText getNomEdition() {
+        return nomEdition;
+    }
+
+    public void setNomEdition(EditText nomEdition) {
+        this.nomEdition = nomEdition;
+    }
+
+    public LinearLayout getLayoutResultatCam() {
+        return layoutResultatCam;
+    }
+
+    public void setLayoutResultatCam(LinearLayout layoutResultatCam) {
+        this.layoutResultatCam = layoutResultatCam;
+    }
+
+    public ImageView getImageCam() {
+        return imageCam;
+    }
+
+    public void setImageCam(ImageView imageCam) {
+        this.imageCam = imageCam;
+    }
+
+    public Button getBoutonAccesCamera() {
+        return boutonAccesCamera;
+    }
+
+    public void setBoutonAccesCamera(Button boutonAccesCamera) {
+        this.boutonAccesCamera = boutonAccesCamera;
+    }
+
+    public Button getBoutonEnregistrementCarte() {
+        return boutonEnregistrementCarte;
+    }
+
+    public void setBoutonEnregistrementCarte(Button boutonEnregistrementCarte) {
+        this.boutonEnregistrementCarte = boutonEnregistrementCarte;
+    }
+
+    public NavigationView getNavigationView() {
+        return navigationView;
+    }
+
+    public void setNavigationView(NavigationView navigationView) {
+        this.navigationView = navigationView;
+    }
+
+    public ImageButton getBoutonMenuDeroulant() {
+        return boutonMenuDeroulant;
+    }
+
+    public void setBoutonMenuDeroulant(ImageButton boutonMenuDeroulant) {
+        this.boutonMenuDeroulant = boutonMenuDeroulant;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.enregistrercarte);
-
-        this.drawerLayout=findViewById(R.id.drawerLayout);
-
-        ImageButton boutonMenuDeroulant = findViewById(R.id.menuDeroulant);
-
-        nomCarte = findViewById(R.id.nomCarte);
-
-        nomEdition = findViewById(R.id.nomEdition);
-
-        layoutResultatCam = findViewById(R.id.layoutResultatCam);
-
-        imageCam = findViewById(R.id.imageCam);
-
-        boutonAccesCamera = findViewById(R.id.boutonAccesCamera);
-
-        boutonEnregistrementCarte = findViewById(R.id.boutonEnregistrementCarte);
-
-        this.navigationView = findViewById(R.id.nav_view);
-        Menu menu = navigationView.getMenu();
-
-        this.comportementMenu = new ComportementMenu();
-
-        this.comportementEnregistrementCarte = new ComportementEnregistrementCarte();
-
-        MenuItem menuItem1 = menu.findItem(R.id.menu_bouton_recherche_carte);
-        MenuItem menuItem2 = menu.findItem(R.id.menu_bouton_accueil);
-        MenuItem menuItem3 = menu.findItem(R.id.menu_bouton_recherche_deck);
-        MenuItem menuItem4 = menu.findItem(R.id.menu_bouton_mes_cartes);
-        MenuItem menuItem5 = menu.findItem(R.id.menu_bouton_mes_decks);
-        MenuItem menuItem6 = menu.findItem(R.id.menu_bouton_enregistrer_carte);
-
-
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                return comportementMenu.initItemMenu(item, activity);
-            }
-        });
-
-        boutonAccesCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                comportementEnregistrementCarte.demanderPermissionCamera(activity);
-            }
-        });
-
-        boutonEnregistrementCarte.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    comportementEnregistrementCarte.enregistrementCarte(nomCarte, nomEdition, imageCam,activity);
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-        boutonMenuDeroulant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-
-        // Configuration du geste de balayage pour ouvrir le tiroir de navigation
-        this.drawerLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
-            @Override
-            public void onSwipeRight() {
-                if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    drawerLayout.openDrawer(GravityCompat.START);
-                }
-            }
-        });
+        controlleurEnregistrerCarte = new ControlleurEnregistrerCarte(this);
     }
 
 
@@ -163,16 +166,8 @@ public class EnregistrerCarte extends Activity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CAMERA_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                comportementEnregistrementCarte.ouvrirCamera(activity);
-            } else {
-                // La permission a été refusée. Vous pouvez afficher un message à l'utilisateur.
-                Toast.makeText(this, "Permission de la caméra refusée", Toast.LENGTH_SHORT).show();
-            }
-        }
+        controlleurEnregistrerCarte.retourPermission(requestCode, permissions,grantResults);
     }
-
 }
 
 
