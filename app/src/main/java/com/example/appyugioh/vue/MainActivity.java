@@ -1,35 +1,20 @@
 package com.example.appyugioh.vue;
 
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.appyugioh.R;
 import com.example.appyugioh.controlleur.ControlleurMainActivity;
-import com.example.appyugioh.modele.comportementFront.ComportementMenu;
-import com.google.android.material.carousel.CarouselLayoutManager;
+import com.example.appyugioh.modele.comportementFront.ImageAdapter;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 

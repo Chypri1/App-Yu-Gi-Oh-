@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.appyugioh.modele.comportementFront.OnSwipeTouchListener;
+
 public class AffichageDeck extends Activity {
 
     protected DrawerLayout drawerLayout;

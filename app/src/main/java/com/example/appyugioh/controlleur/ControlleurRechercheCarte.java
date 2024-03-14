@@ -1,6 +1,5 @@
 package com.example.appyugioh.controlleur;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +11,7 @@ import androidx.core.view.GravityCompat;
 import com.example.appyugioh.R;
 import com.example.appyugioh.modele.comportementFront.ComportementMenu;
 import com.example.appyugioh.modele.rest.AccesExterneRest;
-import com.example.appyugioh.vue.OnSwipeTouchListener;
+import com.example.appyugioh.modele.comportementFront.OnSwipeTouchListener;
 import com.example.appyugioh.vue.RechercheCarte;
 import com.google.android.material.navigation.NavigationView;
 
