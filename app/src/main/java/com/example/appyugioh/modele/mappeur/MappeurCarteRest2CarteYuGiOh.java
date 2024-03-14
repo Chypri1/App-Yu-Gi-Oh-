@@ -11,17 +11,13 @@ import java.util.List;
 
 public class MappeurCarteRest2CarteYuGiOh {
 
-    public List<CarteYuGiOh> mapperListeCarteRest2ListeCarteYuGiOh(List<JSONArray> listeCarteRest) throws JSONException {
-        List<CarteYuGiOh> listeCarteYuGiOh = new ArrayList();
+    public List<CarteYuGiOh> mapperListeCarteRest2ListeCarteYuGiOh(JSONArray response) throws JSONException {
+        List<CarteYuGiOh> listeCarteYuGiOh = new ArrayList<>();
 
-        for (JSONArray carteRest:listeCarteRest)
-        {
-            for (int i = 0; i < carteRest.length(); i++)
-            {
-                CarteYuGiOh carteYuGiOh = new CarteYuGiOh();
-                carteYuGiOh = this.mapperCarteRest2CarteYuGiOh(carteRest.getJSONObject(i));
-                listeCarteYuGiOh.add(carteYuGiOh);
-            }
+        for (int i = 0; i < response.length(); i++) {
+            JSONObject carteRest = response.getJSONObject(i);
+            CarteYuGiOh carteYuGiOh = mapperCarteRest2CarteYuGiOh(carteRest);
+            listeCarteYuGiOh.add(carteYuGiOh);
         }
 
         return listeCarteYuGiOh;
@@ -29,19 +25,25 @@ public class MappeurCarteRest2CarteYuGiOh {
 
     public CarteYuGiOh mapperCarteRest2CarteYuGiOh(JSONObject carteRest) throws JSONException {
         CarteYuGiOh carteYuGiOh = new CarteYuGiOh();
-
-        carteYuGiOh.setArchetype( carteRest.getString("archetype"));
-        carteYuGiOh.setAttaque( carteRest.getInt("atk"));
-        carteYuGiOh.setAttribut( carteRest.getString("attribute"));
-        carteYuGiOh.setDefense( carteRest.getInt("def"));
+        carteYuGiOh.setType(carteRest.getString("type"));
+        /*if(carteYuGiOh.getType().equals("Spell Card"))
+        carteYuGiOh.setArchetype(carteRest.getString("archetype"));
+        carteYuGiOh.setAttaque(carteRest.optInt("atk", 0));
+        carteYuGiOh.setAttribut(carteRest.getString("attribute"));
+        carteYuGiOh.setDefense(carteRest.optInt("def", 0));
         carteYuGiOh.setDesc(carteRest.getString("desc"));
-        carteYuGiOh.setNiveau(carteRest.getInt("level"));
+        carteYuGiOh.setNiveau(carteRest.optInt("level", 0));
         carteYuGiOh.setNom(carteRest.getString("name"));
         carteYuGiOh.setRace(carteRest.getString("race"));
-        carteYuGiOh.setType(carteRest.getString("type"));
-        // TODO: mapper les editions
-        carteYuGiOh.setLienImage(carteRest.getJSONArray("card_images").getJSONObject(0).getString("image_url"));
+*/
+
+        // Gérer les images
+        JSONArray cardImages = carteRest.getJSONArray("card_images");
+        if (cardImages.length() > 0) {
+            carteYuGiOh.setLienImage(cardImages.getJSONObject(0).getString("image_url"));
+        }
 
         return carteYuGiOh;
     }
+
 }

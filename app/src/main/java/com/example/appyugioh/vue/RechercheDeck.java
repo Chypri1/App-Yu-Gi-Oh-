@@ -7,7 +7,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.Menu;
@@ -69,23 +68,15 @@ public class RechercheDeck extends Activity {
 
         final Activity activity = this;
 
-        ImageButton cardInfoImageButton = new ImageButton(this);
         boutonRechercheDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<CarteYuGiOh> resultat = new ArrayList<>();
-                resultat = accesExterneRest.appeRest(rechercheDeck.getText().toString());
-
-                // intégration dans l'interface
-                for (CarteYuGiOh carteYuGiOh:resultat)
-                {
-                    Picasso.get().load(carteYuGiOh.getLienImage()).into(cardInfoImageButton);
-
-                }
+                layoutResultatRecherche.removeAllViews();
+                accesExterneRest.appRest(rechercheDeck.getText().toString(),layoutResultatRecherche,activity);
 
             }
         });
-        layoutResultatRecherche.addView(cardInfoImageButton);
+
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

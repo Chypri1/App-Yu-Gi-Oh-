@@ -2,13 +2,10 @@ package com.example.appyugioh.vue;
 
 import static com.example.appyugioh.R.*;
 
-import com.example.appyugioh.modele.comportementFront.ComportementEnregistrementCarte;
 import com.example.appyugioh.modele.comportementFront.ComportementMenu;
 import com.google.android.material.navigation.NavigationView;
-import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.Menu;
@@ -23,11 +20,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.appyugioh.R;
-import com.example.appyugioh.modele.metier.CarteYuGiOh;
 import com.example.appyugioh.modele.rest.AccesExterneRest;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class RechercheCarte extends Activity {
@@ -70,20 +63,11 @@ public class RechercheCarte extends Activity {
 
         final Activity activity = this;
 
-        ImageButton cardInfoImageButton = new ImageButton(this);
         boutonRechercheCarte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<CarteYuGiOh> resultat = new ArrayList<>();
-                resultat = accesExterneRest.appeRest(rechercheCarte.getText().toString());
-
-                // intégration dans l'interface
-                for (CarteYuGiOh carteYuGiOh:resultat)
-                {
-                    Picasso.get().load(carteYuGiOh.getLienImage()).into(cardInfoImageButton);
-
-                }
-
+                layoutResultatRecherche.removeAllViews();
+                accesExterneRest.appRest(rechercheCarte.getText().toString(), layoutResultatRecherche,activity);
             }
         });
 
