@@ -115,7 +115,6 @@ public class EnregistrerCarte extends Activity {
             public void onClick(View v) {
                 try {
                     comportementEnregistrementCarte.enregistrementCarte(nomCarte, nomEdition, imageCam,activity);
-                    comportementEnregistrementCarte.afficherConfirmationEnregistrementCarte(activity);
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }

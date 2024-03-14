@@ -25,15 +25,20 @@ import androidx.core.content.ContextCompat;
 import com.example.appyugioh.R;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class ComportementEnregistrementCarte {
 
@@ -43,6 +48,10 @@ public class ComportementEnregistrementCarte {
 
     public void afficherConfirmationEnregistrementCarte(Activity activity) {
         Snackbar.make(activity.findViewById(android.R.id.content), "Carte enregistrée avec succès", Snackbar.LENGTH_SHORT).show();
+    }
+
+    public void afficherNonEnregistrementCarte(Activity activity) {
+        Snackbar.make(activity.findViewById(android.R.id.content), "Carte non enregistrée", Snackbar.LENGTH_SHORT).show();
     }
 
 
@@ -76,37 +85,66 @@ public class ComportementEnregistrementCarte {
                         // Enregistrer l'objet JSON dans un fichier
                         String jsonFilePath = saveJSONObjectToFile(carteJSON,activity);
                         if (jsonFilePath != null) {
-                            // L'objet JSON a été enregistré avec succès dans le fichier
-                            //TODO : pop up pour dire si oui c'est enregistré
+                            afficherConfirmationEnregistrementCarte(activity);
                         } else {
-                            // Gérer le cas où l'enregistrement de l'objet JSON a échoué
+                            afficherNonEnregistrementCarte(activity);
                         }
                     } else {
-                        // Gérer le cas où l'enregistrement de l'image a échoué
+                        afficherNonEnregistrementCarte(activity);
                     }
                 }
             }
         } else {
-            // Gérer le cas où le nom de la carte ou l'édition est vide ou égal à la valeur par défaut
+            afficherNonEnregistrementCarte(activity);
         }
     }
 
     // Méthode pour enregistrer un objet JSON dans un fichier
-    private String saveJSONObjectToFile(JSONObject jsonObject,Activity activity) {
+    private String saveJSONObjectToFile(JSONObject jsonObject, Activity activity) {
         try {
             // Créer un fichier dans le répertoire des fichiers de l'application
             File jsonFile = new File(activity.getFilesDir(), "carte.json");
+            JSONArray jsonArray;
+            String jsonString;
+
+            // Vérifier si le fichier JSON existe déjà
+            if (jsonFile.exists()) {
+                // Lire le contenu du fichier JSON existant
+                FileInputStream fis = new FileInputStream(jsonFile);
+                InputStreamReader isr = new InputStreamReader(fis);
+                BufferedReader bufferedReader = new BufferedReader(isr);
+                StringBuilder stringBuilder = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line);
+                }
+                bufferedReader.close();
+
+                // Convertir la chaîne JSON en un tableau JSON
+                jsonString = stringBuilder.toString();
+                jsonArray = new JSONArray(jsonString);
+            } else {
+                // Créer un nouveau tableau JSON
+                jsonArray = new JSONArray();
+            }
+
+            // Ajouter le nouvel objet JSON au tableau JSON
+            jsonArray.put(jsonObject);
+
+            // Écrire le tableau JSON dans le fichier
             FileWriter fileWriter = new FileWriter(jsonFile);
-            // Écrire l'objet JSON dans le fichier
-            fileWriter.write(jsonObject.toString());
+            fileWriter.write(jsonArray.toString(4)); // Indentation de 4 espaces pour une meilleure lisibilité
             fileWriter.close();
+
             return jsonFile.getAbsolutePath();
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
             // Gérer l'exception si l'enregistrement de l'objet JSON dans le fichier échoue
             return null;
         }
     }
+
+
 
 
     private void prendreUnePhoto(Activity activity) {
