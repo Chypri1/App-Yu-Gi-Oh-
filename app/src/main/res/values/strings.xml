@@ -8,4 +8,12 @@
     <string name="recherche_de_deck">Recherche de deck</string>
     <string name="carousel_d_image">Carousel d\'image</string>
     <string name="logo_description" />
+    <string name="nom_de_la_carte">nom de la carte</string>
+    <string name="plus">+</string>
+    <string name="rarete">rareté:</string>
+    <string name="nextbouton">Bouton suivant</string>
+    <string name="bouton_pr_c_dent">Bouton précédent</string>
+    <string name="next"><![CDATA[>]]></string>
+    <string name="previous"><![CDATA[<]]></string>
+    <string name="nom_Carte">nom Carte</string>
 </resources>

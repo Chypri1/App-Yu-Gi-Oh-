@@ -1,5 +1,6 @@
 package com.example.appyugioh.vue;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ public class AffichageDeck extends Activity {
 
     protected DrawerLayout drawerLayout;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 

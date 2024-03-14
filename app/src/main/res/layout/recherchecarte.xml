@@ -16,23 +16,27 @@
 
         <EditText
             android:id="@+id/rechercheCarte"
-            android:layout_width="278dp"
-            android:layout_height="73dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="50dp"
+            android:layout_width="248dp"
+            android:layout_height="61dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="48dp"
             android:ems="10"
             android:inputType="text"
-            android:text="nom Carte"
+            android:text="@string/nom_Carte"
+            app:layout_constraintEnd_toStartOf="@+id/boutonRechercheCarte"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="InvalidId" />
 
         <ScrollView
-            android:layout_width="416dp"
-            android:layout_height="491dp"
+            android:id="@+id/scrollViewRecherche"
+            android:layout_width="410dp"
+            android:layout_height="431dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/boutonFiltre"
-            tools:layout_editor_absoluteX="0dp"
-            tools:ignore="MissingConstraints">
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="-3dp">
 
             <LinearLayout
                 android:id="@+id/layoutResultatRecherche"
@@ -48,9 +52,9 @@
             android:id="@+id/boutonFiltre"
             android:layout_width="401dp"
             android:layout_height="97dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="147dp"
+            android:layout_marginTop="144dp"
             android:text="FILTRE"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,11 +62,45 @@
             android:id="@+id/boutonRechercheCarte"
             android:layout_width="71dp"
             android:layout_height="66dp"
-            android:layout_marginStart="322dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="48dp"
+            android:contentDescription="@string/recherche_de_carte"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@id/rechercheCarte"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_zoom" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/nextButton"
+            android:layout_width="65dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="430dp"
+            android:contentDescription="@string/bouton_pr_c_dent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.676"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/scrollView2"
+            app:layout_constraintVertical_bias="0.555"
+            android:visibility="gone"
+            android:text="@string/next"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/previousButton"
+            android:layout_width="65dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="425dp"
+            android:contentDescription="@string/nextbouton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.367"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/scrollView2"
+            app:layout_constraintVertical_bias="0.526"
+            android:visibility="gone"
+            android:text="@string/previous"
+            tools:ignore="MissingConstraints,UnknownId" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

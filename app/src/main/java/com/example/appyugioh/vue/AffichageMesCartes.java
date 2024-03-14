@@ -1,5 +1,6 @@
 package com.example.appyugioh.vue;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,6 +29,7 @@ public class AffichageMesCartes extends Activity {
     protected ComportementMenu comportementMenu;
 
     protected ComportementAffichageMesCartes comportementAffichageMesCartes;
+
 
     protected ControlleurAffichageMesCartes controlleurAffichageMesCartes;
 
@@ -70,6 +72,9 @@ public class AffichageMesCartes extends Activity {
     public void setComportementAffichageMesCartes(ComportementAffichageMesCartes comportementAffichageMesCartes) {
         this.comportementAffichageMesCartes = comportementAffichageMesCartes;
     }
+
+
+    @SuppressLint("ClickableViewAccessibility")
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

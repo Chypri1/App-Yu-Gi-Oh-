@@ -106,6 +106,7 @@ public class MainActivity extends Activity {
         this.adapter = adapter;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
