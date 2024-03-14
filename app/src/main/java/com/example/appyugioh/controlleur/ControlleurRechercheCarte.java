@@ -63,6 +63,8 @@ public class ControlleurRechercheCarte {
         activite.setRechercheCarte( activite.findViewById(R.id.rechercheCarte));
         activite.setLayoutResultatRecherche(activite.findViewById(R.id.layoutResultatRecherche));
         activite.setBoutonFiltre(activite.findViewById(R.id.boutonFiltre));
+        activite.setBtn_prev(activite.findViewById(R.id.previousButton));
+        activite.setBtn_next(activite.findViewById(R.id.nextButton));
 
         activite.setNavigationView(activite.findViewById(R.id.nav_view));
         Menu menu = activite.getNavigationView().getMenu();
@@ -72,14 +74,12 @@ public class ControlleurRechercheCarte {
         MenuItem menuItem4 = menu.findItem(R.id.menu_bouton_mes_cartes);
         MenuItem menuItem5 = menu.findItem(R.id.menu_bouton_mes_decks);
 
-
+        this.accesExterneRest = new AccesExterneRest(activite.getBtn_prev(),activite.getBtn_next(),activite.findViewById(R.id.scrollViewRecherche));
     }
 
 
     public void initialiseComportement()
     {
-        this.comportementMenu = new ComportementMenu();
-        this.accesExterneRest = new AccesExterneRest();
     }
 
     public void observateur()
@@ -116,6 +116,22 @@ public class ControlleurRechercheCarte {
             public void onSwipeRight() {
                 if (!activite.getDrawerLayout().isDrawerOpen(GravityCompat.START)) {
                     activite.getDrawerLayout().openDrawer(GravityCompat.START);
+                }
+            }
+        });
+
+        activite.getRechercheCarte().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                // Vérifiez si l'EditText a le focus
+                if (hasFocus) {
+                    // Si oui, effacez le texte par défaut
+                    activite.getRechercheCarte().getText().clear();
+                } else {
+                    // Si non, réinitialisez le texte par défaut si le champ est vide
+                    if (activite.getRechercheCarte().getText().toString().isEmpty()) {
+                        activite.getRechercheCarte().setText("nom Carte");
+                    }
                 }
             }
         });

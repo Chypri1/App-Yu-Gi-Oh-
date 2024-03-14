@@ -2,7 +2,9 @@ package com.example.appyugioh.vue;
 
 import static com.example.appyugioh.R.*;
 
+import com.example.appyugioh.controlleur.ControlleurRechercheCarte;
 import com.example.appyugioh.modele.comportementFront.ComportementMenu;
+import com.example.appyugioh.modele.comportementFront.OnSwipeTouchListener;
 import com.google.android.material.navigation.NavigationView;
 
 import android.annotation.SuppressLint;
@@ -35,88 +37,99 @@ public class RechercheCarte extends Activity {
 
     protected Button boutonFiltre;
 
+    protected NavigationView navigationView;
+
     protected AccesExterneRest accesExterneRest;
     protected Button btn_prev;
     protected Button btn_next;
 
-    protected ComportementMenu comportementMenu;
+    protected ControlleurRechercheCarte controlleurRechercheCarte;
+
+    public NavigationView getNavigationView() {
+        return navigationView;
+    }
+
+    public void setNavigationView(NavigationView navigationView) {
+        this.navigationView = navigationView;
+    }
+
+    public DrawerLayout getDrawerLayout() {
+        return drawerLayout;
+    }
+
+    public void setDrawerLayout(DrawerLayout drawerLayout) {
+        this.drawerLayout = drawerLayout;
+    }
+
+    public EditText getRechercheCarte() {
+        return rechercheCarte;
+    }
+
+    public void setRechercheCarte(EditText rechercheCarte) {
+        this.rechercheCarte = rechercheCarte;
+    }
+
+    public ImageButton getBoutonRechercheCarte() {
+        return boutonRechercheCarte;
+    }
+
+    public void setBoutonRechercheCarte(ImageButton boutonRechercheCarte) {
+        this.boutonRechercheCarte = boutonRechercheCarte;
+    }
+
+    public LinearLayout getLayoutResultatRecherche() {
+        return layoutResultatRecherche;
+    }
+
+    public void setLayoutResultatRecherche(LinearLayout layoutResultatRecherche) {
+        this.layoutResultatRecherche = layoutResultatRecherche;
+    }
+
+    public Button getBoutonFiltre() {
+        return boutonFiltre;
+    }
+
+    public void setBoutonFiltre(Button boutonFiltre) {
+        this.boutonFiltre = boutonFiltre;
+    }
+
+    public AccesExterneRest getAccesExterneRest() {
+        return accesExterneRest;
+    }
+
+    public void setAccesExterneRest(AccesExterneRest accesExterneRest) {
+        this.accesExterneRest = accesExterneRest;
+    }
+
+    public Button getBtn_prev() {
+        return btn_prev;
+    }
+
+    public void setBtn_prev(Button btn_prev) {
+        this.btn_prev = btn_prev;
+    }
+
+    public Button getBtn_next() {
+        return btn_next;
+    }
+
+    public void setBtn_next(Button btn_next) {
+        this.btn_next = btn_next;
+    }
+
+    public ControlleurRechercheCarte getControlleurRechercheCarte() {
+        return controlleurRechercheCarte;
+    }
+
+    public void setControlleurRechercheCarte(ControlleurRechercheCarte controlleurRechercheCarte) {
+        this.controlleurRechercheCarte = controlleurRechercheCarte;
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.recherchecarte);
-
-        drawerLayout=findViewById(id.drawerLayout);
-        boutonRechercheCarte = findViewById(id.boutonRechercheCarte);
-        rechercheCarte = findViewById(R.id.rechercheCarte);
-        layoutResultatRecherche = findViewById(R.id.layoutResultatRecherche);
-        boutonFiltre = findViewById(id.boutonFiltre);
-        btn_next=findViewById(id.nextButton);
-        btn_prev=findViewById(id.previousButton);
-        accesExterneRest = new AccesExterneRest(btn_prev,btn_next,findViewById(id.scrollViewRecherche));
-
-        /* créer une classe pour le menu en lui même */
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        Menu menu = navigationView.getMenu();
-
-        MenuItem menuItem1 = menu.findItem(R.id.menu_bouton_recherche_carte);
-        MenuItem menuItem2 = menu.findItem(R.id.menu_bouton_accueil);
-        MenuItem menuItem3 = menu.findItem(id.menu_bouton_recherche_deck);
-        MenuItem menuItem4 = menu.findItem(id.menu_bouton_mes_cartes);
-        MenuItem menuItem5 = menu.findItem(id.menu_bouton_mes_decks);
-
-        this.comportementMenu = new ComportementMenu();
-
-        final Activity activity = this;
-
-        boutonRechercheCarte.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                layoutResultatRecherche.removeAllViews();
-                accesExterneRest.appRest(rechercheCarte.getText().toString(), layoutResultatRecherche,activity);
-            }
-        });
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                return comportementMenu.initItemMenu(item, activity);
-            }
-        });
-
-        ImageButton boutonMenuDeroulant=findViewById(R.id.menuDeroulant);
-        boutonMenuDeroulant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-        // Configuration du geste de balayage pour ouvrir le tiroir de navigation
-        this.drawerLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
-            @Override
-            public void onSwipeRight() {
-                if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    drawerLayout.openDrawer(GravityCompat.START);
-                }
-            }
-        });
-
-        rechercheCarte.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                // Vérifiez si l'EditText a le focus
-                if (hasFocus) {
-                    // Si oui, effacez le texte par défaut
-                    rechercheCarte.getText().clear();
-                } else {
-                    // Si non, réinitialisez le texte par défaut si le champ est vide
-                    if (rechercheCarte.getText().toString().isEmpty()) {
-                        rechercheCarte.setText("nom Carte");
-                    }
-                }
-            }
-        });
+        controlleurRechercheCarte = new ControlleurRechercheCarte(this);
     }
 }

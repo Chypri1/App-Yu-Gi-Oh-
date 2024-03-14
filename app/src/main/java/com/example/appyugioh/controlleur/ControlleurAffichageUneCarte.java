@@ -128,6 +128,8 @@ public class ControlleurAffichageUneCarte {
                 activite.getDrawerLayout().openDrawer(GravityCompat.START);
             }
         });
+
+
         // Configuration du geste de balayage pour ouvrir le tiroir de navigation
         activite.getDrawerLayout().setOnTouchListener(new OnSwipeTouchListener(activite) {
             @Override
