@@ -1,8 +1,7 @@
-package com.example.appyugioh.vue;
+package com.example.appyugioh.modele.comportementFront;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

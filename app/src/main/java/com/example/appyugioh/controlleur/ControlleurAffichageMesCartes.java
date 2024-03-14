@@ -1,6 +1,5 @@
 package com.example.appyugioh.controlleur;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,8 +13,7 @@ import com.example.appyugioh.modele.comportementFront.ComportementAffichageMesCa
 import com.example.appyugioh.modele.comportementFront.ComportementMenu;
 import com.example.appyugioh.modele.rest.AccesExterneRest;
 import com.example.appyugioh.vue.AffichageMesCartes;
-import com.example.appyugioh.vue.OnSwipeTouchListener;
-import com.example.appyugioh.vue.RechercheCarte;
+import com.example.appyugioh.modele.comportementFront.OnSwipeTouchListener;
 import com.google.android.material.navigation.NavigationView;
 
 public class ControlleurAffichageMesCartes {

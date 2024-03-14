@@ -1,7 +1,5 @@
 package com.example.appyugioh.controlleur;
 
-import static android.content.Intent.getIntent;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -9,8 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.core.view.GravityCompat;
 
@@ -18,9 +14,8 @@ import com.example.appyugioh.R;
 import com.example.appyugioh.modele.comportementFront.ComportementAffichageMesCartes;
 import com.example.appyugioh.modele.comportementFront.ComportementMenu;
 import com.example.appyugioh.modele.rest.AccesExterneRest;
-import com.example.appyugioh.vue.AffichageMesCartes;
 import com.example.appyugioh.vue.AffichageUneCarte;
-import com.example.appyugioh.vue.OnSwipeTouchListener;
+import com.example.appyugioh.modele.comportementFront.OnSwipeTouchListener;
 import com.google.android.material.navigation.NavigationView;
 
 public class ControlleurAffichageUneCarte {
