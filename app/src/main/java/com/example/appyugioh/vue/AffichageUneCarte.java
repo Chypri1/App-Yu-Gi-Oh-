@@ -17,6 +17,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.appyugioh.R;
+import com.example.appyugioh.modele.comportementFront.ComportementAffichageMesCartes;
 import com.example.appyugioh.modele.comportementFront.ComportementMenu;
 import com.google.android.material.navigation.NavigationView;
 
@@ -30,12 +31,15 @@ public class AffichageUneCarte extends Activity {
 
     protected ComportementMenu comportementMenu;
 
+    protected ComportementAffichageMesCartes comportementAffichageMesCartes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.affichageunecarte);
 
         comportementMenu = new ComportementMenu();
+        comportementAffichageMesCartes = new ComportementAffichageMesCartes();
         this.drawerLayout = findViewById(R.id.drawerLayout);
         boutonMenuDeroulant = findViewById(R.id.menuDeroulant);
 
@@ -46,14 +50,16 @@ public class AffichageUneCarte extends Activity {
             texteViewNomCarte.setText(nomCarte);
         }
 
+
         imageViewImage = findViewById(R.id.imageViewCarte);
         // Extraire le chemin de l'image de l'intention
         String imagePath = getIntent().getStringExtra("imagePath");
         if (imagePath != null) {
             // Charger l'image depuis le chemin de l'image
             Bitmap imageBitmap = BitmapFactory.decodeFile(imagePath);
+            Bitmap imageBitmapResized = comportementAffichageMesCartes.resizeBitmap(imageBitmap, 3.0f);
             // Afficher l'image dans l'ImageView
-            imageViewImage.setImageBitmap(imageBitmap);
+            imageViewImage.setImageBitmap(imageBitmapResized);
         }
 
 

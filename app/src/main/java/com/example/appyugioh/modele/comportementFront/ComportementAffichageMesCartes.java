@@ -90,7 +90,7 @@ public class ComportementAffichageMesCartes
         }
     }
 
-    private Bitmap resizeBitmap(Bitmap originalBitmap, float scaleFactor) {
+    public Bitmap resizeBitmap(Bitmap originalBitmap, float scaleFactor) {
         int newWidth = (int) (originalBitmap.getWidth() * scaleFactor);
         int newHeight = (int) (originalBitmap.getHeight() * scaleFactor);
         return Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, false);
