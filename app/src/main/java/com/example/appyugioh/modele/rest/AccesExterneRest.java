@@ -1,167 +1,117 @@
 package com.example.appyugioh.modele.rest;
 
+import android.app.Activity;
+import android.os.Handler;
+import android.os.Looper;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+
 import com.example.appyugioh.modele.mappeur.MappeurCarteRest2CarteYuGiOh;
 import com.example.appyugioh.modele.metier.CarteYuGiOh;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class AccesExterneRest {
 
-    private static final String URL = "https://db.ygoprodeck.com/api/v7/cardinfo.php";
-
+    private static final String API_URL = "https://db.ygoprodeck.com/api/v7/cardinfo.php";
+    private static final int BUTTON_SIZE_DP = 115; // Taille du bouton en dp
 
     protected MappeurCarteRest2CarteYuGiOh mappeurCarteRest2CarteYuGiOh = new MappeurCarteRest2CarteYuGiOh();
-    public List<CarteYuGiOh> appeRest(String nomCarte) {
 
-        List<CarteYuGiOh> listeCarteYuGiOh = new ArrayList();
-        StringBuffer response = new StringBuffer();
-        String urlNomCarte = URL + "?name=" + nomCarte;
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
-        // TODO: faire appel rest
+    public void appRest(String nomCarte, LinearLayout layoutResultatRecherche, Activity activity) {
+        executorService.execute(() -> {
+            List<CarteYuGiOh> listeCarteYuGiOh = new ArrayList<>();
 
-        // resultat appel Rest
-        String resultatRest = """
-                {
-                  "data": [
-                    {
-                      "id": 63977008,
-                      "name": "Robot Synchronique",
-                      "type": "Tuner Monster",
-                      "frameType": "effect",
-                      "desc": "Lorsque cette carte est Invoqu\\u00e9e Normalement : vous pouvez cibler 1 monstre de max. Niveau 2 dans votre Cimeti\\u00e8re ; Invoquez Sp\\u00e9cialement la cible en Position de D\\u00e9fense, mais annulez ses effets.",
-                      "atk": 1300,
-                      "def": 500,
-                      "level": 3,
-                      "race": "Warrior",
-                      "attribute": "DARK",
-                      "name_en": "Junk Synchron",
-                      "archetype": "Junk",
-                      "ygoprodeck_url": "https://ygoprodeck.com/card/junk-synchron-5399",
-                      "card_sets": [
-                        {
-                          "set_name": "Duel Terminal 3",
-                          "set_code": "DT03-EN003",
-                          "set_rarity": "Duel Terminal Rare Parallel Rare",
-                          "set_rarity_code": "(DRPR)",
-                          "set_price": "10.8"
-                        },
-                        {
-                          "set_name": "Duelist League 3 participation cards",
-                          "set_code": "DL12-EN010",
-                          "set_rarity": "Rare",
-                          "set_rarity_code": "(R)",
-                          "set_price": "9.39"
-                        },
-                        {
-                          "set_name": "Duelist Pack Collection Tin 2010",
-                          "set_code": "DPCT-ENY01",
-                          "set_rarity": "Ultra Rare",
-                          "set_rarity_code": "(UR)",
-                          "set_price": "6.98"
-                        },
-                        {
-                          "set_name": "Duelist Pack: Yusei",
-                          "set_code": "DP08-EN001",
-                          "set_rarity": "Common",
-                          "set_rarity_code": "(C)",
-                          "set_price": "2.08"
-                        },
-                        {
-                          "set_name": "Duelist Saga",
-                          "set_code": "DUSA-EN074",
-                          "set_rarity": "Ultra Rare",
-                          "set_rarity_code": "(UR)",
-                          "set_price": "4.89"
-                        },
-                        {
-                          "set_name": "Legendary Collection 5D's Mega Pack",
-                          "set_code": "LC5D-EN002",
-                          "set_rarity": "Secret Rare",
-                          "set_rarity_code": "(ScR)",
-                          "set_price": "14.46"
-                        },
-                        {
-                          "set_name": "OTS Tournament Pack 17",
-                          "set_code": "OP17-EN015",
-                          "set_rarity": "Common",
-                          "set_rarity_code": "(C)",
-                          "set_price": "1.79"
-                        },
-                        {
-                          "set_name": "OTS Tournament Pack 17 (POR)",
-                          "set_code": "OP17-PT015",
-                          "set_rarity": "Common",
-                          "set_rarity_code": "(C)",
-                          "set_price": "0"
-                        },
-                        {
-                          "set_name": "Starter Deck: Duelist Toolbox",
-                          "set_code": "5DS3-EN010",
-                          "set_rarity": "Common",
-                          "set_rarity_code": "(C)",
-                          "set_price": "3"
-                        },
-                        {
-                          "set_name": "Starter Deck: Yu-Gi-Oh! 5D's",
-                          "set_code": "5DS1-EN011",
-                          "set_rarity": "Common",
-                          "set_rarity_code": "(C)",
-                          "set_price": "2.56"
-                        },
-                        {
-                          "set_name": "Starter Deck: Yu-Gi-Oh! 5D's 2009",
-                          "set_code": "5DS2-EN014",
-                          "set_rarity": "Common",
-                          "set_rarity_code": "(C)",
-                          "set_price": "3.32"
-                        },
-                        {
-                          "set_name": "Synchron Extreme Structure Deck",
-                          "set_code": "SDSE-EN004",
-                          "set_rarity": "Common",
-                          "set_rarity_code": "(C)",
-                          "set_price": "2.02"
-                        }
-                      ],
-                      "card_images": [
-                        {
-                          "id": 63977008,
-                          "image_url": "https://images.ygoprodeck.com/images/cards/63977008.jpg",
-                          "image_url_small": "https://images.ygoprodeck.com/images/cards_small/63977008.jpg",
-                          "image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/63977008.jpg"
-                        }
-                      ],
-                      "card_prices": [
-                        {
-                          "cardmarket_price": "0.12",
-                          "tcgplayer_price": "0.66",
-                          "ebay_price": "9.00",
-                          "amazon_price": "7.99",
-                          "coolstuffinc_price": "0.49"
-                        }
-                      ]
-                    }
-                  ]
-                }""";
+            try {
+                // Créer l'URL avec le nom de la carte
+                URL url = new URL(API_URL + "?fname=" + nomCarte + "&language=fr");
 
+                // Ouvrir la connexion HTTP
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
 
-        try {
-            // Convertir la réponse en objet JSON
-            JSONObject jsonResponse = new JSONObject(resultatRest);
+                // Lire la réponse de l'API
+                InputStream inputStream = connection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    response.append(line);
+                }
+                bufferedReader.close();
 
-            // Récupérer le tableau de cartes
-            List<JSONArray> cardsArray = List.of(jsonResponse.getJSONArray("data"));
+                // Fermer la connexion
+                connection.disconnect();
 
-            listeCarteYuGiOh = mappeurCarteRest2CarteYuGiOh.mapperListeCarteRest2ListeCarteYuGiOh(cardsArray);
+                // Convertir la réponse en objet JSON
+                JSONObject jsonResponse = new JSONObject(response.toString());
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+                // Récupérer le tableau de cartes
+                JSONArray cardsArray = jsonResponse.getJSONArray("data");
+
+                listeCarteYuGiOh = mappeurCarteRest2CarteYuGiOh.mapperListeCarteRest2ListeCarteYuGiOh(cardsArray);
+
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
+            // Envoyer les résultats sur le thread principal via le handler
+            List<CarteYuGiOh> finalListeCarteYuGiOh = listeCarteYuGiOh;
+            handler.post(() -> afficher_carte(finalListeCarteYuGiOh, layoutResultatRecherche, activity));
+        });
+    }
+
+    private void afficher_carte(List<CarteYuGiOh> finalListeCarteYuGiOh, LinearLayout layoutResultatRecherche, Activity activity) {
+        int buttonSizePx = convertDpToPx(BUTTON_SIZE_DP, activity);
+        int buttonsPerRow = 3; // Nombre de boutons par ligne
+
+        LinearLayout rowLayout = null; // Layout temporaire pour chaque ligne
+
+        for (int i = 0; i < finalListeCarteYuGiOh.size(); i++) {
+            CarteYuGiOh carteYuGiOh = finalListeCarteYuGiOh.get(i);
+
+            // Créer une nouvelle ligne si nécessaire (tous les 3 boutons)
+            if (i % buttonsPerRow == 0) {
+                rowLayout = new LinearLayout(activity);
+                rowLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                ));
+                layoutResultatRecherche.addView(rowLayout);
+            }
+
+            // Créer et ajouter l'ImageButton à la ligne actuelle
+            ImageButton cardInfo = new ImageButton(activity);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(buttonSizePx, buttonSizePx+100);
+            params.setMargins(0, 0, 16, 16);
+            cardInfo.setLayoutParams(params);
+            Picasso.get().load(carteYuGiOh.getLienImage()).resize(buttonSizePx, buttonSizePx+100).into(cardInfo);
+            rowLayout.addView(cardInfo);
         }
-        return listeCarteYuGiOh;
+    }
+
+
+    private int convertDpToPx(int dp, Activity activity) {
+        float density = activity.getResources().getDisplayMetrics().density;
+        return Math.round(dp * density);
     }
 }
