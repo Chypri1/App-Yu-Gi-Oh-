@@ -3,6 +3,7 @@ package com.example.appyugioh.modele.mappeur;
 import com.example.appyugioh.modele.metier.CarteLink;
 import com.example.appyugioh.modele.metier.CarteMonstre;
 import com.example.appyugioh.modele.metier.CarteYuGiOh;
+import com.example.appyugioh.modele.metier.Edition;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,14 +54,13 @@ public class MappeurCarteRest2CarteYuGiOh {
         {
             carteYuGiOh = new CarteYuGiOh();
         }
+        carteYuGiOh.setNom(carteRest.getString("name"));
         carteYuGiOh.setType(carteRest.getString("type"));
+        carteYuGiOh.setTypeFrame(carteRest.getString("typeframe"));
         carteYuGiOh.setArchetype(carteRest.getString("archetype"));
         carteYuGiOh.setDesc(carteRest.getString("desc"));
-        carteYuGiOh.setNom(carteRest.getString("name"));
         carteYuGiOh.setRace(carteRest.getString("race"));
-
-
-
+        carteYuGiOh.setListeEdition((List<Edition>) carteRest.getJSONArray("card_set"));
         // Gérer les images
         JSONArray cardImages = carteRest.getJSONArray("card_images");
         if (cardImages.length() > 0) {
