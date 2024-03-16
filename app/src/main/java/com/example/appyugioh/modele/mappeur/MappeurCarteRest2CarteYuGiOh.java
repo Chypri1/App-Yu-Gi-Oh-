@@ -1,5 +1,7 @@
 package com.example.appyugioh.modele.mappeur;
 
+import com.example.appyugioh.modele.metier.CarteLink;
+import com.example.appyugioh.modele.metier.CarteMonstre;
 import com.example.appyugioh.modele.metier.CarteYuGiOh;
 
 import org.json.JSONArray;
@@ -24,18 +26,40 @@ public class MappeurCarteRest2CarteYuGiOh {
     }
 
     public CarteYuGiOh mapperCarteRest2CarteYuGiOh(JSONObject carteRest) throws JSONException {
-        CarteYuGiOh carteYuGiOh = new CarteYuGiOh();
+        CarteYuGiOh carteYuGiOh;
+        if(carteRest.getString("type").contains("monster"))
+        {
+
+            if(carteRest.getString("frametype").contentEquals("link"))
+            {
+                carteYuGiOh = new CarteLink();
+                ((CarteLink) carteYuGiOh).setAttaque(carteRest.optInt("atk", 0));
+                ((CarteLink) carteYuGiOh).setAttribut(carteRest.getString("attribute"));
+                ((CarteLink) carteYuGiOh).setNombreLien(carteRest.optInt("level", 0));
+                ((CarteLink) carteYuGiOh).setListeEmplacementMarqueurs((List<String>) carteRest.getJSONArray("linkmarkers"));
+
+            }
+            else
+            {
+                carteYuGiOh = new CarteMonstre();
+                ((CarteMonstre) carteYuGiOh).setAttaque(carteRest.optInt("atk", 0));
+                ((CarteMonstre) carteYuGiOh).setAttribut(carteRest.getString("attribute"));
+                ((CarteMonstre) carteYuGiOh).setDefense(carteRest.optInt("def", 0));
+                ((CarteMonstre) carteYuGiOh).setNiveau(carteRest.optInt("level", 0));
+            }
+
+        }
+        else
+        {
+            carteYuGiOh = new CarteYuGiOh();
+        }
         carteYuGiOh.setType(carteRest.getString("type"));
-        /*if(carteYuGiOh.getType().equals("Spell Card"))
         carteYuGiOh.setArchetype(carteRest.getString("archetype"));
-        carteYuGiOh.setAttaque(carteRest.optInt("atk", 0));
-        carteYuGiOh.setAttribut(carteRest.getString("attribute"));
-        carteYuGiOh.setDefense(carteRest.optInt("def", 0));
         carteYuGiOh.setDesc(carteRest.getString("desc"));
-        carteYuGiOh.setNiveau(carteRest.optInt("level", 0));
         carteYuGiOh.setNom(carteRest.getString("name"));
         carteYuGiOh.setRace(carteRest.getString("race"));
-*/
+
+
 
         // Gérer les images
         JSONArray cardImages = carteRest.getJSONArray("card_images");
