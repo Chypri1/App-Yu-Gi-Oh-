@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.appyugioh.R;
 import com.example.appyugioh.modele.metier.Deck;
+import com.example.appyugioh.vue.RechercheDeck;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,6 +71,7 @@ public class ComportementAffichageMesDecks {
             throw new RuntimeException(e);
         }
 
+
         // Afficher les decks dans le layoutResultatRecherche
         if (decks != null) {
             for (Deck deck : decks) {
@@ -81,6 +84,14 @@ public class ComportementAffichageMesDecks {
                 textPrix.setText("Prix: $" + 20);
                 layoutResultatRecherche.addView(deckView);
 
+                deckView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent rechercheCarte = new Intent(activite.getApplicationContext(), RechercheDeck.class);
+                        activite.startActivity(rechercheCarte);
+                        activite.finish();
+                    }
+                });
                 deckView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
@@ -91,12 +102,16 @@ public class ComportementAffichageMesDecks {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 supprimerDeckDansFichierJSON(deck.getNom(), activite);
+                                layoutResultatRecherche.removeAllViews();
                                 afficherDecks(layoutResultatRecherche, activite);
                             }
+
+
                         });
                         builder.setNegativeButton("Non", null);
                         AlertDialog dialog = builder.create();
                         dialog.show();
+
                         return true; // Indique que l'événement a été consommé
                     }
                 });
@@ -104,6 +119,7 @@ public class ComportementAffichageMesDecks {
         } else {
             Log.e("DeckManager", "Erreur lors de la récupération des decks");
         }
+
     }
 
 
@@ -160,7 +176,7 @@ public class ComportementAffichageMesDecks {
     }
 
     @SuppressLint("MissingInflatedId")
-    public void afficherPopupNouveauDeck(Activity activite) {
+    public void afficherPopupNouveauDeck(Activity activite,LinearLayout layoutResultatRecherche) {
         // Créez une vue pour votre popup en inflatant le layout XML
         View popupView = LayoutInflater.from(activite).inflate(R.layout.nouveau_deck_popup, null);
 
@@ -171,7 +187,7 @@ public class ComportementAffichageMesDecks {
         AlertDialog.Builder builder = new AlertDialog.Builder(activite);
         builder.setView(popupView);
         builder.setTitle("Nouveau Deck");
-        LinearLayout layoutResultat = this.layoutResultatRecherche;
+
         builder.setPositiveButton("Créer", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -182,6 +198,8 @@ public class ComportementAffichageMesDecks {
                 // Affichez un message pour indiquer que le deck a été créé
                 afficherMessage("Nouveau Deck", "Le deck " + deck.getNom() + " a été créé avec succès !",activite);
                 saveDecksToFile(List.of(deck),activite);
+                layoutResultatRecherche.removeAllViews();
+                afficherDecks(layoutResultatRecherche, activite);
             }
         });
         builder.setNegativeButton("Annuler", null); // Ajoutez une option pour annuler la création du deck

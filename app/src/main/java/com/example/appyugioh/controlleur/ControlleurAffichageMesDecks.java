@@ -92,7 +92,7 @@ public class ControlleurAffichageMesDecks {
         activite.getBoutonNouveauDeck().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                comportementAffichageMesDecks.afficherPopupNouveauDeck(activite);
+                comportementAffichageMesDecks.afficherPopupNouveauDeck(activite,activite.getLayoutResultatRecherche());
             }
         });
 
@@ -114,7 +114,7 @@ public class ControlleurAffichageMesDecks {
             }
         });
 
-        comportementAffichageMesDecks.afficherDecks(activite.getLayoutResultatRecherche(),activite);
+        comportementAffichageMesDecks.afficherDecks(activite.findViewById(R.id.layoutResultatRecherche),activite);
     }
 
 
