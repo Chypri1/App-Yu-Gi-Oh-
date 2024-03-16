@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gris">
+
+    <include layout="@layout/layout_btn_menu_deroulant" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/rechercheCarte"
+            android:layout_width="278dp"
+            android:layout_height="73dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="50dp"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Nom du deck"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="InvalidId" />
+
+
+        <ScrollView
+            android:layout_width="416dp"
+            android:layout_height="485dp"
+            android:layout_marginTop="246dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/layoutResultatRecherche"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"></LinearLayout>
+        </ScrollView>
+
+
+        <Button
+            android:id="@+id/boutonFiltre"
+            android:layout_width="401dp"
+            android:layout_height="97dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="147dp"
+            android:background="@color/rouge"
+            android:text="FILTRE"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/boutonRechercheCarte"
+            android:layout_width="71dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="324dp"
+            android:layout_marginTop="68dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_zoom" />
+
+        <Button
+            android:id="@+id/boutonNouveauDeck"
+            android:layout_width="70dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="326dp"
+            android:layout_marginTop="8dp"
+            android:text="+"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@layout/nav_menu"
+        tools:ignore="MissingConstraints" />
+</androidx.drawerlayout.widget.DrawerLayout>

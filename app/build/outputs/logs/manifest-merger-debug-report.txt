@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:2:1-53:12
-INJECTED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:2:1-53:12
-INJECTED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:2:1-53:12
-INJECTED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:2:1-53:12
+ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:2:1-55:12
+INJECTED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:2:1-55:12
+INJECTED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:2:1-55:12
+INJECTED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:2:1-55:12
 MERGED from [com.squareup.picasso:picasso:2.71828] /Users/apple/.gradle/caches/transforms-3/31f0bb59c212b26cbcddd2f6ee0dfdd5/transformed/picasso-2.71828/AndroidManifest.xml:2:1-14:12
 MERGED from [com.google.android.material:material:1.11.0] /Users/apple/.gradle/caches/transforms-3/0b1b1a158da0668ca4bdcd3e34d70499/transformed/material-1.11.0/AndroidManifest.xml:17:1-24:12
 MERGED from [com.github.bumptech.glide:glide:4.16.0] /Users/apple/.gradle/caches/transforms-3/c5efdd4a8a519170fc72a8bfde6c40fd/transformed/glide-4.16.0/AndroidManifest.xml:2:1-9:12
@@ -80,8 +80,8 @@ ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main
 	android:name
 		ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:12:22-78
 application
-ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:14:5-52:19
-INJECTED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:14:5-52:19
+ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:14:5-54:19
+INJECTED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:14:5-54:19
 MERGED from [com.squareup.picasso:picasso:2.71828] /Users/apple/.gradle/caches/transforms-3/31f0bb59c212b26cbcddd2f6ee0dfdd5/transformed/picasso-2.71828/AndroidManifest.xml:7:5-12:19
 MERGED from [com.squareup.picasso:picasso:2.71828] /Users/apple/.gradle/caches/transforms-3/31f0bb59c212b26cbcddd2f6ee0dfdd5/transformed/picasso-2.71828/AndroidManifest.xml:7:5-12:19
 MERGED from [com.google.android.material:material:1.11.0] /Users/apple/.gradle/caches/transforms-3/0b1b1a158da0668ca4bdcd3e34d70499/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
@@ -153,23 +153,29 @@ ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main
 	android:name
 		ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:36:19-52
 activity#com.example.appyugioh.vue.AffichageMesCartes
-ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:40:9-43:20
+ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:40:9-42:20
 	android:exported
 		ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:41:13-37
 	android:name
 		ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:40:19-57
+activity#com.example.appyugioh.vue.AffichageMesDecks
+ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:43:9-45:20
+	android:exported
+		ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:44:13-37
+	android:name
+		ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:43:19-56
 activity#com.example.appyugioh.vue.EnregistrerCarte
-ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:44:9-47:20
+ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:46:9-49:20
 	android:exported
-		ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:45:13-37
+		ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:47:13-37
 	android:name
-		ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:44:19-55
+		ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:46:19-55
 activity#com.example.appyugioh.vue.AffichageUneCarte
-ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:48:9-51:20
+ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:50:9-53:20
 	android:exported
-		ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:49:13-37
+		ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:51:13-37
 	android:name
-		ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:48:19-56
+		ADDED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml:50:19-56
 uses-sdk
 INJECTED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/apple/Documents/Cours/M1/App Mobile/App-Yu-Gi-Oh-/app/src/main/AndroidManifest.xml

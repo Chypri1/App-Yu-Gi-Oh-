@@ -60,7 +60,7 @@ public class MappeurCarteRest2CarteYuGiOh {
         carteYuGiOh.setArchetype(carteRest.getString("archetype"));
         carteYuGiOh.setDesc(carteRest.getString("desc"));
         carteYuGiOh.setRace(carteRest.getString("race"));
-        carteYuGiOh.setListeEdition((List<Edition>) carteRest.getJSONArray("card_set"));
+        carteYuGiOh.setListeEdition((List<Edition>) carteRest.getJSONArray("card_set")); // revoir pour les editions
         // Gérer les images
         JSONArray cardImages = carteRest.getJSONArray("card_images");
         if (cardImages.length() > 0) {
