@@ -28,16 +28,16 @@ public class MappeurCarteRest2CarteYuGiOh {
 
     public CarteYuGiOh mapperCarteRest2CarteYuGiOh(JSONObject carteRest) throws JSONException {
         CarteYuGiOh carteYuGiOh;
-        if(carteRest.getString("type").contains("monster"))
+        if(carteRest.getString("type").contains("Monster"))
         {
 
-            if(carteRest.getString("frametype").contentEquals("link"))
+            if(carteRest.getString("frameType").contentEquals("Link"))
             {
                 carteYuGiOh = new CarteLink();
                 ((CarteLink) carteYuGiOh).setAttaque(carteRest.optInt("atk", 0));
                 ((CarteLink) carteYuGiOh).setAttribut(carteRest.getString("attribute"));
                 ((CarteLink) carteYuGiOh).setNombreLien(carteRest.optInt("level", 0));
-                ((CarteLink) carteYuGiOh).setListeEmplacementMarqueurs((List<String>) carteRest.getJSONArray("linkmarkers"));
+                // ((CarteLink) carteYuGiOh).setListeEmplacementMarqueurs((List<String>) carteRest.getJSONArray("linkmarkers"));
 
             }
             else
@@ -56,7 +56,7 @@ public class MappeurCarteRest2CarteYuGiOh {
         }
         carteYuGiOh.setNom(carteRest.getString("name"));
         carteYuGiOh.setType(carteRest.getString("type"));
-        carteYuGiOh.setTypeFrame(carteRest.getString("typeframe"));
+        carteYuGiOh.setTypeFrame(carteRest.getString("frameType"));
         carteYuGiOh.setArchetype(carteRest.getString("archetype"));
         carteYuGiOh.setDesc(carteRest.getString("desc"));
         carteYuGiOh.setRace(carteRest.getString("race"));
