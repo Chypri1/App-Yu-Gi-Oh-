@@ -26,8 +26,6 @@ public class AffichageMesCartes extends Activity {
 
     protected NavigationView navigationView;
 
-    protected ComportementMenu comportementMenu;
-
     protected ComportementAffichageMesCartes comportementAffichageMesCartes;
 
 
@@ -55,14 +53,6 @@ public class AffichageMesCartes extends Activity {
 
     public void setNavigationView(NavigationView navigationView) {
         this.navigationView = navigationView;
-    }
-
-    public ComportementMenu getComportementMenu() {
-        return comportementMenu;
-    }
-
-    public void setComportementMenu(ComportementMenu comportementMenu) {
-        this.comportementMenu = comportementMenu;
     }
 
     public ComportementAffichageMesCartes getComportementAffichageMesCartes() {

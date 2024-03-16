@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.appyugioh.R;
 import com.example.appyugioh.modele.metier.Deck;
+import com.example.appyugioh.vue.AffichageUnDeck;
 import com.example.appyugioh.vue.RechercheDeck;
 
 import org.json.JSONArray;
@@ -87,8 +88,8 @@ public class ComportementAffichageMesDecks {
                 deckView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent rechercheCarte = new Intent(activite.getApplicationContext(), RechercheDeck.class);
-                        activite.startActivity(rechercheCarte);
+                        Intent affichageUnDeck = new Intent(activite.getApplicationContext(), AffichageUnDeck.class);
+                        activite.startActivity(affichageUnDeck);
                         activite.finish();
                     }
                 });
