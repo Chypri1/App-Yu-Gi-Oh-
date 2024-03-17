@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import androidx.core.view.GravityCompat;
 
@@ -16,14 +17,19 @@ import com.example.appyugioh.modele.comportementFront.ComportementAffichageMesDe
 import com.example.appyugioh.modele.comportementFront.ComportementAffichageUnDeck;
 import com.example.appyugioh.modele.comportementFront.ComportementMenu;
 import com.example.appyugioh.modele.comportementFront.OnSwipeTouchListener;
+import com.example.appyugioh.modele.metier.CarteYuGiOh;
+import com.example.appyugioh.modele.metier.Deck;
 import com.example.appyugioh.modele.rest.AccesExterneRest;
 import com.example.appyugioh.vue.AffichageUnDeck;
 import com.example.appyugioh.vue.RechercheCarte;
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.Picasso;
 
 public class ControlleurAffichageUnDeck {
 
     protected AffichageUnDeck activite;
+
+    protected Deck deck;
 
     protected AccesExterneRest accesExterneRest;
     protected ComportementMenu comportementMenu;
@@ -51,7 +57,10 @@ public class ControlleurAffichageUnDeck {
         MenuItem menuItem4 = menu.findItem(R.id.menu_bouton_mes_cartes);
         MenuItem menuItem5 = menu.findItem(R.id.menu_bouton_mes_decks);
     }
-    public void initialiseComportement(){}
+    public void initialiseComportement()
+    {
+        this.deck = (Deck) activite.getIntent().getSerializableExtra("deck");
+    }
     public void observateur()
     {
 
@@ -89,5 +98,17 @@ public class ControlleurAffichageUnDeck {
                 activite.finish();
             }
         });
+
+        for(CarteYuGiOh carte:deck.getListeCarteYuGiOh())
+        {
+            ImageButton imageButton = new ImageButton(activite);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            imageButton.setLayoutParams(layoutParams);
+            Picasso.get().load(carte.getLienImage()).into(imageButton);
+            activite.getLayoutResultatRecherche().addView(imageButton);
+        }
     }
 }

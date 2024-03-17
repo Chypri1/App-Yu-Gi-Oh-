@@ -1,9 +1,10 @@
 package com.example.appyugioh.modele.metier;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Deck
+public class Deck implements Serializable
 {
     protected List<CarteYuGiOh> listeCarteYuGiOh = new ArrayList<>();
     protected String nom;

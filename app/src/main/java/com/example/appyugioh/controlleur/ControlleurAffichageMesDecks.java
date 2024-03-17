@@ -49,7 +49,7 @@ public class ControlleurAffichageMesDecks {
     {
         this.activite = activity;
         this.comportementMenu = new ComportementMenu();
-        this.comportementAffichageMesDecks = new ComportementAffichageMesDecks(activite.getLayoutResultatRecherche());
+        this.comportementAffichageMesDecks = new ComportementAffichageMesDecks();
         initialiseActivite();
         initialiseComportement();
         observateur();

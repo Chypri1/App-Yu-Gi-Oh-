@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -33,9 +34,71 @@ public class AffichageUneCarte extends Activity {
     protected TextView texteViewNomCarte;
     protected ImageView imageViewImage;
 
+    protected TextView descriptionCarte;
     protected NavigationView navigationView;
+    protected TextView textViewRarete;
+    protected TextView textViewPrix;
+    protected Button boutonListeEdition;
+
+    protected Button boutonAjoutMesCartes;
+
+    public Button getBoutonAjoutMesCartes() {
+        return boutonAjoutMesCartes;
+    }
+
+    public void setBoutonAjoutMesCartes(Button boutonAjoutMesCartes) {
+        this.boutonAjoutMesCartes = boutonAjoutMesCartes;
+    }
 
     protected ControlleurAffichageUneCarte controlleurAffichageUneCarte;
+
+    public TextView getTextViewRarete() {
+        return textViewRarete;
+    }
+
+    public void setTextViewRarete(TextView textViewRarete) {
+        this.textViewRarete = textViewRarete;
+    }
+
+    public TextView getTextViewPrix() {
+        return textViewPrix;
+    }
+
+    public void setTextViewPrix(TextView textViewPrix) {
+        this.textViewPrix = textViewPrix;
+    }
+
+    public Button getBoutonListeEdition() {
+        return boutonListeEdition;
+    }
+
+    public void setBoutonListeEdition(Button boutonListeEdition) {
+        this.boutonListeEdition = boutonListeEdition;
+    }
+
+    public ScrollView getScrollView() {
+        return scrollView;
+    }
+
+    public void setScrollView(ScrollView scrollView) {
+        this.scrollView = scrollView;
+    }
+
+    public TextView getDescriptionCarte() {
+        return descriptionCarte;
+    }
+
+    public void setDescriptionCarte(TextView descriptionCarte) {
+        this.descriptionCarte = descriptionCarte;
+    }
+
+    public ControlleurAffichageUneCarte getControlleurAffichageUneCarte() {
+        return controlleurAffichageUneCarte;
+    }
+
+    public void setControlleurAffichageUneCarte(ControlleurAffichageUneCarte controlleurAffichageUneCarte) {
+        this.controlleurAffichageUneCarte = controlleurAffichageUneCarte;
+    }
 
     public DrawerLayout getDrawerLayout() {
         return drawerLayout;
