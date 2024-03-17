@@ -1,6 +1,7 @@
 package com.example.appyugioh.controlleur;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import com.example.appyugioh.modele.comportementFront.ComportementMenu;
 import com.example.appyugioh.modele.comportementFront.OnSwipeTouchListener;
 import com.example.appyugioh.modele.rest.AccesExterneRest;
 import com.example.appyugioh.vue.AffichageUnDeck;
+import com.example.appyugioh.vue.RechercheCarte;
 import com.google.android.material.navigation.NavigationView;
 
 public class ControlleurAffichageUnDeck {
@@ -30,7 +32,6 @@ public class ControlleurAffichageUnDeck {
     public ControlleurAffichageUnDeck (AffichageUnDeck activity){
         this.activite = activity;
         this.comportementMenu = new ComportementMenu();
-        this.accesExterneRest = new AccesExterneRest(activity);
         this.comportementAffichageUnDeck = new ComportementAffichageUnDeck(accesExterneRest);
         initialiseActivite();
         initialiseComportement();
@@ -83,7 +84,9 @@ public class ControlleurAffichageUnDeck {
         activite.getBoutonAjoutUneCarte().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                comportementAffichageUnDeck.afficherPopupNomCarte(activite,activite.getLayoutResultatRecherche());
+                Intent rechercheCarte = new Intent(activite.getApplicationContext(), RechercheCarte.class);
+                activite.startActivity(rechercheCarte);
+                activite.finish();
             }
         });
     }

@@ -1,8 +1,10 @@
 package com.example.appyugioh.modele.metier;
 
+import java.io.Serializable;
+
 import kotlin.collections.FloatIterator;
 
-public class Edition
+public class Edition implements Serializable
 {
 
     protected String nom;

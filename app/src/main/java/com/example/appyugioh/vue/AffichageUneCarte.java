@@ -23,6 +23,7 @@ import com.example.appyugioh.controlleur.ControlleurAffichageUneCarte;
 import com.example.appyugioh.modele.comportementFront.ComportementAffichageMesCartes;
 import com.example.appyugioh.modele.comportementFront.ComportementMenu;
 import com.example.appyugioh.modele.comportementFront.OnSwipeTouchListener;
+import com.example.appyugioh.modele.metier.CarteYuGiOh;
 import com.google.android.material.navigation.NavigationView;
 
 public class AffichageUneCarte extends Activity {
@@ -82,5 +83,6 @@ public class AffichageUneCarte extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.affichageunecarte);
         controlleurAffichageUneCarte = new ControlleurAffichageUneCarte(this);
+
     }
 }

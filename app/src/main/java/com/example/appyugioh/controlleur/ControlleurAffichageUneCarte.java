@@ -13,10 +13,14 @@ import androidx.core.view.GravityCompat;
 import com.example.appyugioh.R;
 import com.example.appyugioh.modele.comportementFront.ComportementAffichageMesCartes;
 import com.example.appyugioh.modele.comportementFront.ComportementMenu;
+import com.example.appyugioh.modele.metier.CarteYuGiOh;
 import com.example.appyugioh.modele.rest.AccesExterneRest;
 import com.example.appyugioh.vue.AffichageUneCarte;
 import com.example.appyugioh.modele.comportementFront.OnSwipeTouchListener;
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 public class ControlleurAffichageUneCarte {
 
@@ -26,6 +30,8 @@ public class ControlleurAffichageUneCarte {
     protected ComportementMenu comportementMenu;
 
     protected ComportementAffichageMesCartes comportementAffichageMesCartes;
+
+    protected CarteYuGiOh carteYuGiOh;
 
     protected AccesExterneRest accesExterneRest;
 
@@ -94,22 +100,30 @@ public class ControlleurAffichageUneCarte {
     public void observateur()
     {
 
-
-        String nomCarte = activite.getIntent().getStringExtra("nomCarte");
-        if(nomCarte != null)
+        String nomCarte;
+        if((nomCarte = activite.getIntent().getStringExtra("nomCarte"))!= null)
         {
+
+            nomCarte = activite.getIntent().getStringExtra("nomCarte");
             activite.getTexteViewNomCarte().setText(nomCarte);
+        }
+        else{
+            this.carteYuGiOh = (CarteYuGiOh) activite.getIntent().getSerializableExtra("carteYuGiOh");
+            activite.getTexteViewNomCarte().setText(carteYuGiOh.getNom());
         }
 
 
+
+
         // Extraire le chemin de l'image de l'intention
-        String imagePath = activite.getIntent().getStringExtra("imagePath");
-        if (imagePath != null) {
-            // Charger l'image depuis le chemin de l'image
-            Bitmap imageBitmap = BitmapFactory.decodeFile(imagePath);
-            Bitmap imageBitmapResized = comportementAffichageMesCartes.resizeBitmap(imageBitmap, 3.0f);
-            // Afficher l'image dans l'ImageView
-            activite.getImageViewImage().setImageBitmap(imageBitmapResized);
+        String imagePath;
+        if((imagePath = activite.getIntent().getStringExtra("imagePath")) != null)
+        {
+                Picasso.get().load(new File(imagePath)).resize(550,800).into(activite.getImageViewImage());
+        }
+        else
+        {
+            Picasso.get().load(carteYuGiOh.getLienImage()).resize(550,800).into(activite.getImageViewImage());
         }
 
         activite.getNavigationView().setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
