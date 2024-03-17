@@ -3,26 +3,20 @@ package com.example.appyugioh.vue;
 import static com.example.appyugioh.R.*;
 
 import com.example.appyugioh.controlleur.ControlleurRechercheCarte;
-import com.example.appyugioh.modele.comportementFront.ComportementMenu;
-import com.example.appyugioh.modele.comportementFront.OnSwipeTouchListener;
 import com.google.android.material.navigation.NavigationView;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.appyugioh.R;
 import com.example.appyugioh.modele.rest.AccesExterneRest;
 
 
@@ -42,8 +36,11 @@ public class RechercheCarte extends Activity {
     protected AccesExterneRest accesExterneRest;
     protected Button btn_prev;
     protected Button btn_next;
-
+    private AlertDialog dialog;
+    private ScrollView scrollView;
     protected ControlleurRechercheCarte controlleurRechercheCarte;
+
+
 
     public NavigationView getNavigationView() {
         return navigationView;
@@ -60,6 +57,15 @@ public class RechercheCarte extends Activity {
     public void setDrawerLayout(DrawerLayout drawerLayout) {
         this.drawerLayout = drawerLayout;
     }
+
+    public ScrollView getScrollView() {
+        return scrollView;
+    }
+
+    public void setScrollView(ScrollView scrollView) {
+        this.scrollView = scrollView;
+    }
+
 
     public EditText getRechercheCarte() {
         return rechercheCarte;
@@ -92,6 +98,10 @@ public class RechercheCarte extends Activity {
     public void setBoutonFiltre(Button boutonFiltre) {
         this.boutonFiltre = boutonFiltre;
     }
+
+    public AlertDialog getDialog(){return dialog;}
+
+    public void setDialog(AlertDialog dialog){this.dialog=dialog;}
 
     public AccesExterneRest getAccesExterneRest() {
         return accesExterneRest;
