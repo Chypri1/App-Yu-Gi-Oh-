@@ -1,0 +1,15 @@
+<!-- nouveau_deck_popup.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/editTextNomDeck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nom du deck" />
+
+    <!-- Ajoutez d'autres champs nécessaires pour créer un nouveau deck -->
+
+</LinearLayout>

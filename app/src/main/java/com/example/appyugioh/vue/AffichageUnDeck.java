@@ -1,35 +1,28 @@
 package com.example.appyugioh.vue;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.appyugioh.R;
 import com.example.appyugioh.controlleur.ControlleurAffichageMesCartes;
+import com.example.appyugioh.controlleur.ControlleurAffichageMesDecks;
+import com.example.appyugioh.controlleur.ControlleurAffichageUnDeck;
 import com.example.appyugioh.modele.comportementFront.ComportementAffichageMesCartes;
 import com.example.appyugioh.modele.comportementFront.ComportementMenu;
 import com.google.android.material.navigation.NavigationView;
 
-public class AffichageMesCartes extends Activity {
+public class AffichageUnDeck extends Activity {
 
     protected DrawerLayout drawerLayout;
     protected LinearLayout layoutResultatRecherche;
-
     protected NavigationView navigationView;
+    protected ControlleurAffichageUnDeck controlleurAffichageUnDeck;
 
-    protected ComportementAffichageMesCartes comportementAffichageMesCartes;
-
-
-    protected ControlleurAffichageMesCartes controlleurAffichageMesCartes;
+    protected Button boutonAjoutUneCarte;
 
     public DrawerLayout getDrawerLayout() {
         return drawerLayout;
@@ -55,21 +48,28 @@ public class AffichageMesCartes extends Activity {
         this.navigationView = navigationView;
     }
 
-    public ComportementAffichageMesCartes getComportementAffichageMesCartes() {
-        return comportementAffichageMesCartes;
+    public ControlleurAffichageUnDeck getControlleurAffichageUnDeck() {
+        return controlleurAffichageUnDeck;
     }
 
-    public void setComportementAffichageMesCartes(ComportementAffichageMesCartes comportementAffichageMesCartes) {
-        this.comportementAffichageMesCartes = comportementAffichageMesCartes;
+    public void setControlleurAffichageUnDeck(ControlleurAffichageUnDeck controlleurAffichageUnDeck) {
+        this.controlleurAffichageUnDeck = controlleurAffichageUnDeck;
     }
 
+    public Button getBoutonAjoutUneCarte() {
+        return boutonAjoutUneCarte;
+    }
 
-    @SuppressLint("ClickableViewAccessibility")
+    public void setBoutonAjoutUneCarte(Button boutonAjoutUneCarte) {
+        this.boutonAjoutUneCarte = boutonAjoutUneCarte;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.affichagemescartes);
-        this.controlleurAffichageMesCartes = new ControlleurAffichageMesCartes(this);
+        setContentView(R.layout.affichageundeck);
+        this.controlleurAffichageUnDeck = new ControlleurAffichageUnDeck(this);
     }
+
+
 }

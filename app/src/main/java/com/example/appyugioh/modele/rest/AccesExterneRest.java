@@ -1,6 +1,7 @@
 package com.example.appyugioh.modele.rest;
 
         import android.app.Activity;
+        import android.content.Intent;
         import android.os.Handler;
         import android.os.Looper;
         import android.util.Log;
@@ -14,6 +15,8 @@ package com.example.appyugioh.modele.rest;
 
         import com.example.appyugioh.modele.mappeur.MappeurCarteRest2CarteYuGiOh;
         import com.example.appyugioh.modele.metier.CarteYuGiOh;
+        import com.example.appyugioh.vue.AffichageUneCarte;
+        import com.example.appyugioh.vue.RechercheDeck;
         import com.squareup.picasso.Picasso;
 
         import org.json.JSONArray;
@@ -24,6 +27,7 @@ package com.example.appyugioh.modele.rest;
         import java.io.IOException;
         import java.io.InputStream;
         import java.io.InputStreamReader;
+        import java.io.Serializable;
         import java.net.HttpURLConnection;
         import java.net.URL;
         import java.util.ArrayList;
@@ -49,6 +53,15 @@ public class AccesExterneRest {
 
     protected MappeurCarteRest2CarteYuGiOh mappeurCarteRest2CarteYuGiOh = new MappeurCarteRest2CarteYuGiOh();
 
+
+    public List<CarteYuGiOh> getFinalListeCarteYuGiOh() {
+        return finalListeCarteYuGiOh;
+    }
+
+    public void setFinalListeCarteYuGiOh(List<CarteYuGiOh> finalListeCarteYuGiOh) {
+        this.finalListeCarteYuGiOh = finalListeCarteYuGiOh;
+    }
+
     public AccesExterneRest(Button btn_prev, Button btn_next, ScrollView scrollView) {
         this.btn_prev = btn_prev;
         this.btn_next = btn_next;
@@ -73,6 +86,43 @@ public class AccesExterneRest {
 
             try {
                 URL url = new URL(API_URL + "?fname=" + nomCarte + "&language=fr");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                InputStream inputStream = connection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    response.append(line);
+                }
+                bufferedReader.close();
+
+                connection.disconnect();
+
+                JSONObject jsonResponse = new JSONObject(response.toString());
+                JSONArray cardsArray = jsonResponse.getJSONArray("data");
+                listeCarteYuGiOh = mappeurCarteRest2CarteYuGiOh.mapperListeCarteRest2ListeCarteYuGiOh(cardsArray);
+            } catch (IOException | JSONException e) {
+                Log.w("REQUETE", "Erreur: Aucune carte trouvée");
+                e.printStackTrace();
+            }
+
+            finalListeCarteYuGiOh = listeCarteYuGiOh;
+            afficher_carte(currentPage);
+        });
+    }
+
+    public void appRestExact(String nomCarte, LinearLayout layoutResultatRecherche, Activity activity) {
+        this.layoutResultatRecherche = layoutResultatRecherche;
+        this.activity = activity;
+
+        executorService.execute(() -> {
+            List<CarteYuGiOh> listeCarteYuGiOh = new ArrayList<>();
+            currentPage=0;
+
+            try {
+                URL url = new URL(API_URL + "?name=" + nomCarte + "&language=fr");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
@@ -143,6 +193,15 @@ public class AccesExterneRest {
                     cardInfo.setLayoutParams(params);
                     Picasso.get().load(carteYuGiOh.getLienImage()).resize(buttonSizePx, buttonSizePx + 100).into(cardInfo);
                     rowLayout.addView(cardInfo);
+                    cardInfo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent affichageUneCarte = new Intent(activity.getApplicationContext(), AffichageUneCarte.class);
+                            affichageUneCarte.putExtra("carteYuGiOh", carteYuGiOh);
+                            activity.startActivity(affichageUneCarte);
+                            activity.finish();
+                        }
+                    });
                 }
             }
 

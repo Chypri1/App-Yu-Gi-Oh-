@@ -1,8 +1,9 @@
 package com.example.appyugioh.modele.metier;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CarteMonstre extends CarteYuGiOh{
+public class CarteMonstre extends CarteYuGiOh implements Serializable {
     protected int attaque;
 
     protected int defense;

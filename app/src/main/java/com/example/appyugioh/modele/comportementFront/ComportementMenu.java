@@ -6,7 +6,7 @@ import android.view.MenuItem;
 
 import com.example.appyugioh.R;
 import com.example.appyugioh.vue.AffichageMesCartes;
-import com.example.appyugioh.vue.AffichageDeck;
+import com.example.appyugioh.vue.AffichageMesDecks;
 import com.example.appyugioh.vue.EnregistrerCarte;
 import com.example.appyugioh.vue.MainActivity;
 import com.example.appyugioh.vue.RechercheCarte;
@@ -28,8 +28,8 @@ public class ComportementMenu {
         }
         if (item.getItemId() == R.id.menu_bouton_recherche_deck)
         {
-            Intent rechercheDeck = new Intent(activity.getApplicationContext(), RechercheDeck.class);
-            activity.startActivity(rechercheDeck);
+            Intent rechercheCarte = new Intent(activity.getApplicationContext(), RechercheDeck.class);
+            activity.startActivity(rechercheCarte);
             activity.finish();
         }
         if (item.getItemId() == R.id.menu_bouton_mes_cartes)
@@ -40,7 +40,7 @@ public class ComportementMenu {
         }
         if (item.getItemId() == R.id.menu_bouton_mes_decks)
         {
-            Intent mesDecks = new Intent(activity.getApplicationContext(), AffichageDeck.class);
+            Intent mesDecks = new Intent(activity.getApplicationContext(), AffichageMesDecks.class);
             activity.startActivity(mesDecks);
             activity.finish();
         }

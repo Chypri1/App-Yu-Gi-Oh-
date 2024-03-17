@@ -39,7 +39,12 @@
         </activity>
         <activity android:name=".vue.AffichageMesCartes"
             android:exported="false">
-
+        </activity>
+        <activity android:name=".vue.AffichageMesDecks"
+            android:exported="false">
+        </activity>
+        <activity android:name=".vue.AffichageUnDeck"
+            android:exported="false">
         </activity>
         <activity android:name=".vue.EnregistrerCarte"
             android:exported="false">

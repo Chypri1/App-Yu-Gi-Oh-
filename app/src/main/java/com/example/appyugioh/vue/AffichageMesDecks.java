@@ -3,11 +3,7 @@ package com.example.appyugioh.vue;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.core.view.GravityCompat;
@@ -15,21 +11,32 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.appyugioh.R;
 import com.example.appyugioh.controlleur.ControlleurAffichageMesCartes;
+import com.example.appyugioh.controlleur.ControlleurAffichageMesDecks;
 import com.example.appyugioh.modele.comportementFront.ComportementAffichageMesCartes;
 import com.example.appyugioh.modele.comportementFront.ComportementMenu;
+import com.example.appyugioh.modele.comportementFront.OnSwipeTouchListener;
 import com.google.android.material.navigation.NavigationView;
 
-public class AffichageMesCartes extends Activity {
+public class AffichageMesDecks extends Activity {
+
 
     protected DrawerLayout drawerLayout;
+
     protected LinearLayout layoutResultatRecherche;
 
     protected NavigationView navigationView;
 
-    protected ComportementAffichageMesCartes comportementAffichageMesCartes;
+    protected Button BoutonNouveauDeck;
 
+    protected ControlleurAffichageMesDecks controlleurAffichageMesDecks;
 
-    protected ControlleurAffichageMesCartes controlleurAffichageMesCartes;
+    public Button getBoutonNouveauDeck() {
+        return BoutonNouveauDeck;
+    }
+
+    public void setBoutonNouveauDeck(Button boutonNouveauDeck) {
+        BoutonNouveauDeck = boutonNouveauDeck;
+    }
 
     public DrawerLayout getDrawerLayout() {
         return drawerLayout;
@@ -55,21 +62,19 @@ public class AffichageMesCartes extends Activity {
         this.navigationView = navigationView;
     }
 
-    public ComportementAffichageMesCartes getComportementAffichageMesCartes() {
-        return comportementAffichageMesCartes;
+    public ControlleurAffichageMesDecks getControlleurAffichageMesDecks() {
+        return controlleurAffichageMesDecks;
     }
 
-    public void setComportementAffichageMesCartes(ComportementAffichageMesCartes comportementAffichageMesCartes) {
-        this.comportementAffichageMesCartes = comportementAffichageMesCartes;
+    public void setControlleurAffichageMesDecks(ControlleurAffichageMesDecks controlleurAffichageMesDecks) {
+        this.controlleurAffichageMesDecks = controlleurAffichageMesDecks;
     }
-
-
-    @SuppressLint("ClickableViewAccessibility")
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.affichagemescartes);
-        this.controlleurAffichageMesCartes = new ControlleurAffichageMesCartes(this);
+        setContentView(R.layout.affichagemesdecks);
+        this.controlleurAffichageMesDecks = new ControlleurAffichageMesDecks(this);
     }
+
 }
