@@ -1,5 +1,6 @@
 package com.example.appyugioh.controlleur;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -76,6 +77,7 @@ public class ControlleurMainActivity {
         MenuItem menuItem6 = menu.findItem(R.id.menu_bouton_enregistrer_carte);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     public void observateur()
     {
 

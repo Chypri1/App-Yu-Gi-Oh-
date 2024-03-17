@@ -55,14 +55,13 @@ public class AccesExterneRest {
         this.scrollView=scrollView;
 
         btn_prev.setOnClickListener(v -> {
-            Log.d("AccesExterneRest", "Bouton précédent cliqué");
             loadPreviousImages();
         });
         btn_next.setOnClickListener(v -> {
-            Log.d("AccesExterneRest", "Bouton suivant cliqué");
             loadNextImages();
         });
     }
+
 
     public void appRest(String nomCarte, LinearLayout layoutResultatRecherche, Activity activity) {
         this.layoutResultatRecherche = layoutResultatRecherche;
@@ -70,6 +69,7 @@ public class AccesExterneRest {
 
         executorService.execute(() -> {
             List<CarteYuGiOh> listeCarteYuGiOh = new ArrayList<>();
+            currentPage=0;
 
             try {
                 URL url = new URL(API_URL + "?fname=" + nomCarte + "&language=fr");
@@ -108,10 +108,6 @@ public class AccesExterneRest {
         int startIndex = page * IMAGES_PER_PAGE;
         int endIndex = Math.min((page + 1) * IMAGES_PER_PAGE, finalListeCarteYuGiOh.size());
         int totalImages = endIndex - startIndex;
-        Log.d("TOTAL", String.valueOf(totalImages));
-        Log.d("startIndex", String.valueOf(startIndex));
-        Log.d("endIndex", String.valueOf(endIndex));
-        Log.d("TAILLE", String.valueOf(finalListeCarteYuGiOh.size()));
 
         int buttonSizePx = convertDpToPx(BUTTON_SIZE_DP);
         int buttonsPerRow = 3;

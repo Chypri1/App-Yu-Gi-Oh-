@@ -28,16 +28,16 @@ public class MappeurCarteRest2CarteYuGiOh {
 
     public CarteYuGiOh mapperCarteRest2CarteYuGiOh(JSONObject carteRest) throws JSONException {
         CarteYuGiOh carteYuGiOh;
-        if(carteRest.getString("type").contains("monster"))
+        if(carteRest.getString("type").contains("Monster"))
         {
 
-            if(carteRest.getString("frametype").contentEquals("link"))
+            if(carteRest.getString("frameType").contentEquals("Link"))
             {
                 carteYuGiOh = new CarteLink();
                 ((CarteLink) carteYuGiOh).setAttaque(carteRest.optInt("atk", 0));
                 ((CarteLink) carteYuGiOh).setAttribut(carteRest.getString("attribute"));
                 ((CarteLink) carteYuGiOh).setNombreLien(carteRest.optInt("level", 0));
-                ((CarteLink) carteYuGiOh).setListeEmplacementMarqueurs((List<String>) carteRest.getJSONArray("linkmarkers"));
+                // ((CarteLink) carteYuGiOh).setListeEmplacementMarqueurs((List<String>) carteRest.getJSONArray("linkmarkers"));
 
             }
             else
@@ -56,11 +56,20 @@ public class MappeurCarteRest2CarteYuGiOh {
         }
         carteYuGiOh.setNom(carteRest.getString("name"));
         carteYuGiOh.setType(carteRest.getString("type"));
-        carteYuGiOh.setTypeFrame(carteRest.getString("typeframe"));
-        carteYuGiOh.setArchetype(carteRest.getString("archetype"));
+        carteYuGiOh.setTypeFrame(carteRest.getString("frameType"));
+        if (carteRest.has("archetype")) {
+            carteYuGiOh.setArchetype(carteRest.getString("archetype"));
+        }
         carteYuGiOh.setDesc(carteRest.getString("desc"));
         carteYuGiOh.setRace(carteRest.getString("race"));
-        carteYuGiOh.setListeEdition((List<Edition>) carteRest.getJSONArray("card_set")); // revoir pour les editions
+        JSONArray cardSetArray = carteRest.getJSONArray("card_sets");
+        List<Edition> listeEdition = new ArrayList<>();
+        for (int i = 0; i < cardSetArray.length(); i++) {
+            JSONObject editionObj = cardSetArray.getJSONObject(i);
+            Edition edition = new Edition(editionObj.getString("set_name"),editionObj.getString("set_code"),editionObj.getString("set_rarity"),Float.parseFloat(editionObj.getString("set_price")));
+            listeEdition.add(edition);
+        }
+        carteYuGiOh.setListeEdition(listeEdition);
         // Gérer les images
         JSONArray cardImages = carteRest.getJSONArray("card_images");
         if (cardImages.length() > 0) {
