@@ -13,7 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.appyugioh.R;
+import com.example.appyugioh.modele.mappeur.MappeurCarteJson2CarteYuGiOh;
+import com.example.appyugioh.modele.mappeur.MappeurCarteRest2CarteYuGiOh;
+import com.example.appyugioh.modele.metier.CarteMonstre;
+import com.example.appyugioh.modele.metier.CarteYuGiOh;
 import com.example.appyugioh.modele.metier.Deck;
+import com.example.appyugioh.modele.metier.Edition;
 import com.example.appyugioh.vue.AffichageUnDeck;
 import com.example.appyugioh.vue.RechercheDeck;
 
@@ -34,11 +39,7 @@ import java.util.List;
 
 public class ComportementAffichageMesDecks {
 
-    public LinearLayout layoutResultatRecherche;
 
-    public ComportementAffichageMesDecks(LinearLayout layoutResultatRecherche) {
-        this.layoutResultatRecherche = layoutResultatRecherche;
-    }
     public void afficherDecks(LinearLayout layoutResultatRecherche, Activity activite) {
         List<Deck> decks = new ArrayList<>();
         try {
@@ -63,10 +64,26 @@ public class ComportementAffichageMesDecks {
             // Analyser le contenu JSON en une liste de decks
             JSONArray jsonArray = new JSONArray(stringBuilder.toString());
             for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Deck deck = new Deck();
-                deck.setNom(jsonObject.getString("nom"));
-                decks.add(deck);
+                try {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    Deck deck = new Deck();
+                    deck.setNom(jsonObject.getString("nom"));
+
+                    JSONArray listeCartesJson = jsonObject.getJSONArray("listeCartes");
+                    List<CarteYuGiOh> listeCartes = new ArrayList<>();
+                    for (int j = 0; j < listeCartesJson.length(); j++) {
+                        JSONObject carteJson = listeCartesJson.getJSONObject(j);
+                        // Créer un objet CarteYuGiOh et le remplir avec les données JSON
+                        MappeurCarteJson2CarteYuGiOh mappeurCarteRest2CarteYuGiOh = new MappeurCarteJson2CarteYuGiOh();
+                        CarteYuGiOh carte = mappeurCarteRest2CarteYuGiOh.mapperCarteRest2CarteYuGiOh(carteJson);
+                        listeCartes.add(carte);
+                    }
+                    deck.setListeCarteYuGiOh(listeCartes);
+                    decks.add(deck);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("DeckManager", "Erreur lors de la lecture du deck JSON");
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -82,13 +99,14 @@ public class ComportementAffichageMesDecks {
                 TextView textPrix = deckView.findViewById(R.id.textPrix);
                 textNomDeck.setText(deck.getNom());
                 textNombreCartes.setText("Nombre de cartes: " + deck.getListeCarteYuGiOh().size());
-                textPrix.setText("Prix: $" + 20);
+                textPrix.setText("Prix: $" + "prix qu'il faut mettre");
                 layoutResultatRecherche.addView(deckView);
 
                 deckView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent affichageUnDeck = new Intent(activite.getApplicationContext(), AffichageUnDeck.class);
+                        affichageUnDeck.putExtra("deck",deck);
                         activite.startActivity(affichageUnDeck);
                         activite.finish();
                     }
@@ -124,40 +142,56 @@ public class ComportementAffichageMesDecks {
     }
 
 
-    private void saveDecksToFile(List<Deck> decks, Activity activite) {
+    public void saveDecksToFile(List<Deck> decks, Activity activite) {
         // Création du fichier JSONArray pour stocker les informations des decks
         JSONArray jsonArray = new JSONArray();
 
-        // Récupération du fichier de decks s'il existe
-        File jsonFile = new File(activite.getFilesDir(), "decks.json");
-
-        // Vérification de l'existence du fichier
-        if (jsonFile.exists()) {
-            // Si le fichier existe, essayez de le lire
-            try {
-                BufferedReader bufferedReader = new BufferedReader(new FileReader(jsonFile));
-                StringBuilder stringBuilder = new StringBuilder();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-                bufferedReader.close();
-
-                // Convertir la chaîne JSON en un JSONArray
-                jsonArray = new JSONArray(stringBuilder.toString());
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-                Log.e("DeckManager", "Erreur lors de la lecture du fichier JSON");
-                return;
-            }
-        }
-
-        // Ajouter les informations du nouveau deck à la JSONArray
+        // Ajouter les informations de chaque nouveau deck à la JSONArray
         for (Deck deck : decks) {
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("nom", deck.getNom());
                 jsonObject.put("nombreCartes", deck.getListeCarteYuGiOh().size());
+
+                // Créer un tableau JSON pour stocker les informations sur chaque carte
+                JSONArray cartesArray = new JSONArray();
+                for (CarteYuGiOh carte : deck.getListeCarteYuGiOh()) {
+                    JSONObject carteJson = new JSONObject();
+
+                    // Ajouter les informations de la carte à l'objet JSON représentant la carte
+                    // Vous devez remplacer ces valeurs par les propriétés réelles de votre objet CarteYuGiOh
+                    carteJson.put("name", carte.getNom());
+                    carteJson.put("lienImage", carte.getLienImage());
+                    carteJson.put("desc", carte.getDesc());
+                    carteJson.put("type", carte.getType());
+                    carteJson.put("frameType",carte.getTypeFrame());
+                    carteJson.put("race",carte.getRace());
+                    carteJson.put("atk",((CarteMonstre) carte).getAttaque());
+                    carteJson.put("def",((CarteMonstre) carte).getDefense());
+                    carteJson.put("attribute",((CarteMonstre) carte).getAttribut());
+                    carteJson.put("level",((CarteMonstre) carte).getNiveau());
+                    JSONArray listeEdition = new JSONArray();
+                    for(Edition edition:carte.getListeEdition())
+                    {
+                        JSONObject editionJson = new JSONObject();
+                        editionJson.put("nom",edition.getNom());
+                        editionJson.put("code",edition.getCode());
+                        editionJson.put("rarete",edition.getRarete());
+                        editionJson.put("prix",edition.getPrix());
+                        listeEdition.put(editionJson);
+                    }
+                    carteJson.put("editionCarte",listeEdition);
+
+                    // mettre liste des editions
+
+                    // Ajouter l'objet JSON représentant la carte au tableau JSON
+                    cartesArray.put(carteJson);
+                }
+
+                // Ajouter le tableau JSON des cartes au deck JSON
+                jsonObject.put("listeCartes", cartesArray);
+
+                // Ajouter le deck JSON au tableau JSON principal
                 jsonArray.put(jsonObject);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -167,7 +201,7 @@ public class ComportementAffichageMesDecks {
 
         // Enregistrer la JSONArray mise à jour dans le fichier
         try {
-            FileWriter fileWriter = new FileWriter(jsonFile);
+            FileWriter fileWriter = new FileWriter(new File(activite.getFilesDir(), "decks.json"));
             fileWriter.write(jsonArray.toString());
             fileWriter.close();
         } catch (IOException e) {
@@ -175,6 +209,7 @@ public class ComportementAffichageMesDecks {
             Log.e("DeckManager", "Erreur lors de l'enregistrement des decks dans le fichier JSON");
         }
     }
+
 
     @SuppressLint("MissingInflatedId")
     public void afficherPopupNouveauDeck(Activity activite,LinearLayout layoutResultatRecherche) {
