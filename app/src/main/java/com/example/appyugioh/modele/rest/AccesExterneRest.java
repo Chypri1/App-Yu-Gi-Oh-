@@ -64,12 +64,14 @@ public class AccesExterneRest {
         });
     }
 
+
     public void appRest(String nomCarte, LinearLayout layoutResultatRecherche, Activity activity) {
         this.layoutResultatRecherche = layoutResultatRecherche;
         this.activity = activity;
 
         executorService.execute(() -> {
             List<CarteYuGiOh> listeCarteYuGiOh = new ArrayList<>();
+            currentPage=0;
 
             try {
                 URL url = new URL(API_URL + "?fname=" + nomCarte + "&language=fr");
