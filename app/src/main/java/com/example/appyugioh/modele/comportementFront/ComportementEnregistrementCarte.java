@@ -100,7 +100,7 @@ public class ComportementEnregistrementCarte {
     }
 
     // Méthode pour enregistrer un objet JSON dans un fichier
-    private String saveJSONObjectToFile(JSONObject jsonObject, Activity activity) {
+    public String saveJSONObjectToFile(JSONObject jsonObject, Activity activity) {
         try {
             // Créer un fichier dans le répertoire des fichiers de l'application
             File jsonFile = new File(activity.getFilesDir(), "carte.json");

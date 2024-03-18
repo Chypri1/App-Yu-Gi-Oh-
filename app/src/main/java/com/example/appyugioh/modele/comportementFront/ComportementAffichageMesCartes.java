@@ -8,7 +8,11 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.example.appyugioh.modele.mappeur.MappeurCarteJson2CarteYuGiOh;
+import com.example.appyugioh.modele.metier.CarteYuGiOh;
 import com.example.appyugioh.vue.AffichageUneCarte;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,10 +51,8 @@ public class ComportementAffichageMesCartes
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                // Récupérer les informations de la carte
-                String nomCarte = jsonObject.getString("nomCarte");
-                String nomEdition = jsonObject.getString("nomEdition");
-                String imagePath = jsonObject.getString("imagePath");
+                MappeurCarteJson2CarteYuGiOh mappeurCarteJson2CarteYuGiOh = new MappeurCarteJson2CarteYuGiOh();
+                CarteYuGiOh carteYuGiOh = mappeurCarteJson2CarteYuGiOh.mapperCarteRest2CarteYuGiOh(jsonObject);
 
                 // Créer un bouton d'image pour afficher la carte
                 ImageButton imageButton = new ImageButton(activity);
@@ -60,13 +62,16 @@ public class ComportementAffichageMesCartes
                 );
                 imageButton.setLayoutParams(layoutParams);
 
-                // Charger l'image depuis le chemin de l'image
-                Bitmap imageBitmap = BitmapFactory.decodeFile(imagePath);
-
-                Bitmap imageBitmapResized = resizeBitmap(imageBitmap, 1.3f);
-
-                // Afficher l'image dans le bouton d'image
-                imageButton.setImageBitmap(imageBitmapResized);
+                // Extraire le chemin de l'image de l'intention
+                String imagePath;
+                if(!carteYuGiOh.getLienImage().contains("https"))
+                {
+                    Picasso.get().load(new File(carteYuGiOh.getLienImage())).resize(550,800).into(imageButton);
+                }
+                else
+                {
+                    Picasso.get().load(carteYuGiOh.getLienImage()).resize(550,800).into(imageButton);
+                }
 
                 // Ajouter un écouteur de clic au bouton d'image
                 imageButton.setOnClickListener(new View.OnClickListener() {
@@ -74,9 +79,7 @@ public class ComportementAffichageMesCartes
                     public void onClick(View v) {
                         // Rediriger l'utilisateur vers la page d'affichage de la carte
                         Intent affichageUneCarte = new Intent(activity, AffichageUneCarte.class);
-                        affichageUneCarte.putExtra("nomCarte", nomCarte);
-                        affichageUneCarte.putExtra("nomEdition", nomEdition);
-                        affichageUneCarte.putExtra("imagePath", imagePath);
+                        affichageUneCarte.putExtra("carteYuGiOh", carteYuGiOh);
                         activity.startActivity(affichageUneCarte);
                         activity.finish();
                     }
