@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -22,7 +23,17 @@ public class AffichageUnDeck extends Activity {
     protected NavigationView navigationView;
     protected ControlleurAffichageUnDeck controlleurAffichageUnDeck;
 
+    protected TextView texteTitreDeck;
+
     protected Button boutonAjoutUneCarte;
+
+    public TextView getTexteTitreDeck() {
+        return texteTitreDeck;
+    }
+
+    public void setTexteTitreDeck(TextView texteTitreDeck) {
+        this.texteTitreDeck = texteTitreDeck;
+    }
 
     public DrawerLayout getDrawerLayout() {
         return drawerLayout;

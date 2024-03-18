@@ -67,7 +67,7 @@ public class ControlleurAffichageMesCartes {
         activite.setDrawerLayout( activite.findViewById(R.id.drawerLayout));
         activite.setLayoutResultatRecherche(activite.findViewById(R.id.layoutResultatRecherche));
         activite.setComportementAffichageMesCartes(new ComportementAffichageMesCartes());
-
+        activite.setRechercheCarte(activite.findViewById(R.id.rechercheCarte));
         activite.setNavigationView(activite.findViewById(R.id.nav_view));
         Menu menu = activite.getNavigationView().getMenu();
         MenuItem menuItem1 = menu.findItem(R.id.menu_bouton_recherche_carte);
@@ -89,6 +89,21 @@ public class ControlleurAffichageMesCartes {
     public void observateur()
     {
 
+        activite.getRechercheCarte().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                // Vérifiez si l'EditText a le focus
+                if (hasFocus) {
+                    // Si oui, effacez le texte par défaut
+                    activite.getRechercheCarte().getText().clear();
+                } else {
+                    // Si non, réinitialisez le texte par défaut si le champ est vide
+                    if (activite.getRechercheCarte().getText().toString().isEmpty()) {
+                        activite.getRechercheCarte().setText("nom Carte");
+                    }
+                }
+            }
+        });
         activite.getNavigationView().setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             @Override

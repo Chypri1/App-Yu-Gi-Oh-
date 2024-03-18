@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.core.view.GravityCompat;
@@ -26,9 +27,19 @@ public class AffichageMesDecks extends Activity {
 
     protected NavigationView navigationView;
 
+    protected EditText rechercheCarte;
+
     protected Button BoutonNouveauDeck;
 
     protected ControlleurAffichageMesDecks controlleurAffichageMesDecks;
+
+    public EditText getRechercheCarte() {
+        return rechercheCarte;
+    }
+
+    public void setRechercheCarte(EditText rechercheCarte) {
+        this.rechercheCarte = rechercheCarte;
+    }
 
     public Button getBoutonNouveauDeck() {
         return BoutonNouveauDeck;

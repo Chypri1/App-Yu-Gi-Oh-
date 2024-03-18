@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -26,10 +27,20 @@ public class AffichageMesCartes extends Activity {
 
     protected NavigationView navigationView;
 
+    protected EditText rechercheCarte;
+
     protected ComportementAffichageMesCartes comportementAffichageMesCartes;
 
 
     protected ControlleurAffichageMesCartes controlleurAffichageMesCartes;
+
+    public EditText getRechercheCarte() {
+        return rechercheCarte;
+    }
+
+    public void setRechercheCarte(EditText rechercheCarte) {
+        this.rechercheCarte = rechercheCarte;
+    }
 
     public DrawerLayout getDrawerLayout() {
         return drawerLayout;

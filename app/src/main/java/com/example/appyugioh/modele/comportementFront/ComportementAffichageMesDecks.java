@@ -166,10 +166,12 @@ public class ComportementAffichageMesDecks {
                     carteJson.put("type", carte.getType());
                     carteJson.put("frameType",carte.getTypeFrame());
                     carteJson.put("race",carte.getRace());
-                    carteJson.put("atk",((CarteMonstre) carte).getAttaque());
-                    carteJson.put("def",((CarteMonstre) carte).getDefense());
-                    carteJson.put("attribute",((CarteMonstre) carte).getAttribut());
-                    carteJson.put("level",((CarteMonstre) carte).getNiveau());
+                    if(carte.getType().contains("Monster")) {
+                        carteJson.put("atk", ((CarteMonstre) carte).getAttaque());
+                        carteJson.put("def", ((CarteMonstre) carte).getDefense());
+                        carteJson.put("attribute", ((CarteMonstre) carte).getAttribut());
+                        carteJson.put("level", ((CarteMonstre) carte).getNiveau());
+                    }
                     JSONArray listeEdition = new JSONArray();
                     for(Edition edition:carte.getListeEdition())
                     {
