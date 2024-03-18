@@ -45,6 +45,7 @@ public class AccesExterneRest {
     private final Button btn_next;
     private int currentPage = 0;
     private List<CarteYuGiOh> finalListeCarteYuGiOh;
+    private List<CarteYuGiOh> listeFiltreCarteYuGiOh;
     private LinearLayout layoutResultatRecherche;
     private ScrollView scrollView;
     private Activity activity;
@@ -58,8 +59,14 @@ public class AccesExterneRest {
         return finalListeCarteYuGiOh;
     }
 
-    public void setFinalListeCarteYuGiOh(List<CarteYuGiOh> finalListeCarteYuGiOh) {
-        this.finalListeCarteYuGiOh = finalListeCarteYuGiOh;
+    public List<CarteYuGiOh> getListeFiltreCarteYuGiOh() {
+        return listeFiltreCarteYuGiOh;
+    }
+
+    public void setListeFiltreCarteYuGiOh(List<CarteYuGiOh> listeFiltreCarteYuGiOh) {
+        this.listeFiltreCarteYuGiOh = listeFiltreCarteYuGiOh;
+        currentPage=0;
+        afficher_carte(currentPage);
     }
 
     public AccesExterneRest(Button btn_prev, Button btn_next, ScrollView scrollView) {
@@ -109,6 +116,7 @@ public class AccesExterneRest {
             }
 
             finalListeCarteYuGiOh = listeCarteYuGiOh;
+            listeFiltreCarteYuGiOh = listeCarteYuGiOh;
             afficher_carte(currentPage);
         });
     }
@@ -146,17 +154,19 @@ public class AccesExterneRest {
             }
 
             finalListeCarteYuGiOh = listeCarteYuGiOh;
+            listeFiltreCarteYuGiOh = listeCarteYuGiOh;
             afficher_carte(currentPage);
         });
     }
 
     private void afficher_carte(int page) {
-        if (finalListeCarteYuGiOh == null || finalListeCarteYuGiOh.isEmpty()) {
+        if (listeFiltreCarteYuGiOh == null || listeFiltreCarteYuGiOh.isEmpty()) {
+            layoutResultatRecherche.removeAllViews();
             return;
         }
 
         int startIndex = page * IMAGES_PER_PAGE;
-        int endIndex = Math.min((page + 1) * IMAGES_PER_PAGE, finalListeCarteYuGiOh.size());
+        int endIndex = Math.min((page + 1) * IMAGES_PER_PAGE, listeFiltreCarteYuGiOh.size());
         int totalImages = endIndex - startIndex;
 
         int buttonSizePx = convertDpToPx(BUTTON_SIZE_DP);
@@ -168,15 +178,12 @@ public class AccesExterneRest {
                 Log.e("AccesExterneRest", "layoutResultatRecherche est null");
                 return;
             }
-
-            // Définir la position de défilement à 0
-            layoutResultatRecherche.scrollTo(0, 0);
             layoutResultatRecherche.removeAllViews();
 
             LinearLayout rowLayout = null;
 
             for (int i = startIndex; i < endIndex; i++) {
-                CarteYuGiOh carteYuGiOh = finalListeCarteYuGiOh.get(i);
+                CarteYuGiOh carteYuGiOh = listeFiltreCarteYuGiOh.get(i);
 
                 if (i % buttonsPerRow == 0) {
                     rowLayout = new LinearLayout(activity);
@@ -206,7 +213,7 @@ public class AccesExterneRest {
             }
 
             // Afficher les boutons suivant et précédent si nécessaire
-            if (finalListeCarteYuGiOh.size()>IMAGES_PER_PAGE) {
+            if (listeFiltreCarteYuGiOh.size()>IMAGES_PER_PAGE) {
                 btn_prev.setVisibility(View.VISIBLE);
                 btn_next.setVisibility(View.VISIBLE);
             } else {
@@ -226,8 +233,8 @@ public class AccesExterneRest {
     }
 
     private void loadNextImages() {
-        if (finalListeCarteYuGiOh != null && !finalListeCarteYuGiOh.isEmpty()) {
-            if (currentPage < finalListeCarteYuGiOh.size() / IMAGES_PER_PAGE) {
+        if (listeFiltreCarteYuGiOh != null && !listeFiltreCarteYuGiOh.isEmpty()) {
+            if (currentPage < listeFiltreCarteYuGiOh.size() / IMAGES_PER_PAGE) {
                 currentPage++;
                 afficher_carte(currentPage);
             }

@@ -38,20 +38,20 @@
             android:gravity="center">
 
             <CheckBox
-                android:id="@+id/monstre"
+                android:id="@+id/monster"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/monstre"
                 android:layout_marginEnd="8dp"/>
             <CheckBox
-                android:id="@+id/magie"
+                android:id="@+id/spell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/magie"
                 android:layout_marginEnd="8dp"/>
 
             <CheckBox
-                android:id="@+id/piege"
+                android:id="@+id/trap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/piege" />
@@ -237,22 +237,28 @@
             android:gravity="center">
 
             <CheckBox
-                android:id="@+id/monstre_normal"
+                android:id="@+id/normal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/normal" />
 
             <CheckBox
-                android:id="@+id/monstre_effet"
+                android:id="@+id/effect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/effet" />
 
             <CheckBox
-                android:id="@+id/monstre_rituel"
+                android:id="@+id/ritual"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/rituel" />
+
+            <CheckBox
+                android:id="@+id/fusion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fusion" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -261,76 +267,28 @@
             android:gravity="center">
 
             <CheckBox
-                android:id="@+id/monstre_fusion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fusion" />
-
-            <CheckBox
-                android:id="@+id/monstre_synchro"
+                android:id="@+id/synchro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/synchro" />
 
             <CheckBox
-                android:id="@+id/monstre_xyz"
+                android:id="@+id/xyz"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/xyz" />
 
             <CheckBox
-                android:id="@+id/monstre_link"
+                android:id="@+id/pendulum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pendule" />
+
+            <CheckBox
+                android:id="@+id/link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/link" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-            <CheckBox
-                android:id="@+id/monstre_normal_pendule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/normal_pendule" />
-
-            <CheckBox
-                android:id="@+id/monstre_effet_pendule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/effet_pendule" />
-
-            <CheckBox
-                android:id="@+id/monstre_rituel_pendule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rituel_pendule" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-            <CheckBox
-                android:id="@+id/monstre_fusion_pendule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fusion_pendule" />
-
-            <CheckBox
-                android:id="@+id/monstre_synchro_pendule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/synchro_pendule" />
-
-            <CheckBox
-                android:id="@+id/monstre_xyz_pendule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/xyz_pendule" />
         </LinearLayout>
     </LinearLayout>
     <!--Layout Classification Lien-->
@@ -412,21 +370,21 @@
             android:gravity="center">
 
             <CheckBox
-                android:id="@+id/link_marque_HG"
+                android:id="@+id/Top_Left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/haut_gauche" />
+                android:text="@string/top_bottom" />
 
             <CheckBox
-                android:id="@+id/link_marque_H"
+                android:id="@+id/Top"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/haut" />
+                android:text="@string/top" />
             <CheckBox
-                android:id="@+id/link_marque_HD"
+                android:id="@+id/Top_Right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/haut_droite" />
+                android:text="@string/top_right" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -435,16 +393,16 @@
             android:gravity="center">
 
             <CheckBox
-                android:id="@+id/link_marque_G"
+                android:id="@+id/Left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/gauche" />
+                android:text="@string/left" />
 
             <CheckBox
-                android:id="@+id/link_marque_D"
+                android:id="@+id/Right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/droite" />
+                android:text="@string/right" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -452,20 +410,20 @@
             android:orientation="horizontal"
             android:gravity="center">
             <CheckBox
-                android:id="@+id/link_marque_BG"
+                android:id="@+id/Bottom_Left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/bas_gauche" />
+                android:text="@string/bottom_left" />
             <CheckBox
-                android:id="@+id/link_marque_B"
+                android:id="@+id/Bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/bas" />
+                android:text="@string/bottom" />
             <CheckBox
-                android:id="@+id/link_marque_BD"
+                android:id="@+id/Bottom_Right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/bas_droite" />
+                android:text="@string/bottom_right" />
         </LinearLayout>
     </LinearLayout>
     <!--Layout Type Magie-->
@@ -492,19 +450,19 @@
             android:gravity="center">
 
             <CheckBox
-                android:id="@+id/magie_normale"
+                android:id="@+id/Normal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/normale" />
 
             <CheckBox
-                android:id="@+id/magie_terrain"
+                android:id="@+id/Field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/terrain" />
 
             <CheckBox
-                android:id="@+id/magie_equipement"
+                android:id="@+id/Equip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/equipement" />
@@ -516,19 +474,19 @@
             android:gravity="center">
 
             <CheckBox
-                android:id="@+id/magie_continue"
+                android:id="@+id/Continuous"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/continu_e" />
 
             <CheckBox
-                android:id="@+id/magie_rapide"
+                android:id="@+id/Quick_Play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/rapide" />
 
             <CheckBox
-                android:id="@+id/magie_rituel"
+                android:id="@+id/Ritual"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/rituel" />
@@ -603,19 +561,19 @@
                 android:id="@+id/attribut_feu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/feu" />
+                android:text="Fire" />
 
             <CheckBox
                 android:id="@+id/attribut_eau"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/eau" />
+                android:text="Water" />
 
             <CheckBox
                 android:id="@+id/attribut_terre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/terre" />
+                android:text="Earth" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -627,24 +585,24 @@
                 android:id="@+id/attribut_vent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/vent" />
+                android:text="Wind" />
 
             <CheckBox
                 android:id="@+id/attribut_lumiere"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lumiere" />
+                android:text="Light" />
 
             <CheckBox
                 android:id="@+id/attribut_tenebre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tenebre" />
+                android:text="Dark" />
             <CheckBox
                 android:id="@+id/attribut_divin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/divin" />
+                android:text="Divine" />
         </LinearLayout>
     </LinearLayout>
     <!--Layout Race du monstre-->

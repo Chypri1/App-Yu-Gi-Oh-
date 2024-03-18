@@ -45,12 +45,7 @@
     <string name="xyz">XYZ</string>
     <string name="fusion">Fusion</string>
     <string name="link">Link</string>
-    <string name="normal_pendule">Normal Pendule</string>
-    <string name="effet_pendule">Effet Pendule</string>
-    <string name="rituel_pendule">Rituel Pendule</string>
-    <string name="fusion_pendule">Fusion Pendule</string>
-    <string name="synchro_pendule">Synchro Pendule</string>
-    <string name="xyz_pendule">XYZ Pendule</string>
+    <string name="pendule">Pendule</string>
     <string name="type_monstre">Type Monstre</string>
     <string name="rapide">Rapide</string>
     <string name="continu_e">Continue</string>
@@ -92,4 +87,12 @@
     <string name="feu">FEU</string>
     <string name="eau">EAU</string>
     <string name="reset">Reset</string>
+    <string name="top_bottom">Top-Bottom</string>
+    <string name="top">Top</string>
+    <string name="top_right">Top-Right</string>
+    <string name="left">Left</string>
+    <string name="right">Right</string>
+    <string name="bottom_left">Bottom-Left</string>
+    <string name="bottom">Bottom</string>
+    <string name="bottom_right">Bottom-Right</string>
 </resources>

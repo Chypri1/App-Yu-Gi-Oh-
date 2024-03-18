@@ -44,7 +44,7 @@ public class Filtre{
 
     public CheckBox getCheckBoxCardType(String label) {
         for (CheckBox checkBox : checkBoxCardType) {
-            if (checkBox.getText().toString().equals(label)) {
+            if (checkBox.getText().toString().equalsIgnoreCase(label)) {
                 return checkBox;
             }
         }
@@ -138,5 +138,27 @@ public class Filtre{
 
     public void setLayoutRace(LinearLayout layoutRace) {
         this.layoutRace = layoutRace;
+    }
+    public List<CheckBox> getCheckBoxesForFilter(String filterOption) {
+        switch (filterOption) {
+            case "type":
+                return checkBoxCardType;
+            case "monstre":
+                return checkBoxMonsterType;
+            case "spell":
+                return checkBoxSpellType;
+            case "trap":
+                return checkBoxTrapType;
+            case "level":
+                return checkBoxLevel;
+            case "link_class":
+                return checkBoxLinkClass;
+            case "link_mark":
+                return checkBoxLinkMark;
+            case "attribut":
+                return checkBoxAttribut;
+            default:
+                return new ArrayList<>(); // Retourne une liste vide si l'option de filtre est inconnue
+        }
     }
 }

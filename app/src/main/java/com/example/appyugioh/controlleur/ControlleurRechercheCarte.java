@@ -210,6 +210,7 @@ public class ControlleurRechercheCarte {
             @Override
             public void onClick(View v) {
                 comportementRechercheCarte.masquerClavier(activite);
+                comportementFiltre.reset(filtre);
                 activite.getLayoutResultatRecherche().removeAllViews();
                 accesExterneRest.appRest(activite.getRechercheCarte().getText().toString(), activite.getLayoutResultatRecherche(),activite);
             }
@@ -292,34 +293,7 @@ public class ControlleurRechercheCarte {
                     @Override
                     public void onClick(View v) {
                         // Décocher toutes les cases de chaque layout
-                        Log.d("RESET","JE CLIQUE FORT");
-                        for (CheckBox checkBox : filtre.getCheckBoxCardType()) {
-                            checkBox.setChecked(false);
-                        }
-                        for (CheckBox checkBox : filtre.getCheckBoxLevel()) {
-                            checkBox.setChecked(false);
-                        }
-                        for (CheckBox checkBox : filtre.getCheckBoxMonsterType()) {
-                            checkBox.setChecked(false);
-                        }
-                        for (CheckBox checkBox : filtre.getCheckBoxSpellType()) {
-                            checkBox.setChecked(false);
-                        }
-                        for (CheckBox checkBox : filtre.getCheckBoxTrapType()) {
-                            checkBox.setChecked(false);
-                        }
-                        for (CheckBox checkBox : filtre.getCheckBoxLinkClass()) {
-                            checkBox.setChecked(false);
-                        }
-                        for (CheckBox checkBox : filtre.getCheckBoxLinkMark()) {
-                            checkBox.setChecked(false);
-                        }
-                        for (CheckBox checkBox : filtre.getCheckBoxAttribut()) {
-                            checkBox.setChecked(false);
-                        }
-                        for (CheckBox checkBox : filtre.getCheckBoxRace()) {
-                            checkBox.setChecked(false);
-                        }
+                        comportementFiltre.reset(filtre);
                     }
                 });
 
@@ -327,7 +301,7 @@ public class ControlleurRechercheCarte {
                 filtre.getBtnOk().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        comportementFiltre.filtre(filtre);
+                        comportementFiltre.filtre(filtre,accesExterneRest);
                         activite.getDialog().dismiss();
                     }
                 });
@@ -339,9 +313,9 @@ public class ControlleurRechercheCarte {
                         activite.getDialog().dismiss();
                     }
                 });
-                CheckBox monstre=layoutFiltrage.findViewById(R.id.monstre);
-                CheckBox magie=layoutFiltrage.findViewById(R.id.magie);
-                CheckBox piege=layoutFiltrage.findViewById(R.id.piege);
+                CheckBox monstre=layoutFiltrage.findViewById(R.id.monster);
+                CheckBox magie=layoutFiltrage.findViewById(R.id.spell);
+                CheckBox piege=layoutFiltrage.findViewById(R.id.trap);
                 monstre.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -355,6 +329,18 @@ public class ControlleurRechercheCarte {
                             filtre.getLayoutMonsterType().setVisibility(View.GONE);
                             filtre.getLayoutLevel().setVisibility(View.GONE);
                             filtre.getLayoutAttribut().setVisibility(View.GONE);
+                            for (CheckBox checkBox : filtre.getCheckBoxLevel()) {
+                                checkBox.setChecked(false);
+                            }
+                            for (CheckBox checkBox : filtre.getCheckBoxMonsterType()) {
+                                checkBox.setChecked(false);
+                            }
+                            for (CheckBox checkBox : filtre.getCheckBoxAttribut()) {
+                                checkBox.setChecked(false);
+                            }
+                            for (CheckBox checkBox : filtre.getCheckBoxRace()) {
+                                checkBox.setChecked(false);
+                            }
                         }
                     }
                 });
@@ -368,6 +354,10 @@ public class ControlleurRechercheCarte {
                         } else {
                             // Checkbox non cochée, masquer les layouts
                             filtre.getLayoutSpellType().setVisibility(View.GONE);
+                            for (CheckBox checkBox : filtre.getCheckBoxSpellType()) {
+                                checkBox.setChecked(false);
+                            }
+
                         }
                     }
                 });
@@ -380,6 +370,9 @@ public class ControlleurRechercheCarte {
                         } else {
                             // Checkbox non cochée, masquer les layouts
                             filtre.getLayoutTrapType().setVisibility(View.GONE);
+                            for (CheckBox checkBox : filtre.getCheckBoxTrapType()) {
+                                checkBox.setChecked(false);
+                            }
                         }
                     }
                 });
