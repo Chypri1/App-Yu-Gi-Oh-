@@ -16,9 +16,12 @@ import androidx.core.view.GravityCompat;
 import com.example.appyugioh.R;
 import com.example.appyugioh.modele.comportementFront.ComportementAffichageMesCartes;
 import com.example.appyugioh.modele.comportementFront.ComportementAffichageMesDecks;
+import com.example.appyugioh.modele.comportementFront.ComportementEnregistrementCarte;
 import com.example.appyugioh.modele.comportementFront.ComportementMenu;
+import com.example.appyugioh.modele.metier.CarteMonstre;
 import com.example.appyugioh.modele.metier.CarteYuGiOh;
 import com.example.appyugioh.modele.metier.Deck;
+import com.example.appyugioh.modele.metier.Edition;
 import com.example.appyugioh.modele.rest.AccesExterneRest;
 import com.example.appyugioh.vue.AffichageUneCarte;
 import com.example.appyugioh.modele.comportementFront.OnSwipeTouchListener;
@@ -26,6 +29,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -234,6 +238,7 @@ public class ControlleurAffichageUneCarte {
         for (Deck deck : decks) {
             nomsDecks.add(deck.getNom());
         }
+        nomsDecks.add("Mes cartes");
 
         // Créer une popup avec la liste des noms de decks
         AlertDialog.Builder builder = new AlertDialog.Builder(activite);
@@ -260,10 +265,46 @@ public class ControlleurAffichageUneCarte {
                     // Enregistrer les modifications dans le fichier JSON
                     ComportementAffichageMesDecks comportementAffichageMesDecks = new ComportementAffichageMesDecks();
                     comportementAffichageMesDecks.saveDecksToFile(decks, activite);
+
+                } else if (nomDeckSelectionne == "Mes cartes") {
+                    ComportementEnregistrementCarte comportementEnregistrementCarte = new ComportementEnregistrementCarte();
+                    JSONObject carteJson = new JSONObject();
+                    try {
+
+
+                        // Ajouter les informations de la carte à l'objet JSON représentant la carte
+                        // Vous devez remplacer ces valeurs par les propriétés réelles de votre objet CarteYuGiOh
+
+                        carteJson.put("name", carteYuGiOh.getNom());
+
+                        carteJson.put("lienImage", carteYuGiOh.getLienImage());
+                        carteJson.put("desc", carteYuGiOh.getDesc());
+                        carteJson.put("type", carteYuGiOh.getType());
+                        carteJson.put("frameType", carteYuGiOh.getTypeFrame());
+                        carteJson.put("race", carteYuGiOh.getRace());
+                        carteJson.put("atk", ((CarteMonstre) carteYuGiOh).getAttaque());
+                        carteJson.put("def", ((CarteMonstre) carteYuGiOh).getDefense());
+                        carteJson.put("attribute", ((CarteMonstre) carteYuGiOh).getAttribut());
+                        carteJson.put("level", ((CarteMonstre) carteYuGiOh).getNiveau());
+                        JSONArray listeEdition = new JSONArray();
+                        for (Edition edition : carteYuGiOh.getListeEdition()) {
+                            JSONObject editionJson = new JSONObject();
+                            editionJson.put("nom", edition.getNom());
+                            editionJson.put("code", edition.getCode());
+                            editionJson.put("rarete", edition.getRarete());
+                            editionJson.put("prix", edition.getPrix());
+                            listeEdition.put(editionJson);
+                        }
+                        carteJson.put("editionCarte", listeEdition);
+                    } catch (Exception e) {
+
+                    }
+                    comportementEnregistrementCarte.saveJSONObjectToFile(carteJson, activite);
                 } else {
                     // Gérer le cas où aucun deck correspondant n'est trouvé
                     Toast.makeText(activite, "Aucun deck correspondant trouvé", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
         builder.show();
