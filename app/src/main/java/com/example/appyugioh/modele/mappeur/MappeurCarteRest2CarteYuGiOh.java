@@ -62,14 +62,16 @@ public class MappeurCarteRest2CarteYuGiOh {
         }
         carteYuGiOh.setDesc(carteRest.getString("desc"));
         carteYuGiOh.setRace(carteRest.getString("race"));
-        JSONArray cardSetArray = carteRest.getJSONArray("card_sets");
-        List<Edition> listeEdition = new ArrayList<>();
-        for (int i = 0; i < cardSetArray.length(); i++) {
-            JSONObject editionObj = cardSetArray.getJSONObject(i);
-            Edition edition = new Edition(editionObj.getString("set_name"),editionObj.getString("set_code"),editionObj.getString("set_rarity"),Float.parseFloat(editionObj.getString("set_price")));
-            listeEdition.add(edition);
+        if (carteRest.has("card_sets")) {
+            JSONArray cardSetArray = carteRest.getJSONArray("card_sets");
+            List<Edition> listeEdition = new ArrayList<>();
+            for (int i = 0; i < cardSetArray.length(); i++) {
+                JSONObject editionObj = cardSetArray.getJSONObject(i);
+                Edition edition = new Edition(editionObj.getString("set_name"), editionObj.getString("set_code"), editionObj.getString("set_rarity"), Float.parseFloat(editionObj.getString("set_price")));
+                listeEdition.add(edition);
+            }
+            carteYuGiOh.setListeEdition(listeEdition);
         }
-        carteYuGiOh.setListeEdition(listeEdition);
         // Gérer les images
         JSONArray cardImages = carteRest.getJSONArray("card_images");
         if (cardImages.length() > 0) {

@@ -148,4 +148,7 @@ public class AffichageUneCarte extends Activity {
         controlleurAffichageUneCarte = new ControlleurAffichageUneCarte(this);
 
     }
+
+
+
 }

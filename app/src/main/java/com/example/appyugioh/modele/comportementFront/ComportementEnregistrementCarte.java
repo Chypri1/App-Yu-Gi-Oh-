@@ -77,13 +77,17 @@ public class ComportementEnregistrementCarte {
                     if (imageSavedPath != null) {
                         // Créer un objet JSON avec le nom de la carte, l'édition et l'emplacement de l'image
                         // TODO: enregistrer d'autres infos pour savoir si c'est une carte prise ne photo ou non
-                        JSONObject carteJSON = new JSONObject();
-                        carteJSON.put("nomCarte", nomCarteText);
-                        carteJSON.put("nomEdition", nomEditionText);
-                        carteJSON.put("imagePath", imageSavedPath);
+                        JSONObject carteJson = new JSONObject();
+                        carteJson.put("name", nomCarte);
+                        carteJson.put("lienImage", imageSavedPath);
+                        JSONArray listeEdition = new JSONArray();
+                        JSONObject editionJson = new JSONObject();
+                        editionJson.put("code", nomEditionText);
+                        listeEdition.put(editionJson);
+                        carteJson.put("editionCarte", listeEdition);
 
                         // Enregistrer l'objet JSON dans un fichier
-                        String jsonFilePath = saveJSONObjectToFile(carteJSON,activity);
+                        String jsonFilePath = saveJSONObjectToFile(carteJson,activity);
                         if (jsonFilePath != null) {
                             afficherConfirmationEnregistrementCarte(activity);
                         } else {

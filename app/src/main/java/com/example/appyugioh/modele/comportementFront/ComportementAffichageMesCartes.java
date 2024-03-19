@@ -66,11 +66,11 @@ public class ComportementAffichageMesCartes
                 String imagePath;
                 if(!carteYuGiOh.getLienImage().contains("https"))
                 {
-                    Picasso.get().load(new File(carteYuGiOh.getLienImage())).resize(550,800).into(imageButton);
+                    Picasso.get().load(new File(carteYuGiOh.getLienImage())).resize(100,125).into(imageButton);
                 }
                 else
                 {
-                    Picasso.get().load(carteYuGiOh.getLienImage()).resize(550,800).into(imageButton);
+                    Picasso.get().load(carteYuGiOh.getLienImage()).resize(100,125).into(imageButton);
                 }
 
                 // Ajouter un écouteur de clic au bouton d'image

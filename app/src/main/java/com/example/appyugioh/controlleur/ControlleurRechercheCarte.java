@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.core.view.GravityCompat;
+import androidx.core.widget.NestedScrollView;
 
 import com.example.appyugioh.R;
 import com.example.appyugioh.modele.comportementFront.ComportementFiltre;
@@ -93,7 +94,7 @@ public class ControlleurRechercheCarte {
         activite.setBoutonFiltre(activite.findViewById(R.id.boutonFiltre));
         activite.setBtn_prev(activite.findViewById(R.id.previousButton));
         activite.setBtn_next(activite.findViewById(R.id.nextButton));
-        activite.setScrollView(activite.findViewById(R.id.scrollViewRecherche));
+        activite.setScrollView((NestedScrollView) activite.findViewById(R.id.scrollViewRecherche));
 
         activite.setNavigationView(activite.findViewById(R.id.nav_view));
         Menu menu = activite.getNavigationView().getMenu();
@@ -180,12 +181,9 @@ public class ControlleurRechercheCarte {
         filtre.getLayoutLinkMark().setVisibility(View.GONE);
         filtre.getLayoutAttribut().setVisibility(View.GONE);
         filtre.getLayoutRace().setVisibility(View.GONE);
+        filtre.getCheckBoxCardType("token").setVisibility(View.GONE);
+        filtre.getCheckBoxCardType("skill").setVisibility(View.GONE);
         layoutFiltrage.findViewById(R.id.layout_type_monstre).setVisibility(View.GONE);
-        Log.d("Initialisation", "CheckBox Level" + filtre.getCheckBoxLevel().size());
-        Log.d("Initialisation", "CheckBox Level" + filtre.getCheckBoxMonsterType().size());
-        Log.d("Initialisation", "CheckBox Level" + filtre.getCheckBoxSpellType().size());
-        Log.d("Initialisation", "CheckBox Level" + filtre.getCheckBoxCardType().size());
-
     }
 
     private void initialiseCheckBoxList(View view, List<CheckBox> checkBoxList) {
@@ -301,7 +299,9 @@ public class ControlleurRechercheCarte {
                 filtre.getBtnOk().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        comportementFiltre.filtre(filtre,accesExterneRest);
+                        if(accesExterneRest.getListeFiltreCarteYuGiOh() != null)
+                            if(!accesExterneRest.getListeFiltreCarteYuGiOh().isEmpty())
+                                comportementFiltre.filtre(filtre,accesExterneRest);
                         activite.getDialog().dismiss();
                     }
                 });
