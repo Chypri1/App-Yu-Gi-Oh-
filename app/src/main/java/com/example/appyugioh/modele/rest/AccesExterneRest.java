@@ -166,19 +166,10 @@ public class AccesExterneRest {
                 listeCarteYuGiOh.addAll(mappeurCarteRest2CarteYuGiOh.mapperListeCarteRest2ListeCarteYuGiOh(cardsArray));
             } catch (IOException | JSONException e) {
                 Log.w("REQUETE", "Erreur: Aucune carte trouvée");
-
                 e.printStackTrace();
             }
 
         });
-
-        // Attendre que le thread se termine
-        try {
-            executorService.awaitTermination(10, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         return listeCarteYuGiOh;
     }
 
