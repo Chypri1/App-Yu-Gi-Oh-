@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.core.view.GravityCompat;
 
@@ -49,6 +50,7 @@ public class ControlleurAffichageUnDeck {
         activite.setDrawerLayout(activite.findViewById(R.id.drawerLayout));
         activite.setLayoutResultatRecherche(activite.findViewById(R.id.layoutResultatRecherche));
         activite.setBoutonAjoutUneCarte(activite.findViewById(R.id.boutonAjoutUneCarte));
+        activite.setTexteTitreDeck(activite.findViewById(R.id.texteTitreDeck));
         activite.setNavigationView(activite.findViewById(R.id.nav_view));
         Menu menu = activite.getNavigationView().getMenu();
         MenuItem menuItem1 = menu.findItem(R.id.menu_bouton_recherche_carte);
@@ -60,6 +62,7 @@ public class ControlleurAffichageUnDeck {
     public void initialiseComportement()
     {
         this.deck = (Deck) activite.getIntent().getSerializableExtra("deck");
+        activite.getTexteTitreDeck().setText(deck.getNom());
     }
     public void observateur()
     {

@@ -36,17 +36,19 @@ package com.example.appyugioh.modele.rest;
         import java.net.URL;
         import java.util.ArrayList;
         import java.util.List;
+        import java.util.concurrent.CopyOnWriteArrayList;
         import java.util.concurrent.ExecutorService;
         import java.util.concurrent.Executors;
+        import java.util.concurrent.TimeUnit;
 
 public class AccesExterneRest {
 
     private static final String API_URL = "https://db.ygoprodeck.com/api/v7/cardinfo.php";
     private static final int BUTTON_SIZE_DP = 115;
     private static final int IMAGES_PER_PAGE = 50;
+    private Button btn_prev = null;
+    private Button btn_next = null;
 
-    private Button btn_prev;
-    private Button btn_next;
     private int currentPage = 0;
     private List<CarteYuGiOh> finalListeCarteYuGiOh;
     private List<CarteYuGiOh> listeFiltreCarteYuGiOh;
@@ -139,14 +141,10 @@ public class AccesExterneRest {
         });
     }
 
-    public List<CarteYuGiOh> appRestExact(String nomCarte, LinearLayout layoutResultatRecherche, Activity activity) {
-        this.layoutResultatRecherche = layoutResultatRecherche;
-        this.activity = activity;
+    public List<CarteYuGiOh> appRestExact(String nomCarte) {
+        final List<CarteYuGiOh> listeCarteYuGiOh = new CopyOnWriteArrayList<>();
 
         executorService.execute(() -> {
-            List<CarteYuGiOh> listeCarteYuGiOh = new ArrayList<>();
-            currentPage=0;
-
             try {
                 URL url = new URL(API_URL + "?name=" + nomCarte + "&language=fr");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -165,16 +163,25 @@ public class AccesExterneRest {
 
                 JSONObject jsonResponse = new JSONObject(response.toString());
                 JSONArray cardsArray = jsonResponse.getJSONArray("data");
-                listeCarteYuGiOh = mappeurCarteRest2CarteYuGiOh.mapperListeCarteRest2ListeCarteYuGiOh(cardsArray);
+                listeCarteYuGiOh.addAll(mappeurCarteRest2CarteYuGiOh.mapperListeCarteRest2ListeCarteYuGiOh(cardsArray));
             } catch (IOException | JSONException e) {
                 Log.w("REQUETE", "Erreur: Aucune carte trouvée");
 
                 e.printStackTrace();
             }
-            finalListeCarteYuGiOh=listeCarteYuGiOh;
+
         });
-        return finalListeCarteYuGiOh;
+
+        // Attendre que le thread se termine
+        try {
+            executorService.awaitTermination(10, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return listeCarteYuGiOh;
     }
+
 
     private void afficher_carte(int page) {
         if (listeFiltreCarteYuGiOh == null || listeFiltreCarteYuGiOh.isEmpty()) {

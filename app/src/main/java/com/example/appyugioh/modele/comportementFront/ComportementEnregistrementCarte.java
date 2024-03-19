@@ -23,6 +23,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.appyugioh.R;
+import com.example.appyugioh.modele.metier.CarteMonstre;
+import com.example.appyugioh.modele.metier.CarteYuGiOh;
+import com.example.appyugioh.modele.metier.Edition;
+import com.example.appyugioh.modele.rest.AccesExterneRest;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
@@ -59,9 +63,12 @@ public class ComportementEnregistrementCarte {
         String nomCarteText = nomCarte.getText().toString();
         String nomEditionText = nomEdition.getText().toString();
 
+        AccesExterneRest accesExterneRest  =new AccesExterneRest();
+        List<CarteYuGiOh> listeCarteYuGiOh = accesExterneRest.appRestExact(nomCarteText);
+
         // Vérifier si le nom de la carte et l'édition sont vides ou égaux aux valeurs par défaut
         if (!TextUtils.isEmpty(nomCarteText) && !nomCarteText.equals(activity.getString(R.string.nom_carte)) &&
-                !TextUtils.isEmpty(nomEditionText) && !nomEditionText.equals(activity.getString(R.string.edition))) {
+                !TextUtils.isEmpty(nomEditionText) && !nomEditionText.equals(activity.getString(R.string.edition)) && listeCarteYuGiOh.size() == 1) {
 
             // Vérifier si l'imageView n'est pas vide
             if (imageCam.getDrawable() != null) {
@@ -76,16 +83,39 @@ public class ComportementEnregistrementCarte {
                     // Vérifier si l'enregistrement de l'image a réussi
                     if (imageSavedPath != null) {
                         // Créer un objet JSON avec le nom de la carte, l'édition et l'emplacement de l'image
-                        // TODO: enregistrer d'autres infos pour savoir si c'est une carte prise ne photo ou non
-                        JSONObject carteJson = new JSONObject();
-                        carteJson.put("name", nomCarte);
-                        carteJson.put("lienImage", imageSavedPath);
-                        JSONArray listeEdition = new JSONArray();
-                        JSONObject editionJson = new JSONObject();
-                        editionJson.put("code", nomEditionText);
-                        listeEdition.put(editionJson);
-                        carteJson.put("editionCarte", listeEdition);
 
+                        JSONObject carteJson = new JSONObject();
+                        CarteYuGiOh carteYuGiOh =listeCarteYuGiOh.get(0);
+                        try {
+
+
+                            // Ajouter les informations de la carte à l'objet JSON représentant la carte
+                            // Vous devez remplacer ces valeurs par les propriétés réelles de votre objet CarteYuGiOh
+
+                            carteJson.put("name", carteYuGiOh.getNom());
+
+                            carteJson.put("lienImage", imageSavedPath);
+                            carteJson.put("desc", carteYuGiOh.getDesc());
+                            carteJson.put("type", carteYuGiOh.getType());
+                            carteJson.put("frameType", carteYuGiOh.getTypeFrame());
+                            carteJson.put("race", carteYuGiOh.getRace());
+                            carteJson.put("atk", ((CarteMonstre) carteYuGiOh).getAttaque());
+                            carteJson.put("def", ((CarteMonstre) carteYuGiOh).getDefense());
+                            carteJson.put("attribute", ((CarteMonstre) carteYuGiOh).getAttribut());
+                            carteJson.put("level", ((CarteMonstre) carteYuGiOh).getNiveau());
+                            JSONArray listeEdition = new JSONArray();
+                            for (Edition edition : carteYuGiOh.getListeEdition()) {
+                                JSONObject editionJson = new JSONObject();
+                                editionJson.put("nom", edition.getNom());
+                                editionJson.put("code", edition.getCode());
+                                editionJson.put("rarete", edition.getRarete());
+                                editionJson.put("prix", edition.getPrix());
+                                listeEdition.put(editionJson);
+                            }
+                            carteJson.put("editionCarte", listeEdition);
+                        } catch (Exception e) {
+
+                        }
                         // Enregistrer l'objet JSON dans un fichier
                         String jsonFilePath = saveJSONObjectToFile(carteJson,activity);
                         if (jsonFilePath != null) {

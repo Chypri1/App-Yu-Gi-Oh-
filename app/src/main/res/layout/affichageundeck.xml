@@ -14,8 +14,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/rechercheCarte"
+        <TextView
+            android:id="@+id/texteTitreDeck"
             android:layout_width="278dp"
             android:layout_height="73dp"
             android:layout_marginLeft="30dp"

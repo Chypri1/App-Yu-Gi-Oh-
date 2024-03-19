@@ -130,26 +130,18 @@ public class ControlleurAffichageUneCarte {
             }
         });
 
-        String nomCarte;
-        if((nomCarte = activite.getIntent().getStringExtra("nomCarte"))!= null)
-        {
-
-            nomCarte = activite.getIntent().getStringExtra("nomCarte");
-            activite.getTexteViewNomCarte().setText(nomCarte);
-        }
-        else{
             this.carteYuGiOh = (CarteYuGiOh) activite.getIntent().getSerializableExtra("carteYuGiOh");
             activite.getTexteViewNomCarte().setText(carteYuGiOh.getNom());
-        }
+
 
 
 
 
         // Extraire le chemin de l'image de l'intention
         String imagePath;
-        if((imagePath = activite.getIntent().getStringExtra("imagePath")) != null)
+        if(!carteYuGiOh.getLienImage().contains("https"))
         {
-                Picasso.get().load(new File(imagePath)).resize(550,800).into(activite.getImageViewImage());
+            Picasso.get().load(new File(carteYuGiOh.getLienImage())).resize(550,800).into(activite.getImageViewImage());
         }
         else
         {

@@ -55,13 +55,21 @@ public class MappeurCarteJson2CarteYuGiOh {
                 carteYuGiOh = new CarteYuGiOh();
             }
             carteYuGiOh.setNom(carteRest.getString("name"));
-            carteYuGiOh.setType(carteRest.getString("type"));
-            carteYuGiOh.setTypeFrame(carteRest.getString("frameType"));
+            if(carteRest.has("type")){
+                carteYuGiOh.setType(carteRest.getString("type"));
+            }
+            if(carteRest.has("framType")) {
+                carteYuGiOh.setTypeFrame(carteRest.getString("frameType"));
+            }
             if (carteRest.has("archetype")) {
                 carteYuGiOh.setArchetype(carteRest.getString("archetype"));
             }
-            carteYuGiOh.setDesc(carteRest.getString("desc"));
-            carteYuGiOh.setRace(carteRest.getString("race"));
+            if(carteRest.has("desc")) {
+                carteYuGiOh.setDesc(carteRest.getString("desc"));
+            }
+            if(carteRest.has("type")) {
+                carteYuGiOh.setRace(carteRest.getString("race"));
+            }
             if(carteRest.has("editionCarte")) {
                 JSONArray cardSetArray = carteRest.getJSONArray("editionCarte");
                 List<Edition> listeEdition = new ArrayList<>();
