@@ -194,6 +194,8 @@ public class ControlleurAffichageUneCarte {
                 }
             }
         });
+
+
     }
 
     private void afficherPopupListeDecks() {

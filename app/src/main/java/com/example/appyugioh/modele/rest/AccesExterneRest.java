@@ -9,10 +9,14 @@ package com.example.appyugioh.modele.rest;
         import android.view.View;
         import android.widget.Button;
         import android.widget.ImageButton;
+        import android.widget.ImageView;
         import android.widget.LinearLayout;
         import android.widget.ScrollView;
         import android.widget.TextView;
 
+        import androidx.core.widget.NestedScrollView;
+
+        import com.example.appyugioh.R;
         import com.example.appyugioh.modele.mappeur.MappeurCarteRest2CarteYuGiOh;
         import com.example.appyugioh.modele.metier.CarteYuGiOh;
         import com.example.appyugioh.vue.AffichageUneCarte;
@@ -42,14 +46,14 @@ public class AccesExterneRest {
     private static final String API_URL = "https://db.ygoprodeck.com/api/v7/cardinfo.php";
     private static final int BUTTON_SIZE_DP = 115;
     private static final int IMAGES_PER_PAGE = 50;
-
     private Button btn_prev = null;
     private Button btn_next = null;
+
     private int currentPage = 0;
     private List<CarteYuGiOh> finalListeCarteYuGiOh;
     private List<CarteYuGiOh> listeFiltreCarteYuGiOh;
     private LinearLayout layoutResultatRecherche;
-    private ScrollView scrollView;
+    private NestedScrollView scrollView;
     private Activity activity;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final Handler handler = new Handler(Looper.getMainLooper());
@@ -71,7 +75,7 @@ public class AccesExterneRest {
         afficher_carte(currentPage);
     }
 
-    public AccesExterneRest(Button btn_prev, Button btn_next, ScrollView scrollView) {
+    public AccesExterneRest(Button btn_prev, Button btn_next, NestedScrollView scrollView) {
         this.btn_prev = btn_prev;
         this.btn_next = btn_next;
         this.scrollView=scrollView;
@@ -117,6 +121,18 @@ public class AccesExterneRest {
             } catch (IOException | JSONException e) {
                 Log.w("REQUETE", "Erreur: Aucune carte trouvée");
                 e.printStackTrace();
+                activity.runOnUiThread(() -> {
+                    layoutResultatRecherche.removeAllViews();
+                    TextView noCardsTextView = new TextView(activity);
+                    noCardsTextView.setText("Aucune carte trouvée");
+                    noCardsTextView.setGravity(Gravity.CENTER);
+                    layoutResultatRecherche.addView(noCardsTextView);
+                    if(finalListeCarteYuGiOh != null)
+                        finalListeCarteYuGiOh.clear();
+                    if(listeFiltreCarteYuGiOh != null)
+                        listeFiltreCarteYuGiOh.clear();
+                });
+                return;
             }
 
             finalListeCarteYuGiOh = listeCarteYuGiOh;
@@ -150,8 +166,10 @@ public class AccesExterneRest {
                 listeCarteYuGiOh.addAll(mappeurCarteRest2CarteYuGiOh.mapperListeCarteRest2ListeCarteYuGiOh(cardsArray));
             } catch (IOException | JSONException e) {
                 Log.w("REQUETE", "Erreur: Aucune carte trouvée");
+
                 e.printStackTrace();
             }
+
         });
 
         // Attendre que le thread se termine
@@ -179,6 +197,7 @@ public class AccesExterneRest {
         int buttonsPerRow = 3;
 
         activity.runOnUiThread(() -> {
+
             // Vérifier si layoutResultatRecherche est null avant d'ajouter des vues
             if (layoutResultatRecherche == null) {
                 Log.e("AccesExterneRest", "layoutResultatRecherche est null");
@@ -201,19 +220,21 @@ public class AccesExterneRest {
                 }
                 if(rowLayout!=null) {
                     ImageButton cardInfo = new ImageButton(activity);
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(buttonSizePx, buttonSizePx + 100);
-                    params.setMargins(0, 0, 16, 16);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            0,
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            1.0f / buttonsPerRow); // 1.0f divisé par le nombre de boutons par ligne
+                    params.weight = 1; // Utiliser le poids pour équilibrer la largeur des boutons
                     cardInfo.setLayoutParams(params);
-                    Picasso.get().load(carteYuGiOh.getLienImage()).resize(buttonSizePx, buttonSizePx + 100).into(cardInfo);
+                    cardInfo.setPadding(0, 0, 0, 0); // Ajuster la marge à zéro
+                    cardInfo.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                    cardInfo.setAdjustViewBounds(true);
+                    Picasso.get().load(carteYuGiOh.getLienImage()).into(cardInfo);
                     rowLayout.addView(cardInfo);
-                    cardInfo.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent affichageUneCarte = new Intent(activity.getApplicationContext(), AffichageUneCarte.class);
-                            affichageUneCarte.putExtra("carteYuGiOh", carteYuGiOh);
-                            activity.startActivity(affichageUneCarte);
-                            activity.finish();
-                        }
+                    cardInfo.setOnClickListener(v -> {
+                        Intent affichageUneCarte = new Intent(activity.getApplicationContext(), AffichageUneCarte.class);
+                        affichageUneCarte.putExtra("carteYuGiOh", carteYuGiOh);
+                        activity.startActivity(affichageUneCarte);
                     });
                 }
             }
@@ -226,6 +247,10 @@ public class AccesExterneRest {
                 btn_prev.setVisibility(View.GONE);
                 btn_next.setVisibility(View.GONE);
             }
+            if(currentPage==0)
+                btn_prev.setVisibility(View.GONE);
+            if(currentPage>=listeFiltreCarteYuGiOh.size() / IMAGES_PER_PAGE)
+                btn_next.setVisibility(View.GONE);
             scrollView.post(() -> {
                 scrollView.smoothScrollTo(0, 0);
             });

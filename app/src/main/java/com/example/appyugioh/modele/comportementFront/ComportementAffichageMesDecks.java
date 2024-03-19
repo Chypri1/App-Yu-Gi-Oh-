@@ -108,7 +108,7 @@ public class ComportementAffichageMesDecks {
                         Intent affichageUnDeck = new Intent(activite.getApplicationContext(), AffichageUnDeck.class);
                         affichageUnDeck.putExtra("deck",deck);
                         activite.startActivity(affichageUnDeck);
-                        activite.finish();
+
                     }
                 });
                 deckView.setOnLongClickListener(new View.OnLongClickListener() {

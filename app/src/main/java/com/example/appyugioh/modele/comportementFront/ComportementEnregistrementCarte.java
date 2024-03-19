@@ -116,7 +116,6 @@ public class ComportementEnregistrementCarte {
                         } catch (Exception e) {
 
                         }
-
                         // Enregistrer l'objet JSON dans un fichier
                         String jsonFilePath = saveJSONObjectToFile(carteJson,activity);
                         if (jsonFilePath != null) {
