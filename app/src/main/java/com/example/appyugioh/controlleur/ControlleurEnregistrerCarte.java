@@ -1,5 +1,6 @@
 package com.example.appyugioh.controlleur;
 
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.view.Menu;
@@ -169,12 +170,33 @@ public class ControlleurEnregistrerCarte {
                 activite.getDrawerLayout().openDrawer(GravityCompat.START);
             }
         });
-        // Configuration du geste de balayage pour ouvrir le tiroir de navigation
-        activite.getDrawerLayout().setOnTouchListener(new OnSwipeTouchListener(activite) {
+        activite.getNomCarte().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onSwipeRight() {
-                if (!activite.getDrawerLayout().isDrawerOpen(GravityCompat.START)) {
-                    activite.getDrawerLayout().openDrawer(GravityCompat.START);
+            public void onFocusChange(View view, boolean hasFocus) {
+                // Vérifiez si l'EditText a le focus
+                if (hasFocus) {
+                    // Si oui, effacez le texte par défaut
+                    activite.getNomCarte().getText().clear();
+                } else {
+                    // Si non, réinitialisez le texte par défaut si le champ est vide
+                    if (activite.getNomCarte().getText().toString().isEmpty()) {
+                        activite.getNomCarte().setText(R.string.nom_carte);
+                    }
+                }
+            }
+        });
+        activite.getNomEdition().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                // Vérifiez si l'EditText a le focus
+                if (hasFocus) {
+                    // Si oui, effacez le texte par défaut
+                    activite.getNomEdition().getText().clear();
+                } else {
+                    // Si non, réinitialisez le texte par défaut si le champ est vide
+                    if (activite.getNomEdition().getText().toString().isEmpty()) {
+                        activite.getNomEdition().setText(R.string.edition_de_la_carte);
+                    }
                 }
             }
         });
