@@ -9,11 +9,12 @@
 
     <include layout="@layout/layout_btn_menu_deroulant" />
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
 
 
         <TextView
@@ -109,7 +110,6 @@
 
             </LinearLayout>
         </ScrollView>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

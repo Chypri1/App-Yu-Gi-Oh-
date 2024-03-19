@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.appyugioh.modele.rest.AccesExterneRest;
@@ -37,7 +38,7 @@ public class RechercheCarte extends Activity {
     protected Button btn_prev;
     protected Button btn_next;
     private AlertDialog dialog;
-    private ScrollView scrollView;
+    private NestedScrollView scrollView;
     protected ControlleurRechercheCarte controlleurRechercheCarte;
 
 
@@ -58,11 +59,11 @@ public class RechercheCarte extends Activity {
         this.drawerLayout = drawerLayout;
     }
 
-    public ScrollView getScrollView() {
+    public NestedScrollView getScrollView() {
         return scrollView;
     }
 
-    public void setScrollView(ScrollView scrollView) {
+    public void setScrollView(NestedScrollView scrollView) {
         this.scrollView = scrollView;
     }
 
