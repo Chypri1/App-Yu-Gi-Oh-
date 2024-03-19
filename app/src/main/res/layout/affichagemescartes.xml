@@ -62,7 +62,7 @@
             android:layout_weight="0.5">
 
             <LinearLayout
-                android:id="@+id/layoutResultatRecherche"
+                android:id="@+id/layoutResultatMesCartes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -70,38 +70,6 @@
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/buttonsLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <!-- Bouton Previous -->
-            <Button
-                android:id="@+id/previousButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/previous"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/nextButton"
-                app:layout_constraintWidth_percent="0.5"
-                tools:ignore="MissingConstraints" />
-
-            <!-- Bouton Next -->
-            <Button
-                android:id="@+id/nextButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/next"
-                android:visibility="gone"
-                app:layout_constraintStart_toEndOf="@id/previousButton"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.5"
-                tools:ignore="MissingConstraints" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </LinearLayout>

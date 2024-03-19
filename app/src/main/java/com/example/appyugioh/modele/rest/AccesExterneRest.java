@@ -141,9 +141,8 @@ public class AccesExterneRest {
         });
     }
 
-    public List<CarteYuGiOh> appRestExact(String nomCarte) {
-        final List<CarteYuGiOh> listeCarteYuGiOh = new CopyOnWriteArrayList<>();
-
+    public void appRestExact(String nomCarte, CarteYuGiOhCallback callback) {
+        List<CarteYuGiOh> listeCarteYuGiOh = new ArrayList<>(); // Déplacer la déclaration à l'extérieur de la lambda expression
         executorService.execute(() -> {
             try {
                 URL url = new URL(API_URL + "?name=" + nomCarte + "&language=fr");
@@ -169,9 +168,11 @@ public class AccesExterneRest {
                 e.printStackTrace();
             }
 
+            // Une fois la tâche terminée, appeler la méthode de rappel avec les résultats
+            callback.onCarteYuGiOhReceived(listeCarteYuGiOh); // Maintenant, la liste est accessible ici
         });
-        return listeCarteYuGiOh;
     }
+
 
 
     private void afficher_carte(int page) {

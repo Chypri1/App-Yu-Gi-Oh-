@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.appyugioh.modele.mappeur.MappeurCarteJson2CarteYuGiOh;
@@ -46,6 +47,10 @@ public class ComportementAffichageMesCartes
             // Convertir la chaîne JSON en un tableau JSON
             String jsonString = stringBuilder.toString();
             JSONArray jsonArray = new JSONArray(jsonString);
+            int buttonsPerRow= 3;
+
+            // Créer un LinearLayout pour chaque rangée d'images
+            LinearLayout rowLayout = null;
 
             // Pour chaque carte dans le tableau JSON
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -55,40 +60,47 @@ public class ComportementAffichageMesCartes
                 CarteYuGiOh carteYuGiOh = mappeurCarteJson2CarteYuGiOh.mapperCarteRest2CarteYuGiOh(jsonObject);
 
                 // Créer un bouton d'image pour afficher la carte
-                ImageButton imageButton = new ImageButton(activity);
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                ImageButton cardInfo = new ImageButton(activity);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        0,
                         LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-                imageButton.setLayoutParams(layoutParams);
-
+                        1.0f / buttonsPerRow); // 1.0f divisé par le nombre de boutons par ligne
+                params.weight = 1; // Utiliser le poids pour équilibrer la largeur des boutons
+                cardInfo.setLayoutParams(params);
+                cardInfo.setPadding(0, 0, 0, 0); // Ajuster la marge à zéro
+                cardInfo.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                cardInfo.setAdjustViewBounds(true);
+                Picasso.get().load(carteYuGiOh.getLienImage()).into(cardInfo);
                 // Extraire le chemin de l'image de l'intention
                 String imagePath;
-                if(!carteYuGiOh.getLienImage().contains("https"))
-                {
-                    Picasso.get().load(new File(carteYuGiOh.getLienImage())).resize(100,125).into(imageButton);
-                }
-                else
-                {
-                    Picasso.get().load(carteYuGiOh.getLienImage()).resize(100,125).into(imageButton);
+                if (!carteYuGiOh.getLienImage().contains("https")) {
+                    Picasso.get().load(new File(carteYuGiOh.getLienImage())).into(cardInfo);
+                } else {
+                    Picasso.get().load(carteYuGiOh.getLienImage()).into(cardInfo);
                 }
 
-                // Ajouter un écouteur de clic au bouton d'image
-                imageButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Rediriger l'utilisateur vers la page d'affichage de la carte
-                        Intent affichageUneCarte = new Intent(activity, AffichageUneCarte.class);
-                        affichageUneCarte.putExtra("carteYuGiOh", carteYuGiOh);
-                        activity.startActivity(affichageUneCarte);
-                        activity.finish();
-                    }
+                // Ajouter le bouton d'image au LinearLayout de la rangée actuelle
+                if (i % 3 == 0) {
+                    // Créer un nouveau LinearLayout pour une nouvelle rangée
+                    rowLayout = new LinearLayout(activity);
+                    rowLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    ));
+                    rowLayout.setOrientation(LinearLayout.HORIZONTAL);
+                    layoutResultatRecherche.addView(rowLayout);
+                }
+                // Ajouter le bouton d'image au LinearLayout de la rangée actuelle
+                if (rowLayout != null) {
+                    rowLayout.addView(cardInfo);
+                }
+                cardInfo.setOnClickListener(v -> {
+                    Intent affichageUneCarte = new Intent(activity.getApplicationContext(), AffichageUneCarte.class);
+                    affichageUneCarte.putExtra("carteYuGiOh", carteYuGiOh);
+                    activity.startActivity(affichageUneCarte);
                 });
-
-                // Ajouter le bouton d'image au layoutResultatRecherche
-                layoutResultatRecherche.addView(imageButton);
             }
-        } catch (IOException | JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

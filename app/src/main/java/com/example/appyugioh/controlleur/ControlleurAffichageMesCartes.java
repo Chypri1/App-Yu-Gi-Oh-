@@ -65,9 +65,9 @@ public class ControlleurAffichageMesCartes {
     public void initialiseActivite()
     {
         activite.setDrawerLayout( activite.findViewById(R.id.drawerLayout));
-        activite.setLayoutResultatRecherche(activite.findViewById(R.id.layoutResultatRecherche));
+        activite.setLayoutResultatRecherche(activite.findViewById(R.id.layoutResultatMesCartes));
         activite.setComportementAffichageMesCartes(new ComportementAffichageMesCartes());
-        activite.setRechercheCarte(activite.findViewById(R.id.rechercheCarte));
+        activite.setRechercheCarte(activite.findViewById(R.id.rechercheMesCartes));
         activite.setNavigationView(activite.findViewById(R.id.nav_view));
         Menu menu = activite.getNavigationView().getMenu();
         MenuItem menuItem1 = menu.findItem(R.id.menu_bouton_recherche_carte);

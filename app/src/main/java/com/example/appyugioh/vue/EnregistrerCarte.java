@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.view.Display;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -149,18 +152,28 @@ public class EnregistrerCarte extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RETOUR_PRENDRE_PHOTO) {
-            if (resultCode == RESULT_OK ) {
-                // La photo a été prise et le résultat est valide
+            if (resultCode == RESULT_OK) {
                 Bundle extras = data.getExtras();
                 if (extras != null) {
                     Bitmap imageBitmap = (Bitmap) extras.get("data");
                     // Utiliser l'image capturée
                     imageCam.setImageBitmap(imageBitmap);
 
+                    // Obtenez la largeur de l'écran
+                    Display display = getWindowManager().getDefaultDisplay();
+                    Point size = new Point();
+                    display.getSize(size);
+                    int screenWidth = size.x;
+
+                    // Définir la largeur de l'imageCam sur 50% de la largeur de l'écran
+                    ViewGroup.LayoutParams layoutParams = imageCam.getLayoutParams();
+                    layoutParams.width = screenWidth / 2;
+                    imageCam.setLayoutParams(layoutParams);
                 }
             }
         }
     }
+
 
 
 

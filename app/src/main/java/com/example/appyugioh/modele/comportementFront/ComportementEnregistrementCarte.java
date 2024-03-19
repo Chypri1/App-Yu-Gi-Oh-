@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
@@ -14,7 +13,6 @@ import android.hardware.camera2.CameraManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -22,12 +20,15 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.appyugioh.R;
 import com.example.appyugioh.modele.metier.CarteMonstre;
 import com.example.appyugioh.modele.metier.CarteYuGiOh;
 import com.example.appyugioh.modele.metier.Edition;
 import com.example.appyugioh.modele.rest.AccesExterneRest;
+import com.example.appyugioh.modele.rest.CarteYuGiOhCallback;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,70 +64,77 @@ public class ComportementEnregistrementCarte {
         String nomCarteText = nomCarte.getText().toString();
         String nomEditionText = nomEdition.getText().toString();
 
-        AccesExterneRest accesExterneRest  =new AccesExterneRest();
-        List<CarteYuGiOh> listeCarteYuGiOh = accesExterneRest.appRestExact(nomCarteText);
-
-        // Vérifier si le nom de la carte et l'édition sont vides ou égaux aux valeurs par défaut
-        if (!TextUtils.isEmpty(nomCarteText) && !nomCarteText.equals(activity.getString(R.string.nom_carte)) &&
-                !TextUtils.isEmpty(nomEditionText) && !nomEditionText.equals(activity.getString(R.string.edition)) && listeCarteYuGiOh.size() == 1) {
-
-            // Vérifier si l'imageView n'est pas vide
-            if (imageCam.getDrawable() != null) {
-                // Récupérer le Drawable de l'ImageView
-                Drawable drawable = imageCam.getDrawable();
-                // Vérifier si le Drawable est une instance de BitmapDrawable
-                if (drawable instanceof BitmapDrawable) {
-                    // Convertir le Drawable en Bitmap
-                    Bitmap image = ((BitmapDrawable) drawable).getBitmap();
-                    // Enregistrer l'image dans le stockage de l'appareil
-                    String imageSavedPath = saveImageToGallery(image, nomCarteText,activity);
-                    // Vérifier si l'enregistrement de l'image a réussi
-                    if (imageSavedPath != null) {
-                        // Créer un objet JSON avec le nom de la carte, l'édition et l'emplacement de l'image
-
-                        JSONObject carteJson = new JSONObject();
-                        CarteYuGiOh carteYuGiOh =listeCarteYuGiOh.get(0);
-                        try {
-
-
-                            // Ajouter les informations de la carte à l'objet JSON représentant la carte
-                            // Vous devez remplacer ces valeurs par les propriétés réelles de votre objet CarteYuGiOh
-
-                            carteJson.put("name", carteYuGiOh.getNom());
-
-                            carteJson.put("lienImage", imageSavedPath);
-                            carteJson.put("desc", carteYuGiOh.getDesc());
-                            carteJson.put("type", carteYuGiOh.getType());
-                            carteJson.put("frameType", carteYuGiOh.getTypeFrame());
-                            carteJson.put("race", carteYuGiOh.getRace());
-                            carteJson.put("atk", ((CarteMonstre) carteYuGiOh).getAttaque());
-                            carteJson.put("def", ((CarteMonstre) carteYuGiOh).getDefense());
-                            carteJson.put("attribute", ((CarteMonstre) carteYuGiOh).getAttribut());
-                            carteJson.put("level", ((CarteMonstre) carteYuGiOh).getNiveau());
-                            JSONArray listeEdition = new JSONArray();
-                            for (Edition edition : carteYuGiOh.getListeEdition()) {
-                                JSONObject editionJson = new JSONObject();
-                                editionJson.put("nom", edition.getNom());
-                                editionJson.put("code", edition.getCode());
-                                editionJson.put("rarete", edition.getRarete());
-                                editionJson.put("prix", edition.getPrix());
-                                listeEdition.put(editionJson);
+        AccesExterneRest accesExterneRest = new AccesExterneRest();
+        // Création de la tâche Callable pour effectuer la requête
+        accesExterneRest.appRestExact(nomCarteText, new CarteYuGiOhCallback() {
+            @Override
+            public void onCarteYuGiOhReceived(List<CarteYuGiOh> cartes) {
+                // Le traitement des résultats de la requête peut être effectué ici
+                if (!nomCarteText.isEmpty() && !nomEditionText.isEmpty() && cartes.size() == 1) {
+                    // Continuer le traitement et l'enregistrement de la carte
+                    // Charger l'image à partir de l'URL avec Picasso
+                    Picasso.get().load(cartes.get(0).getLienImage()).into(imageCam, new Callback() {
+                        @Override
+                        public void onSuccess()  {
+                            // L'image a été chargée avec succès, vous pouvez maintenant enregistrer la carte
+                            try {
+                                enregistrerCarte(nomCarteText, nomEditionText, cartes.get(0), imageCam, activity);
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
                             }
-                            carteJson.put("editionCarte", listeEdition);
-                        } catch (Exception e) {
-
                         }
-                        // Enregistrer l'objet JSON dans un fichier
-                        String jsonFilePath = saveJSONObjectToFile(carteJson,activity);
-                        if (jsonFilePath != null) {
-                            afficherConfirmationEnregistrementCarte(activity);
-                        } else {
+
+                        @Override
+                        public void onError(Exception e) {
+                            // Gérer l'erreur de chargement de l'image avec Picasso
                             afficherNonEnregistrementCarte(activity);
                         }
-                    } else {
-                        afficherNonEnregistrementCarte(activity);
-                    }
+                    });
+                } else {
+                    afficherNonEnregistrementCarte(activity);
                 }
+            }
+        });
+    }
+
+    private void enregistrerCarte(String nomCarteText, String nomEditionText, CarteYuGiOh carte, ImageView imageCam, Activity activity) throws JSONException {
+        // Enregistrer l'image dans le stockage de l'appareil
+        String imageSavedPath = saveImageToGallery(carte.getLienImage(), nomCarteText, activity);
+        // Vérifier si l'enregistrement de l'image a réussi
+        if (imageSavedPath != null) {
+            // Créer un objet JSON avec le nom de la carte, l'édition et l'emplacement de l'image
+            JSONObject carteJson = new JSONObject();
+            // Ajouter les informations de la carte à l'objet JSON représentant la carte
+            // Vous devez remplacer ces valeurs par les propriétés réelles de votre objet CarteYuGiOh
+            carteJson.put("name", carte.getNom());
+            carteJson.put("lienImage", imageSavedPath);
+            carteJson.put("desc", carte.getDesc());
+            carteJson.put("type", carte.getType());
+            carteJson.put("frameType", carte.getTypeFrame());
+            carteJson.put("race", carte.getRace());
+            if (carte instanceof CarteMonstre) {
+                carteJson.put("atk", ((CarteMonstre) carte).getAttaque());
+                carteJson.put("def", ((CarteMonstre) carte).getDefense());
+                carteJson.put("attribute", ((CarteMonstre) carte).getAttribut());
+                carteJson.put("level", ((CarteMonstre) carte).getNiveau());
+            }
+            JSONArray listeEdition = new JSONArray();
+            for (Edition edition : carte.getListeEdition()) {
+                JSONObject editionJson = new JSONObject();
+                editionJson.put("nom", edition.getNom());
+                editionJson.put("code", edition.getCode());
+                editionJson.put("rarete", edition.getRarete());
+                editionJson.put("prix", edition.getPrix());
+                listeEdition.put(editionJson);
+            }
+            // Ajouter la liste des éditions à l'objet JSON représentant la carte
+            carteJson.put("editionCarte", listeEdition);
+            // Enregistrer l'objet JSON dans un fichier
+            String jsonFilePath = saveJSONObjectToFile(carteJson, activity);
+            if (jsonFilePath != null) {
+                afficherConfirmationEnregistrementCarte(activity);
+            } else {
+                afficherNonEnregistrementCarte(activity);
             }
         } else {
             afficherNonEnregistrementCarte(activity);
@@ -237,34 +245,51 @@ public class ComportementEnregistrementCarte {
         }
     }
 
-    private String saveImageToGallery(Bitmap image, String imageName, Activity activity) {
-        // Vérifier si le stockage externe est disponible en écriture
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            // Définir le répertoire de destination pour enregistrer l'image
-            File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "VotreDossier");
-            // Créer le répertoire s'il n'existe pas
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
-            // Enregistrer l'image dans le répertoire
-            File imageFile = new File(directory, imageName + ".jpg");
-            try {
-                FileOutputStream outputStream = new FileOutputStream(imageFile);
-                image.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-                outputStream.close();
-                // Ajouter l'image à la galerie
-                MediaStore.Images.Media.insertImage(activity.getContentResolver(), imageFile.getAbsolutePath(), imageName, "Description de l'image");
-                // Retourner le chemin de l'image enregistrée
-                return imageFile.getAbsolutePath();
-            } catch (IOException e) {
-                e.printStackTrace();
-                // Gérer l'exception si l'enregistrement de l'image échoue
-                return null;
-            }
-        } else {
-            // Gérer le cas où le stockage externe n'est pas disponible
-            return null;
-        }
+    private String saveImageToGallery(String imageUrl, String imageName, Activity activity) {
+        Picasso.get()
+                .load(imageUrl)
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        // Vérifier si le stockage externe est disponible en écriture
+                        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                            // Définir le répertoire de destination pour enregistrer l'image
+                            File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "VotreDossier");
+                            // Créer le répertoire s'il n'existe pas
+                            if (!directory.exists()) {
+                                directory.mkdirs();
+                            }
+                            // Enregistrer l'image dans le répertoire
+                            File imageFile = new File(directory, imageName + ".jpg");
+                            try {
+                                // Ajouter l'image à la galerie
+                                MediaStore.Images.Media.insertImage(activity.getContentResolver(), imageFile.getAbsolutePath(), imageName, "Description de l'image");
+                                // Afficher un message de confirmation
+                                afficherConfirmationEnregistrementCarte(activity);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                // Gérer l'exception si l'enregistrement de l'image échoue
+                                afficherNonEnregistrementCarte(activity);
+                            }
+                        } else {
+                            // Gérer le cas où le stockage externe n'est pas disponible
+                            afficherNonEnregistrementCarte(activity);
+                        }
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                        // Gérer l'échec du chargement de l'image
+                        afficherNonEnregistrementCarte(activity);
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                });
+        return imageUrl;
     }
+
 
 }
