@@ -272,7 +272,11 @@ public class ControlleurAffichageUneCarte {
 
                     // Enregistrer les modifications dans le fichier JSON
                     ComportementAffichageMesDecks comportementAffichageMesDecks = new ComportementAffichageMesDecks();
-                    comportementAffichageMesDecks.saveDecksToFile(decks, activite);
+                    try {
+                        comportementAffichageMesDecks.saveDecksToFile(decks, activite);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
 
                 } else if (Objects.equals(nomDeckSelectionne, "Mes cartes")) {
                     ComportementEnregistrementCarte comportementEnregistrementCarte = new ComportementEnregistrementCarte();

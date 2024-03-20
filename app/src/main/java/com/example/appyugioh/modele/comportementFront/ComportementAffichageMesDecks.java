@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ComportementAffichageMesDecks {
 
@@ -148,12 +149,21 @@ public class ComportementAffichageMesDecks {
     }
 
 
-    public void saveDecksToFile(List<Deck> decks, Activity activite) {
+    public void saveDecksToFile(List<Deck> decks, Activity activite) throws JSONException {
         // Création du fichier JSONArray pour stocker les informations des decks
-        JSONArray jsonArray = new JSONArray();
+        JSONArray jsonArray = loadExistingDecks(activite);
 
         // Ajouter les informations de chaque nouveau deck à la JSONArray
         for (Deck deck : decks) {
+            for(int indice = 0; indice < jsonArray.length();indice ++)
+            {
+                JSONObject deckJson = jsonArray.getJSONObject(indice);
+                if(Objects.equals(deck.getNom(), deckJson.getString("nom")))
+                {
+                    supprimerDeckDansFichierJSON(deck.getNom(),activite);
+                    jsonArray = loadExistingDecks(activite);
+                }
+            }
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("nom", deck.getNom());
@@ -263,7 +273,11 @@ public class ComportementAffichageMesDecks {
 
                 // Affichez un message pour indiquer que le deck a été créé
                 afficherMessage("Nouveau Deck", "Le deck " + deck.getNom() + " a été créé avec succès !",activite);
-                saveDecksToFile(List.of(deck),activite);
+                try {
+                    saveDecksToFile(List.of(deck),activite);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
                 layoutResultatRecherche.removeAllViews();
                 afficherDecks(layoutResultatRecherche, activite);
             }
