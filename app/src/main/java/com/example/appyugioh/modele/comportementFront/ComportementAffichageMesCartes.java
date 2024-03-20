@@ -58,47 +58,58 @@ public class ComportementAffichageMesCartes
 
                 MappeurCarteJson2CarteYuGiOh mappeurCarteJson2CarteYuGiOh = new MappeurCarteJson2CarteYuGiOh();
                 CarteYuGiOh carteYuGiOh = mappeurCarteJson2CarteYuGiOh.mapperCarteRest2CarteYuGiOh(jsonObject);
-
-                // Créer un bouton d'image pour afficher la carte
-                ImageButton cardInfo = new ImageButton(activity);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        0,
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        1.0f / buttonsPerRow); // 1.0f divisé par le nombre de boutons par ligne
-                params.weight = 1; // Utiliser le poids pour équilibrer la largeur des boutons
-                cardInfo.setLayoutParams(params);
-                cardInfo.setPadding(0, 0, 0, 0); // Ajuster la marge à zéro
-                cardInfo.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                cardInfo.setAdjustViewBounds(true);
-                Picasso.get().load(carteYuGiOh.getLienImage()).into(cardInfo);
-                // Extraire le chemin de l'image de l'intention
-                String imagePath;
-                if (!carteYuGiOh.getLienImage().contains("https")) {
-                    Picasso.get().load(new File(carteYuGiOh.getLienImage())).into(cardInfo);
-                } else {
+                if(carteYuGiOh!=null) {
+                    // Créer un bouton d'image pour afficher la carte
+                    ImageButton cardInfo = new ImageButton(activity);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            0,
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            1.0f / buttonsPerRow); // 1.0f divisé par le nombre de boutons par ligne
+                    params.weight = 1; // Utiliser le poids pour équilibrer la largeur des boutons
+                    cardInfo.setLayoutParams(params);
+                    cardInfo.setPadding(0, 0, 0, 0); // Ajuster la marge à zéro
+                    cardInfo.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                    cardInfo.setAdjustViewBounds(true);
                     Picasso.get().load(carteYuGiOh.getLienImage()).into(cardInfo);
-                }
+                    // Extraire le chemin de l'image de l'intention
+                    String imagePath;
+                    if (!carteYuGiOh.getLienImage().contains("https")) {
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Picasso.get().load(new File(carteYuGiOh.getLienImage())).into(cardInfo);
+                            }
+                        });
+                    } else {
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Picasso.get().load(carteYuGiOh.getLienImage()).into(cardInfo);
+                            }
+                        });
+                    }
 
-                // Ajouter le bouton d'image au LinearLayout de la rangée actuelle
-                if (i % 3 == 0) {
-                    // Créer un nouveau LinearLayout pour une nouvelle rangée
-                    rowLayout = new LinearLayout(activity);
-                    rowLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT
-                    ));
-                    rowLayout.setOrientation(LinearLayout.HORIZONTAL);
-                    layoutResultatRecherche.addView(rowLayout);
+                    // Ajouter le bouton d'image au LinearLayout de la rangée actuelle
+                    if (i % buttonsPerRow == 0) {
+                        // Créer un nouveau LinearLayout pour une nouvelle rangée
+                        rowLayout = new LinearLayout(activity);
+                        rowLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT
+                        ));
+                        rowLayout.setOrientation(LinearLayout.HORIZONTAL);
+                        layoutResultatRecherche.addView(rowLayout);
+                    }
+                    // Ajouter le bouton d'image au LinearLayout de la rangée actuelle
+                    if (rowLayout != null) {
+                        rowLayout.addView(cardInfo);
+                    }
+                    cardInfo.setOnClickListener(v -> {
+                        Intent affichageUneCarte = new Intent(activity.getApplicationContext(), AffichageUneCarte.class);
+                        affichageUneCarte.putExtra("carteYuGiOh", carteYuGiOh);
+                        activity.startActivity(affichageUneCarte);
+                    });
                 }
-                // Ajouter le bouton d'image au LinearLayout de la rangée actuelle
-                if (rowLayout != null) {
-                    rowLayout.addView(cardInfo);
-                }
-                cardInfo.setOnClickListener(v -> {
-                    Intent affichageUneCarte = new Intent(activity.getApplicationContext(), AffichageUneCarte.class);
-                    affichageUneCarte.putExtra("carteYuGiOh", carteYuGiOh);
-                    activity.startActivity(affichageUneCarte);
-                });
             }
         } catch (Exception e) {
             e.printStackTrace();

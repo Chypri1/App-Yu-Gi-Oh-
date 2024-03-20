@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
@@ -73,23 +74,12 @@ public class ComportementEnregistrementCarte {
                 if (!nomCarteText.isEmpty() && !nomEditionText.isEmpty() && cartes.size() == 1) {
                     // Continuer le traitement et l'enregistrement de la carte
                     // Charger l'image à partir de l'URL avec Picasso
-                    Picasso.get().load(cartes.get(0).getLienImage()).into(imageCam, new Callback() {
-                        @Override
-                        public void onSuccess()  {
-                            // L'image a été chargée avec succès, vous pouvez maintenant enregistrer la carte
-                            try {
-                                enregistrerCarte(nomCarteText, nomEditionText, cartes.get(0), imageCam, activity);
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
 
-                        @Override
-                        public void onError(Exception e) {
-                            // Gérer l'erreur de chargement de l'image avec Picasso
-                            afficherNonEnregistrementCarte(activity);
-                        }
-                    });
+                    try {
+                        enregistrerCarte(nomCarteText, nomEditionText, cartes.get(0), imageCam, activity);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else {
                     afficherNonEnregistrementCarte(activity);
                 }
@@ -99,7 +89,7 @@ public class ComportementEnregistrementCarte {
 
     private void enregistrerCarte(String nomCarteText, String nomEditionText, CarteYuGiOh carte, ImageView imageCam, Activity activity) throws JSONException {
         // Enregistrer l'image dans le stockage de l'appareil
-        String imageSavedPath = saveImageToGallery(carte.getLienImage(), nomCarteText, activity);
+        String imageSavedPath = saveImageToGallery(imageCam, nomCarteText, activity);
         // Vérifier si l'enregistrement de l'image a réussi
         if (imageSavedPath != null) {
             // Créer un objet JSON avec le nom de la carte, l'édition et l'emplacement de l'image
@@ -245,51 +235,54 @@ public class ComportementEnregistrementCarte {
         }
     }
 
-    private String saveImageToGallery(String imageUrl, String imageName, Activity activity) {
-        Picasso.get()
-                .load(imageUrl)
-                .into(new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        // Vérifier si le stockage externe est disponible en écriture
-                        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                            // Définir le répertoire de destination pour enregistrer l'image
-                            File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "VotreDossier");
-                            // Créer le répertoire s'il n'existe pas
-                            if (!directory.exists()) {
-                                directory.mkdirs();
-                            }
-                            // Enregistrer l'image dans le répertoire
-                            File imageFile = new File(directory, imageName + ".jpg");
-                            try {
-                                // Ajouter l'image à la galerie
-                                MediaStore.Images.Media.insertImage(activity.getContentResolver(), imageFile.getAbsolutePath(), imageName, "Description de l'image");
-                                // Afficher un message de confirmation
-                                afficherConfirmationEnregistrementCarte(activity);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                // Gérer l'exception si l'enregistrement de l'image échoue
-                                afficherNonEnregistrementCarte(activity);
-                            }
-                        } else {
-                            // Gérer le cas où le stockage externe n'est pas disponible
-                            afficherNonEnregistrementCarte(activity);
-                        }
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                        // Gérer l'échec du chargement de l'image
-                        afficherNonEnregistrementCarte(activity);
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                    }
-                });
-        return imageUrl;
+    private String saveImageToGallery(ImageView imageCam, String imageName, Activity activity) {
+        // Récupérer le Drawable de l'image de l'ImageView
+        Drawable drawable = imageCam.getDrawable();
+        if (drawable instanceof BitmapDrawable) {
+            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+            // Enregistrer le bitmap dans la galerie
+            return saveBitmapToGallery(bitmap, imageName, activity);
+        } else {
+            // Gérer le cas où l'image de l'ImageView n'est pas un BitmapDrawable
+            afficherNonEnregistrementCarte(activity);
+            return null;
+        }
     }
+
+    private String saveBitmapToGallery(Bitmap bitmap, String imageName, Activity activity) {
+        // Vérifier si le stockage externe est disponible en écriture
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            // Définir le répertoire de destination pour enregistrer l'image
+            File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "VotreDossier");
+            // Créer le répertoire s'il n'existe pas
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+            // Enregistrer le bitmap dans le répertoire
+            File imageFile = new File(directory, imageName + ".jpg");
+            try {
+                FileOutputStream fos = new FileOutputStream(imageFile);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                fos.flush();
+                fos.close();
+                // Ajouter l'image à la galerie
+                MediaStore.Images.Media.insertImage(activity.getContentResolver(), imageFile.getAbsolutePath(), imageName, "Description de l'image");
+                // Afficher un message de confirmation
+                afficherConfirmationEnregistrementCarte(activity);
+                return imageFile.getAbsolutePath();
+            } catch (IOException e) {
+                e.printStackTrace();
+                // Gérer l'exception si l'enregistrement de l'image échoue
+                afficherNonEnregistrementCarte(activity);
+                return null;
+            }
+        } else {
+            // Gérer le cas où le stockage externe n'est pas disponible
+            afficherNonEnregistrementCarte(activity);
+            return null;
+        }
+    }
+
 
 
 }

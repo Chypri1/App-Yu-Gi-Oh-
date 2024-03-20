@@ -17,6 +17,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.core.view.GravityCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.appyugioh.R;
@@ -29,7 +30,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class AffichageUneCarte extends Activity {
     protected DrawerLayout drawerLayout;
-    protected ScrollView scrollView;
+    protected NestedScrollView scrollView;
     protected ImageButton boutonMenuDeroulant;
     protected TextView texteViewNomCarte;
     protected ImageView imageViewImage;
@@ -76,11 +77,11 @@ public class AffichageUneCarte extends Activity {
         this.boutonListeEdition = boutonListeEdition;
     }
 
-    public ScrollView getScrollView() {
+    public NestedScrollView getScrollView() {
         return scrollView;
     }
 
-    public void setScrollView(ScrollView scrollView) {
+    public void setScrollView(NestedScrollView scrollView) {
         this.scrollView = scrollView;
     }
 

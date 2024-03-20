@@ -1,5 +1,7 @@
 package com.example.appyugioh.modele.mappeur;
 
+import android.util.Log;
+
 import com.example.appyugioh.modele.metier.CarteLink;
 import com.example.appyugioh.modele.metier.CarteMonstre;
 import com.example.appyugioh.modele.metier.CarteYuGiOh;
@@ -10,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class MappeurCarteJson2CarteYuGiOh {
@@ -28,6 +31,10 @@ public class MappeurCarteJson2CarteYuGiOh {
 
         public CarteYuGiOh mapperCarteRest2CarteYuGiOh(JSONObject carteRest) throws JSONException {
             CarteYuGiOh carteYuGiOh;
+            if(!carteRest.has("type"))
+            {
+                return null;
+            }
             if(carteRest.getString("type").contains("Monster"))
             {
 

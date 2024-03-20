@@ -52,6 +52,7 @@ public class ControlleurAffichageUnDeck {
         activite.setBoutonAjoutUneCarte(activite.findViewById(R.id.boutonAjoutUneCarte));
         activite.setTexteTitreDeck(activite.findViewById(R.id.texteTitreDeck));
         activite.setNavigationView(activite.findViewById(R.id.nav_view));
+        activite.setScrollView(activite.findViewById(R.id.scrollViewRecherche));
         Menu menu = activite.getNavigationView().getMenu();
         MenuItem menuItem1 = menu.findItem(R.id.menu_bouton_recherche_carte);
         MenuItem menuItem2 = menu.findItem(R.id.menu_bouton_accueil);
@@ -85,6 +86,14 @@ public class ControlleurAffichageUnDeck {
         });
         // Configuration du geste de balayage pour ouvrir le tiroir de navigation
         activite.getDrawerLayout().setOnTouchListener(new OnSwipeTouchListener(activite) {
+            @Override
+            public void onSwipeRight() {
+                if (!activite.getDrawerLayout().isDrawerOpen(GravityCompat.START)) {
+                    activite.getDrawerLayout().openDrawer(GravityCompat.START);
+                }
+            }
+        });
+        activite.getScrollView().setOnTouchListener(new OnSwipeTouchListener(activite) {
             @Override
             public void onSwipeRight() {
                 if (!activite.getDrawerLayout().isDrawerOpen(GravityCompat.START)) {

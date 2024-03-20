@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.appyugioh.R;
@@ -26,6 +27,16 @@ public class AffichageUnDeck extends Activity {
     protected TextView texteTitreDeck;
 
     protected Button boutonAjoutUneCarte;
+
+    protected NestedScrollView scrollView;
+
+    public NestedScrollView getScrollView() {
+        return scrollView;
+    }
+
+    public void setScrollView(NestedScrollView scrollView) {
+        this.scrollView = scrollView;
+    }
 
     public TextView getTexteTitreDeck() {
         return texteTitreDeck;

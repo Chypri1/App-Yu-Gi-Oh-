@@ -98,4 +98,9 @@
     <string name="filtre">FILTRE</string>
     <string name="edition_de_la_carte">édition de la carte</string>
     <string name="enregistrer">Enregistrer</string>
+    <string name="prix">Prix:</string>
+    <string name="rarete_deux_points">rareté:</string>
+    <string name="textview">TextView</string>
+    <string name="carte_du_deck">carte du deck</string>
+    <string name="nom_deck">nom Deck</string>
 </resources>

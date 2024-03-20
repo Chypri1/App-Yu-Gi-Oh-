@@ -38,6 +38,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ControlleurAffichageUneCarte {
 
@@ -104,7 +105,7 @@ public class ControlleurAffichageUneCarte {
         activite.setTextViewRarete(activite.findViewById(R.id.textViewRarete));
         activite.setTextViewPrix(activite.findViewById(R.id.textViewPrix));
         activite.setBoutonAjoutMesCartes((activite.findViewById(R.id.boutonAjoutMesCartes)));
-
+        activite.setScrollView(activite.findViewById(R.id.nestedScrollView));
         activite.setNavigationView(activite.findViewById(R.id.nav_view));
         Menu menu = activite.getNavigationView().getMenu();
         MenuItem menuItem1 = menu.findItem(R.id.menu_bouton_recherche_carte);
@@ -141,24 +142,25 @@ public class ControlleurAffichageUneCarte {
         String imagePath;
         if(!carteYuGiOh.getLienImage().contains("https"))
         {
-            Picasso.get().load(new File(carteYuGiOh.getLienImage())).resize(550,800).into(activite.getImageViewImage());
+            Picasso.get().load(new File(carteYuGiOh.getLienImage())).into(activite.getImageViewImage());
         }
         else
         {
-            Picasso.get().load(carteYuGiOh.getLienImage()).resize(550,800).into(activite.getImageViewImage());
+            Picasso.get().load(carteYuGiOh.getLienImage()).into(activite.getImageViewImage());
         }
         if(carteYuGiOh != null)
         {
-            final int n = 0;
+            int n = 0;
             activite.getDescriptionCarte().setText(carteYuGiOh.getDesc());
             activite.getTextViewPrix().setText(carteYuGiOh.getListeEdition().get(n).getPrix().toString());
             activite.getTextViewRarete().setText(carteYuGiOh.getListeEdition().get(n).getRarete());
             activite.getBoutonListeEdition().setText(carteYuGiOh.getListeEdition().get(n).getCode());
             activite.getBoutonListeEdition().setOnClickListener(new View.OnClickListener() {
+                int ni = n;
                 @Override
                 public void onClick(View v) {
 
-                    int ni = (n + 1) % carteYuGiOh.getListeEdition().size();
+                    ni = (ni + 1) % carteYuGiOh.getListeEdition().size();
 
                     activite.getTextViewPrix().setText(carteYuGiOh.getListeEdition().get(ni).getPrix().toString());
                     activite.getTextViewRarete().setText(carteYuGiOh.getListeEdition().get(ni).getRarete());
@@ -194,6 +196,14 @@ public class ControlleurAffichageUneCarte {
                 }
             }
         });
+        activite.getScrollView().setOnTouchListener(new OnSwipeTouchListener(activite) {
+            @Override
+            public void onSwipeRight() {
+                if (!activite.getDrawerLayout().isDrawerOpen(GravityCompat.START)) {
+                    activite.getDrawerLayout().openDrawer(GravityCompat.START);
+                }
+            }
+        });
 
 
     }
@@ -204,6 +214,10 @@ public class ControlleurAffichageUneCarte {
         List<String> nomsDecks = new ArrayList<>();
         List<Deck> decks = new ArrayList<>();
         try {
+            File file = new File(activite.getFilesDir(), "decks.json");
+            if (!file.exists()) {
+                file.createNewFile(); // Crée le fichier s'il n'existe pas
+            }
             FileInputStream fis = activite.openFileInput("decks.json");
             BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
             StringBuilder sb = new StringBuilder();
@@ -260,26 +274,22 @@ public class ControlleurAffichageUneCarte {
                     ComportementAffichageMesDecks comportementAffichageMesDecks = new ComportementAffichageMesDecks();
                     comportementAffichageMesDecks.saveDecksToFile(decks, activite);
 
-                } else if (nomDeckSelectionne == "Mes cartes") {
+                } else if (Objects.equals(nomDeckSelectionne, "Mes cartes")) {
                     ComportementEnregistrementCarte comportementEnregistrementCarte = new ComportementEnregistrementCarte();
                     JSONObject carteJson = new JSONObject();
                     try {
-
-
-                        // Ajouter les informations de la carte à l'objet JSON représentant la carte
-                        // Vous devez remplacer ces valeurs par les propriétés réelles de votre objet CarteYuGiOh
-
                         carteJson.put("name", carteYuGiOh.getNom());
-
                         carteJson.put("lienImage", carteYuGiOh.getLienImage());
                         carteJson.put("desc", carteYuGiOh.getDesc());
                         carteJson.put("type", carteYuGiOh.getType());
                         carteJson.put("frameType", carteYuGiOh.getTypeFrame());
                         carteJson.put("race", carteYuGiOh.getRace());
-                        carteJson.put("atk", ((CarteMonstre) carteYuGiOh).getAttaque());
-                        carteJson.put("def", ((CarteMonstre) carteYuGiOh).getDefense());
-                        carteJson.put("attribute", ((CarteMonstre) carteYuGiOh).getAttribut());
-                        carteJson.put("level", ((CarteMonstre) carteYuGiOh).getNiveau());
+                        if(carteYuGiOh instanceof CarteMonstre) {
+                            carteJson.put("atk", ((CarteMonstre) carteYuGiOh).getAttaque());
+                            carteJson.put("def", ((CarteMonstre) carteYuGiOh).getDefense());
+                            carteJson.put("attribute", ((CarteMonstre) carteYuGiOh).getAttribut());
+                            carteJson.put("level", ((CarteMonstre) carteYuGiOh).getNiveau());
+                        }
                         JSONArray listeEdition = new JSONArray();
                         for (Edition edition : carteYuGiOh.getListeEdition()) {
                             JSONObject editionJson = new JSONObject();
@@ -291,7 +301,7 @@ public class ControlleurAffichageUneCarte {
                         }
                         carteJson.put("editionCarte", listeEdition);
                     } catch (Exception e) {
-
+                        e.printStackTrace();
                     }
                     comportementEnregistrementCarte.saveJSONObjectToFile(carteJson, activite);
                 } else {

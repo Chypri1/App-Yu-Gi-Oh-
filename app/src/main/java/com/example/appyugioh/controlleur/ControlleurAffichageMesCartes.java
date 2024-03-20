@@ -69,6 +69,7 @@ public class ControlleurAffichageMesCartes {
         activite.setComportementAffichageMesCartes(new ComportementAffichageMesCartes());
         activite.setRechercheCarte(activite.findViewById(R.id.rechercheMesCartes));
         activite.setNavigationView(activite.findViewById(R.id.nav_view));
+        activite.setScrollView(activite.findViewById(R.id.scrollViewRecherche));
         Menu menu = activite.getNavigationView().getMenu();
         MenuItem menuItem1 = menu.findItem(R.id.menu_bouton_recherche_carte);
         MenuItem menuItem2 = menu.findItem(R.id.menu_bouton_accueil);
@@ -129,5 +130,14 @@ public class ControlleurAffichageMesCartes {
                 }
             }
         });
+        activite.getScrollView().setOnTouchListener(new OnSwipeTouchListener(activite) {
+            @Override
+            public void onSwipeRight() {
+                if (!activite.getDrawerLayout().isDrawerOpen(GravityCompat.START)) {
+                    activite.getDrawerLayout().openDrawer(GravityCompat.START);
+                }
+            }
+        });
+
     }
 }

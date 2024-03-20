@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import androidx.core.view.GravityCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.appyugioh.R;
@@ -33,6 +34,16 @@ public class AffichageMesCartes extends Activity {
 
 
     protected ControlleurAffichageMesCartes controlleurAffichageMesCartes;
+
+    protected NestedScrollView scrollView;
+
+    public NestedScrollView getScrollView() {
+        return scrollView;
+    }
+
+    public void setScrollView(NestedScrollView scrollView) {
+        this.scrollView = scrollView;
+    }
 
     public EditText getRechercheCarte() {
         return rechercheCarte;

@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.core.view.GravityCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.appyugioh.R;
@@ -27,18 +28,28 @@ public class AffichageMesDecks extends Activity {
 
     protected NavigationView navigationView;
 
-    protected EditText rechercheCarte;
+    protected EditText rechercheDeck;
 
     protected Button BoutonNouveauDeck;
 
     protected ControlleurAffichageMesDecks controlleurAffichageMesDecks;
 
-    public EditText getRechercheCarte() {
-        return rechercheCarte;
+    protected NestedScrollView scrollView;
+
+    public NestedScrollView getScrollView() {
+        return scrollView;
     }
 
-    public void setRechercheCarte(EditText rechercheCarte) {
-        this.rechercheCarte = rechercheCarte;
+    public void setScrollView(NestedScrollView scrollView) {
+        this.scrollView = scrollView;
+    }
+
+    public EditText getRechercheDeck() {
+        return rechercheDeck;
+    }
+
+    public void setRechercheDeck(EditText rechercheDeck) {
+        this.rechercheDeck = rechercheDeck;
     }
 
     public Button getBoutonNouveauDeck() {

@@ -8,74 +8,88 @@
     android:background="@color/gris">
 
     <include layout="@layout/layout_btn_menu_deroulant" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/rechercheCarte"
-            android:layout_width="278dp"
-            android:layout_height="73dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="50dp"
-            android:ems="10"
-            android:inputType="text"
-            android:text="Nom du deck"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="InvalidId" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
+            android:orientation="horizontal">
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"/>
+            <Button
+                android:id="@+id/boutonNouveauDeck"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:text="@string/plus" />>
 
+        </LinearLayout>
 
-        <ScrollView
-            android:layout_width="416dp"
-            android:layout_height="485dp"
-            android:layout_marginTop="246dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <!-- LinearLayout horizontal pour EditText et Bouton Recherche -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
+
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- EditText -->
+            <EditText
+                android:id="@+id/rechercheDeck"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:layout_marginStart="48dp"
+                android:inputType="text"
+                android:text="@string/nom_deck"
+                android:elevation="2dp" />
+
+            <!-- Bouton Recherche -->
+            <ImageButton
+                android:id="@+id/boutonRechercheMesCartes"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:contentDescription="@string/recherche_de_carte"
+                android:src="@drawable/ic_search"
+                android:scaleType="fitCenter"/>
+        </LinearLayout>
+
+        <!-- Bouton Filtre -->
+        <Button
+            android:id="@+id/boutonFiltre"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:text="@string/filtre"
+            android:background="@color/purple_500"/>
+
+        <!-- ScrollView -->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollViewRecherche"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5">
 
             <LinearLayout
                 android:id="@+id/layoutResultatRecherche"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"/>
-        </ScrollView>
+                android:orientation="vertical">
+                <!-- Votre contenu -->
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
 
-        <Button
-            android:id="@+id/boutonFiltre"
-            android:layout_width="401dp"
-            android:layout_height="97dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="147dp"
-            android:background="@color/rouge"
-            android:text="FILTRE"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/boutonRechercheCarte"
-            android:layout_width="71dp"
-            android:layout_height="66dp"
-            android:layout_marginStart="324dp"
-            android:layout_marginTop="68dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_zoom" />
-
-        <Button
-            android:id="@+id/boutonNouveauDeck"
-            android:layout_width="70dp"
-            android:layout_height="55dp"
-            android:layout_marginStart="326dp"
-            android:layout_marginTop="8dp"
-            android:text="+"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </LinearLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"

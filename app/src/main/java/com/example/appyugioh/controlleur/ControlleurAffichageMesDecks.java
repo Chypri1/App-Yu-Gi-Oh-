@@ -60,8 +60,9 @@ public class ControlleurAffichageMesDecks {
         activite.setDrawerLayout( activite.findViewById(R.id.drawerLayout));
         activite.setLayoutResultatRecherche(activite.findViewById(R.id.layoutResultatRecherche));
         activite.setBoutonNouveauDeck(activite.findViewById(R.id.boutonNouveauDeck));
-        activite.setRechercheCarte(activite.findViewById(R.id.rechercheCarte));
+        activite.setRechercheDeck(activite.findViewById(R.id.rechercheDeck));
         activite.setNavigationView(activite.findViewById(R.id.nav_view));
+        activite.setScrollView(activite.findViewById(R.id.scrollViewRecherche));
         Menu menu = activite.getNavigationView().getMenu();
         MenuItem menuItem1 = menu.findItem(R.id.menu_bouton_recherche_carte);
         MenuItem menuItem2 = menu.findItem(R.id.menu_bouton_accueil);
@@ -77,17 +78,17 @@ public class ControlleurAffichageMesDecks {
     public void observateur()
     {
 
-        activite.getRechercheCarte().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        activite.getRechercheDeck().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 // Vérifiez si l'EditText a le focus
                 if (hasFocus) {
                     // Si oui, effacez le texte par défaut
-                    activite.getRechercheCarte().getText().clear();
+                    activite.getRechercheDeck().getText().clear();
                 } else {
                     // Si non, réinitialisez le texte par défaut si le champ est vide
-                    if (activite.getRechercheCarte().getText().toString().isEmpty()) {
-                        activite.getRechercheCarte().setText("nom Carte");
+                    if (activite.getRechercheDeck().getText().toString().isEmpty()) {
+                        activite.getRechercheDeck().setText("nom Deck");
                     }
                 }
             }
@@ -120,6 +121,14 @@ public class ControlleurAffichageMesDecks {
         });
         // Configuration du geste de balayage pour ouvrir le tiroir de navigation
         activite.getDrawerLayout().setOnTouchListener(new OnSwipeTouchListener(activite) {
+            @Override
+            public void onSwipeRight() {
+                if (!activite.getDrawerLayout().isDrawerOpen(GravityCompat.START)) {
+                    activite.getDrawerLayout().openDrawer(GravityCompat.START);
+                }
+            }
+        });
+        activite.getScrollView().setOnTouchListener(new OnSwipeTouchListener(activite) {
             @Override
             public void onSwipeRight() {
                 if (!activite.getDrawerLayout().isDrawerOpen(GravityCompat.START)) {

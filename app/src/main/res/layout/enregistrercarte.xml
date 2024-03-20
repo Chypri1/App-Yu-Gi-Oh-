@@ -15,84 +15,109 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginVertical="16dp"
+        android:layout_weight="0.1"
+        android:orientation="horizontal">
 
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2" />
         <EditText
             android:id="@+id/nomCarte"
-            android:layout_width="278dp"
-            android:layout_height="73dp"
-            android:layout_marginStart="56dp"
-            android:layout_marginTop="52dp"
-            android:ems="10"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
             android:inputType="text"
             android:text="@string/nom_carte"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="InvalidId" />
-
-        <EditText
-            android:id="@+id/nomEdition"
-            android:layout_width="278dp"
-            android:layout_height="73dp"
-            android:layout_marginStart="56dp"
-            android:layout_marginTop="152dp"
-            android:ems="10"
-            android:inputType="text"
-            android:text="@string/edition"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="InvalidId" />
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
         <Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3" />
-
-        <Button
-            android:id="@+id/boutonAccesCamera"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:text="@string/camera" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3">
+            android:layout_weight="0.2" />
     </LinearLayout>
+
         <LinearLayout
-            android:id="@+id/layoutResultatCam"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.4"
-            android:orientation="vertical">
+            android:layout_weight="0.1"
+            android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/imageCam"
-                android:layout_width="match_parent"
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2" />
+            <EditText
+                android:id="@+id/nomEdition"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY" />
+                android:layout_weight="0.5"
+                android:inputType="text"
+                android:text="@string/edition"
+                tools:ignore="InvalidId" />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2" />
         </LinearLayout>
 
 
-        <Button
-            android:id="@+id/boutonEnregistrementCarte"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:text="@string/enregistrer"
-            android:layout_weight="0.1" />
-    </LinearLayout>
+            android:layout_weight="0.15"
+            android:orientation="horizontal">
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2" />
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@layout/nav_menu"
-        tools:ignore="MissingConstraints" />
+            <Button
+                android:id="@+id/boutonAccesCamera"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:text="@string/camera" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"/>
+        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layoutResultatCam"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageCam"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY" />
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/boutonEnregistrementCarte"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:text="@string/enregistrer"
+                android:layout_weight="0.1" />
+        </LinearLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:headerLayout="@layout/nav_header"
+            app:menu="@layout/nav_menu"
+            tools:ignore="MissingConstraints" />
 </androidx.drawerlayout.widget.DrawerLayout>

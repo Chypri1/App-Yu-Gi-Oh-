@@ -9,109 +9,115 @@
 
     <include layout="@layout/layout_btn_menu_deroulant" />
 
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
+            android:orientation="horizontal">
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"/>
+            <HorizontalScrollView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:scrollbars="none"
+                android:fillViewport="true">
+            <TextView
+                android:id="@+id/textViewNomCarte"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/nom_de_la_carte"
+                android:textSize="24sp" />
+            </HorizontalScrollView>
 
-        <TextView
-            android:id="@+id/textViewNomCarte"
-            android:layout_width="163dp"
-            android:layout_height="46dp"
-            android:layout_marginStart="112dp"
-            android:layout_marginTop="16dp"
-            android:text="nom de la carte"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/boutonAjoutMesCartes"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:text="@string/plus"
+                android:background="@color/purple_700"/>
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/boutonAjoutMesCartes"
-            android:layout_width="102dp"
-            android:layout_height="67dp"
-            android:layout_marginStart="291dp"
-            android:layout_marginTop="15dp"
-            android:text="+"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ScrollView
-            android:id="@+id/scrollView"
-            android:layout_width="411dp"
-            android:layout_height="616dp"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="121dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.9"
+            android:fillViewport="true">
 
             <LinearLayout
+                android:id="@+id/LayoutAffiche"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
                 <LinearLayout
-                    android:layout_width="252dp"
-                    android:layout_height="429dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.8"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/imageViewCarte"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="0.7"
                         app:srcCompat="@drawable/yugioh_card_back" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:orientation="vertical">
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.2"/>
+                        <TextView
+                            android:id="@+id/textViewPrix"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.2"
+                            android:text="@string/prix"
+                            tools:ignore="NestedWeights" />
+
+                        <Button
+                            android:id="@+id/boutonListeEdition"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.2"
+                            android:text="@string/edition"
+                            android:background="@color/rouge"/>
+
+                        <TextView
+                            android:id="@+id/textViewRarete"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.1"
+                            android:text="@string/rarete_deux_points" />
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.2"/>
+                    </LinearLayout>
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/textViewPrix"
-                    android:layout_width="127dp"
-                    android:layout_height="61dp"
-                    android:layout_marginStart="267dp"
-                    android:layout_marginTop="28dp"
-                    android:text="Prix:"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/boutonListeEdition"
-                    android:layout_width="142dp"
-                    android:layout_height="120dp"
-                    android:layout_marginStart="258dp"
-                    android:layout_marginTop="120dp"
-                    android:text="@string/edition"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textViewRarete"
-                    android:layout_width="137dp"
-                    android:layout_height="92dp"
-                    android:layout_marginStart="259dp"
-                    android:layout_marginTop="266dp"
-                    android:text="rareté:"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
                 <TextView
                     android:id="@+id/descriptionCarte"
-                    android:layout_width="match_parent"
-                    android:layout_height="104dp"
-                    android:text="TextView" />
-
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/textview" />
             </LinearLayout>
-        </ScrollView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

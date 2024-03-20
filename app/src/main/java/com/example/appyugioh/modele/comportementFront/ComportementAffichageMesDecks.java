@@ -45,24 +45,30 @@ public class ComportementAffichageMesDecks {
         try {
             File jsonFile = new File(activite.getFilesDir(), "decks.json");
             if (!jsonFile.exists()) {
-                // Si le fichier n'existe pas, créez-le avec une liste de decks vide
-                jsonFile.createNewFile();
-                FileWriter fileWriter = new FileWriter(jsonFile);
-                fileWriter.write("[]"); // Initialiser le fichier avec une liste JSON vide
-                fileWriter.close();
+                if (jsonFile.createNewFile()) {
+                    FileWriter fileWriter = new FileWriter(jsonFile);
+                    fileWriter.write("[]"); // Initialiser le fichier avec une liste JSON vide
+                    fileWriter.close();
+                }
             }
 
             // Lire le contenu du fichier JSON
             FileInputStream fis = activite.openFileInput("decks.json");
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader bufferedReader = new BufferedReader(isr);
             StringBuilder stringBuilder = new StringBuilder();
-            int character;
-            while ((character = fis.read()) != -1) {
-                stringBuilder.append((char) character);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
             }
-            fis.close();
+            bufferedReader.close();
 
             // Analyser le contenu JSON en une liste de decks
-            JSONArray jsonArray = new JSONArray(stringBuilder.toString());
+            String jsonString = stringBuilder.toString().trim();  // Trim pour supprimer les espaces vides
+            if (jsonString.isEmpty())
+                return;
+            JSONArray jsonArray = new JSONArray(jsonString);
+            Log.d("array",String.valueOf(jsonArray.length()));
             for (int i = 0; i < jsonArray.length(); i++) {
                 try {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -212,6 +218,28 @@ public class ComportementAffichageMesDecks {
         }
     }
 
+    private JSONArray loadExistingDecks(Activity activite) {
+        JSONArray jsonArray = new JSONArray();
+        try {
+            File decksFile = new File(activite.getFilesDir(), "decks.json");
+            if (decksFile.exists()) {
+                // Lire le contenu du fichier et le convertir en JSONArray
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(decksFile));
+                StringBuilder stringBuilder = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line);
+                }
+                bufferedReader.close();
+                jsonArray = new JSONArray(stringBuilder.toString());
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+            Log.e("DeckManager", "Erreur lors de la lecture du fichier JSON des decks");
+        }
+        return jsonArray;
+    }
+
 
     @SuppressLint("MissingInflatedId")
     public void afficherPopupNouveauDeck(Activity activite,LinearLayout layoutResultatRecherche) {
@@ -219,7 +247,7 @@ public class ComportementAffichageMesDecks {
         View popupView = LayoutInflater.from(activite).inflate(R.layout.nouveau_deck_popup, null);
 
         // Trouvez les vues nécessaires dans le layout de la popup
-         EditText editTextNomDeck = popupView.findViewById(R.id.editTextNomDeck);
+        EditText editTextNomDeck = popupView.findViewById(R.id.editTextNomDeck);
 
         // Créez une boîte de dialogue AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(activite);
@@ -231,7 +259,7 @@ public class ComportementAffichageMesDecks {
             public void onClick(DialogInterface dialog, int which) {
                 // Récupérez les valeurs des champs de la popup
                 Deck deck = new Deck();
-                      deck.setNom(editTextNomDeck.getText().toString());
+                deck.setNom(editTextNomDeck.getText().toString());
 
                 // Affichez un message pour indiquer que le deck a été créé
                 afficherMessage("Nouveau Deck", "Le deck " + deck.getNom() + " a été créé avec succès !",activite);
