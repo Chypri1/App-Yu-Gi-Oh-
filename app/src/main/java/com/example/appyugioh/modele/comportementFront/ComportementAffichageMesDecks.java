@@ -66,8 +66,6 @@ public class ComportementAffichageMesDecks {
 
             // Analyser le contenu JSON en une liste de decks
             String jsonString = stringBuilder.toString().trim();  // Trim pour supprimer les espaces vides
-            if (jsonString.isEmpty())
-                return;
             JSONArray jsonArray = new JSONArray(jsonString);
             Log.d("array",String.valueOf(jsonArray.length()));
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -106,7 +104,12 @@ public class ComportementAffichageMesDecks {
                 TextView textPrix = deckView.findViewById(R.id.textPrix);
                 textNomDeck.setText(deck.getNom());
                 textNombreCartes.setText("Nombre de cartes: " + deck.getListeCarteYuGiOh().size());
-                textPrix.setText("Prix: $" + "prix qu'il faut mettre");
+                if(!deck.getListeCarteYuGiOh().isEmpty()) {
+                    textPrix.setText("Prix: $:" + deck.getListeCarteYuGiOh().get(0).getListeEdition().get(0).getPrix());
+                }
+                else {
+                    textPrix.setText("Prix: $: 0");
+                }
                 layoutResultatRecherche.addView(deckView);
 
                 deckView.setOnClickListener(new View.OnClickListener() {
@@ -153,6 +156,7 @@ public class ComportementAffichageMesDecks {
         // Création du fichier JSONArray pour stocker les informations des decks
         JSONArray jsonArray = loadExistingDecks(activite);
 
+        JSONArray listeDeck  =new JSONArray();
         // Ajouter les informations de chaque nouveau deck à la JSONArray
         for (Deck deck : decks) {
             for(int indice = 0; indice < jsonArray.length();indice ++)
@@ -160,6 +164,7 @@ public class ComportementAffichageMesDecks {
                 JSONObject deckJson = jsonArray.getJSONObject(indice);
                 if(Objects.equals(deck.getNom(), deckJson.getString("nom")))
                 {
+                    listeDeck = deckJson.getJSONArray("listeCartes");
                     supprimerDeckDansFichierJSON(deck.getNom(),activite);
                     jsonArray = loadExistingDecks(activite);
                 }
@@ -170,7 +175,6 @@ public class ComportementAffichageMesDecks {
                 jsonObject.put("nombreCartes", deck.getListeCarteYuGiOh().size());
 
                 // Créer un tableau JSON pour stocker les informations sur chaque carte
-                JSONArray cartesArray = new JSONArray();
                 for (CarteYuGiOh carte : deck.getListeCarteYuGiOh()) {
                     JSONObject carteJson = new JSONObject();
 
@@ -203,11 +207,11 @@ public class ComportementAffichageMesDecks {
                     // mettre liste des editions
 
                     // Ajouter l'objet JSON représentant la carte au tableau JSON
-                    cartesArray.put(carteJson);
+                    listeDeck.put(carteJson);
                 }
 
                 // Ajouter le tableau JSON des cartes au deck JSON
-                jsonObject.put("listeCartes", cartesArray);
+                jsonObject.put("listeCartes", listeDeck);
 
                 // Ajouter le deck JSON au tableau JSON principal
                 jsonArray.put(jsonObject);
